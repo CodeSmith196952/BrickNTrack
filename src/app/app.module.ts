@@ -17,6 +17,8 @@ import { ComponentsModule } from './components/components.module';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AddPropertyComponent } from './add-property/add-property.component';
+import { CostMonitoringDashboardComponent } from './cost-monitoring-dashboard/cost-monitoring-dashboard.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { AddPropertyComponent } from './add-property/add-property.component';
     FullComponent,
     LandingPageComponent,
     PageNotFoundComponent,
-    AddPropertyComponent
+    AddPropertyComponent,
+    CostMonitoringDashboardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

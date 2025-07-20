@@ -21,17 +21,21 @@ import { FullComponent } from "./layouts/full/full.component";
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { AddPropertyComponent } from "./add-property/add-property.component";
+import { CostMonitoringDashboardComponent } from "./cost-monitoring-dashboard/cost-monitoring-dashboard.component";
+import { LoginComponent } from "./login/login.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/landingPage", pathMatch: "full" },
   { path: "landingPage", component: LandingPageComponent },
+  { path: "login", component: LoginComponent },
   {
     path: "",
     component: FullComponent,
     children: [
       { path: "documents", component: DashboardComponent },
+      { path: "property", component: AddPropertyComponent },
+      { path: "costMonitoringDashboard", component: CostMonitoringDashboardComponent },
       { path: "alerts", component: AlertsComponent },
-      { path: "forms", component: FormsComponent },
       { path: "table", component: ProductComponent },
       { path: "grid-list", component: GridListComponent },
       { path: "menu", component: MenuComponent },
@@ -45,7 +49,6 @@ const routes: Routes = [
       { path: "slider", component: SliderComponent },
       { path: "slide-toggle", component: SlideToggleComponent },
       { path: "tooltip", component: TooltipsComponent },
-      { path: "property", component: AddPropertyComponent },
     ],
   },
 
