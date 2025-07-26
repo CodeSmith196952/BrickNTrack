@@ -23,6 +23,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { AddPropertyComponent } from "./add-property/add-property.component";
 import { CostMonitoringDashboardComponent } from "./cost-monitoring-dashboard/cost-monitoring-dashboard.component";
 import { LoginComponent } from "./login/login.component";
+import { ProgressTrackerComponent } from "./progress-tracker/progress-tracker.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/landingPage", pathMatch: "full" },
@@ -35,7 +36,7 @@ const routes: Routes = [
       { path: "documents", component: DashboardComponent },
       { path: "property", component: AddPropertyComponent },
       { path: "costMonitoringDashboard", component: CostMonitoringDashboardComponent },
-      { path: "alerts", component: AlertsComponent },
+      { path: "progressTracker", component: ProgressTrackerComponent },
       { path: "table", component: ProductComponent },
       { path: "grid-list", component: GridListComponent },
       { path: "menu", component: MenuComponent },

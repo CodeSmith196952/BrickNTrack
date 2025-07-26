@@ -30,6 +30,11 @@ export class FullComponent {
 
   sidebarMenu: sidebarMenu[] = [
     {
+      link: "/costMonitoringDashboard",
+      icon: "layout",
+      menu: "Dashboard",
+    },
+    {
       link: "/documents",
       icon: "home",
       menu: "Document",
@@ -37,18 +42,13 @@ export class FullComponent {
     {
       link: "/property",
       icon: "disc",
-      menu: "Property",
+      menu: "Property Listing",
     },
     {
-      link: "/costMonitoringDashboard",
-      icon: "layout",
-      menu: "Dashboard",
+      link: "/progressTracker",
+      icon: "info",
+      menu: "Progress Tracker",
     },
-    // {
-    //   link: "/alerts",
-    //   icon: "info",
-    //   menu: "Alerts",
-    // },
     // {
     //   link: "/grid-list",
     //   icon: "file-text",

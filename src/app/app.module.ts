@@ -19,6 +19,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AddPropertyComponent } from './add-property/add-property.component';
 import { CostMonitoringDashboardComponent } from './cost-monitoring-dashboard/cost-monitoring-dashboard.component';
 import { LoginComponent } from './login/login.component';
+import { ProgressTrackerComponent } from './progress-tracker/progress-tracker.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     PageNotFoundComponent,
     AddPropertyComponent,
     CostMonitoringDashboardComponent,
-    LoginComponent
+    LoginComponent,
+    ProgressTrackerComponent
   ],
   imports: [
     BrowserModule,
