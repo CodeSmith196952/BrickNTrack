@@ -24,10 +24,12 @@ import { AddPropertyComponent } from "./add-property/add-property.component";
 import { CostMonitoringDashboardComponent } from "./cost-monitoring-dashboard/cost-monitoring-dashboard.component";
 import { LoginComponent } from "./login/login.component";
 import { ProgressTrackerComponent } from "./progress-tracker/progress-tracker.component";
+import { ExplorePropertiesComponent } from "./explore-properties/explore-properties.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/landingPage", pathMatch: "full" },
   { path: "landingPage", component: LandingPageComponent },
+  { path: "exploreProperties", component: ExplorePropertiesComponent },
   { path: "login", component: LoginComponent },
   {
     path: "",
@@ -37,7 +39,6 @@ const routes: Routes = [
       { path: "property", component: AddPropertyComponent },
       { path: "costMonitoringDashboard", component: CostMonitoringDashboardComponent },
       { path: "progressTracker", component: ProgressTrackerComponent },
-      { path: "table", component: ProductComponent },
       { path: "grid-list", component: GridListComponent },
       { path: "menu", component: MenuComponent },
       { path: "tabs", component: TabsComponent },

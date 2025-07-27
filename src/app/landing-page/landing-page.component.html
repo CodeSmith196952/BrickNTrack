@@ -1,10 +1,16 @@
 <header>
   <nav>
-    <img
-      src="https://mobirise.com/extensions/organicamp/assets/images/logo1.jpg"
-      id="logo"
-      alt="Main logo"
-    />
+    <div class="d-flex align-items-center">
+
+      <img
+        src="../../assets/images/architect_2942499.png"
+        id="logo"
+        alt="Main logo"
+      /> &nbsp;
+      <span class="italic-par4">
+        BrickNTrack
+      </span>
+    </div>
     <div>
       <ul id="top-menu">
         <!-- <li id="drop-menu" class="menu-item">
@@ -20,6 +26,16 @@
         <li class="menu-item">
           <a href="#">Blocks<i class="fas fa-caret-down"></i></a>
         </li> -->
+        <li>
+          <a href="/exploreProperties" class="" tooltipPosition="top">
+            <i class="fa-solid fa-arrow-right"></i> &nbsp; Explore Properties
+          </a>
+        </li>
+        <li>
+          <a href="/exploreProperties" class="" tooltipPosition="top">
+            <i class="fa-solid fa-mobile"></i> &nbsp; List Your Projects
+          </a>
+        </li>
         <li><a href="/login">Login</a></li>
       </ul>
     </div>
@@ -27,111 +43,151 @@
   <div id="header-desc">
     <h1>Build Trust Brick by Brick</h1>
     <p>
-      India's most transparent real estate construction platform. Track progress, monitor costs, and collaborate with verified builders in real-time.
+      India's most transparent real estate construction platform.
+      <br />
+      Track progress, monitor costs, and collaborate with verified builders in
+      real-time.
     </p>
+
+    <section class="rates" #ratesSection>
+      <div class="rates-wrap">
+        <div class="rates-block">
+          <h3 class="customRate">{{ projectCount }} +</h3>
+          <p class="text-dark customRate1">Projects Tracked</p>
+        </div>
+        <div class="rates-block">
+          <h3 class="customRate">{{ buyerCount }} K+</h3>
+          <p class="text-dark customRate1">Happy Buyers</p>
+        </div>
+        <div class="rates-block">
+          <h3 class="customRate">{{ transparencyScore }}%</h3>
+          <p class="text-dark customRate1">Transparency Score</p>
+        </div>
+      </div>
+    </section>
   </div>
 </header>
 
 <main>
   <section id="store">
-    <p class="italic-par"></p>
-    <h2>Why Choose PropertyBook?</h2>
-
-    <div id="store-items">
-      <article>
-        <div>
-          <i class="fa fa-camera"></i>
-        </div>
-        <h3>Secure Payments</h3>
-        <p>
-          Multiple payment options with PCI-DSS compliant security and instant
-          transaction confirmations.
-        </p>
-      </article>
-      <article>
-        <div>
-          <i class="fa-rocket fa"></i>
-        </div>
-        <h3>Transparent Process</h3>
-        <p>
-          Clear booking terms, refund policies, and real-time status updates
-          throughout the process.
-        </p>
-      </article>
-      <article>
-        <div>
-          <i class="fab fa-twitter"></i>
-        </div>
-        <h3>Analytics & Insights</h3>
-        <p>
-          Comprehensive dashboards for both buyers and sellers with detailed
-          analytics and reporting.
-        </p>
-      </article>
-      <!-- <article>
-					<div>
-						<i class="fab fa-weixin"></i>
-					</div>
-					<h3>Lorem, ipsum.</h3>
-					<p>Lorem, ipsum dolor.</p>
-				</article> -->
-    </div>
-  </section>
-
-  <section id="comments">
-    <p class="italic-par">Lorem, ipsum.</p>
-    <h2>Lorem, ipsum dolor.</h2>
-    <p id="gray-desc">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum ipsa eaque
-      cumque hic beatae error impedit qui corrupti sunt doloribus!
+    <h3 class="fw-bold">Everything You Need for Transparent Construction</h3>
+    <p class="italic-par">
+      From foundation to finish,
+      <br />
+      track every aspect of your construction project with complete transparency
     </p>
 
-    <div id="comments-items">
-      <article>
-        <img
-          src="https://mobirise.com/extensions/organicamp/assets/images/face5.jpg"
-          alt="Veronica King"
-        />
-        <p>
-          Sales consultants are very polite. Many of the products have tried and
-          are ready to prompt and recommend to customers. The staff shows that
-          they completely share the philosophy of proper nutrition, if you can
-          say so.
-        </p>
-        <h3>Veronica King</h3>
-        <p>Cook</p>
-      </article>
-      <article>
-        <img
-          src="https://mobirise.com/extensions/organicamp/assets/images/face6.jpg"
-          alt="Jim Cash"
-        />
-        <p>
-          The assortment is very wide. From useful organic oils, cereals and
-          teas to specific products for vegetarians, such as sausages and pies
-          without meat.
-        </p>
-        <h3>Jim Cash</h3>
-        <p>Seller</p>
-      </article>
-      <article>
-        <img
-          src="https://mobirise.com/extensions/organicamp/assets/images/face7.jpg"
-          alt="Peter Goodman"
-        />
-        <p>
-          I want to say a huge thank you to the management of the store and all
-          its employees, I'm not a vegetarian, it would seem that the store is
-          not for me, but it's not so, any person who comes here will find
-          something useful.
-        </p>
-        <h3>Peter Goodman</h3>
-        <p>Manager</p>
-      </article>
+    <div class="row">
+      <div id="store-items">
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor customColorIconbg">
+              <i class="fa-solid fa-clock customColorIconbg"></i>
+            </div>
+            <h3 class="mt-2">Construction Timeline</h3>
+            <p>
+              Real-time project milestones and progress tracking with photo
+              evidence
+            </p>
+          </article>
+        </div>
+
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor customWidth">
+              <i class="fa-solid fa-dollar-sign"></i>
+            </div>
+            <h3 class="mt-2">Cost Tracking</h3>
+            <p>Transparent budget monitoring and expense breakdowns</p>
+          </article>
+        </div>
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor customWidth customColorIconbg3">
+              <i class="fa-solid fa-file customColorIconbg3"></i>
+            </div>
+            <h3 class="mt-2">Document Vault</h3>
+            <p>
+              Secure storage for all project documents, permits, and contracts
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div id="store-items">
+      <div class="row">
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor customColorIconbg">
+              <i class="fa-solid fa-camera customColorIconbg"></i>
+            </div>
+            <h3 class="mt-2">Visual Gallery</h3>
+            <p>Progress photos, videos, and 360° site walkthroughs</p>
+          </article>
+        </div>
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h3 class="mt-2">Payment Logs</h3>
+            <p>Complete payment history and milestone-based disbursements</p>
+          </article>
+        </div>
+        <div class="col-sm-4">
+          <article>
+            <div class="iconColor customColorIconbg3">
+              <i class="fa-solid fa-message customColorIconbg3"></i>
+            </div>
+            <h3 class="mt-2">Buyer-Builder Chat</h3>
+            <p>Direct communication channel with task management</p>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="follow">
+  <section>
+    <div id="store-items">
+      <div class="row">
+        <div class="col-sm-6">
+          <article>
+            <div class="iconColor customColorIconbg">
+              <i class="fa-solid fa-camera customColorIconbg"></i>
+            </div>
+            <h3 class="mt-2">Zero Hidden Costsy</h3>
+            <p>
+              Complete financial transparency with detailed cost breakdowns and
+              real-time budget tracking.
+            </p>
+          </article>
+        </div>
+        <div class="col-sm-6">
+          <article>
+            <div class="iconColor">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h3 class="mt-2">Secure & Compliant</h3>
+            <p>
+              Bank-grade security with RERA compliance and legal document
+              management.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <div class="sectionClass">
+
+      <h2 class="d-flex justify-content-center ">Start Building with Trust Today</h2>
+    </div>
+     <div class="class">
+      
+      <p class="d-flex justify-content-center italic-par text-center customPadding mb-3">Join thousands of satisfied buyers and builders who choose transparency, <br>reliability, and trust for their construction projects.</p>
+    </div>
+  <!-- <section id="follow">
+    
     <div id="left-bar">
       <img
         src="../../assets/images/3d-rendering-white-wood-living-room-near-bedroom-upstair.jpg"
@@ -139,46 +195,357 @@
       />
     </div>
     <div id="right-bar">
-      <h2 class="rightbar">Inquire us</h2>
-      <p class="rightbar">A wide range of products courteous staff.</p>
-      <form>
-        <div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            id="email"
-          />
-        </div>
-        <div>
-          <input type="submit" name="submit" value="Contact" id="submit-btn" />
-        </div>
-      </form>
+     
+      <div class="d-flex justify-content-center customPadding2  mt-3">
+
+      <a class="btn cstomButton btn-primary ml-1" tooltipPosition="top">
+             <i class="fa-solid fa-user"></i> &nbsp; Register Now
+           </a>
+            <a class="btn cstomButton btn-primary ml-1" tooltipPosition="top">
+             <i class="fa-solid fa-phone"></i> &nbsp; Talk to Sales
+           </a>
     </div>
-  </section>
+      <div class="d-flex justify-content-center customPadding2 mt-4 ">
+            <span class="mr-1 fs-6 fw-medium"><i class="fa-solid fa-circle-dot"></i> RERA Verified Builders</span>
+            <span class="mr-1 fs-6 fw-medium"> <i class="fa-solid fa-circle-dot"></i> Secure Payment Gateway</span>
+            <span class="fs-6 fw-medium"><i class="fa-solid fa-circle-dot"></i> 24/7 Customer Support</span>
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <p class="fs-6">No setup fees • Free trial available • Money-back guarantee</p>
+          </div>
+    </div>
+  </section> -->
 
   <section id="rates">
     <div id="rates-wrap">
       <div class="rates-block">
-        <h3>150+</h3>
-        <p>Total Properties</p>
+        <h3 class="text-primary">500+</h3>
+        <p>Happy Buyers</p>
       </div>
       <div class="rates-block">
-        <h3>2,500+</h3>
-        <p>Successful Bookings</p>
+        <h3 class="text-success">50+</h3>
+        <p>Verified Builders</p>
       </div>
       <div class="rates-block">
-        <h3>1,200+</h3>
-        <p>Happy Customers</p>
+        <h3 class="text-warning">4.8/5</h3>
+        <p>Average Rating</p>
       </div>
       <div class="rates-block">
-        <h3>25+</h3>
-        <p>Cities Covered</p>
+        <h3 class="">99%</h3>
+        <p>Satisfaction Rate</p>
       </div>
     </div>
   </section>
 
-  <section id="contacts">
+  <section>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="d-flex justify-content-center">
+            <div class="iconColor2">
+              <i class="fa-solid fa-camera"></i>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <h3 class="italic-par2">For Buyers</h3>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex justify-content-center">
+            <div class="iconColor2 customColorIconbg">
+              <i class="fa-solid fa-upload customColorIconbg"></i>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <h3 class="italic-par2 text-primary mb-4">For Builders</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <br /><br /><br />
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor">
+                    <i class="fa-solid fa-camera"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor2"> 01 </span>
+                    Search & Discover
+                  </h3>
+                  <p>
+                    Browse verified construction projects with real-time updates
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor">
+                    <i class="fa-solid fa-camera"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor2"> 02 </span>
+                    Inquire & Connect
+                  </h3>
+                  <p>
+                    Directly communicate with builders through our secure
+                    platform
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor">
+                    <i class="fa-solid fa-camera"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor2"> 03 </span>
+                    Track Progress
+                  </h3>
+                  <p>
+                    Monitor construction milestones with photos and timeline
+                    updates
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor">
+                    <i class="fa-solid fa-camera"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor2"> 04 </span>
+                    Review & Rate
+                  </h3>
+                  <p>
+                    Share your experience and help future buyers make informed
+                    decisions
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor">
+                    <i class="fa-solid fa-camera"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor2"> 05 </span>
+                    Secure Booking
+                  </h3>
+                  <p>
+                    Book with confidence using our secure payment and refund
+                    system
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-sm-6">
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor customColorIconbg">
+                    <i class="fa-solid fa-camera customColorIconbg"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor"> 01 </span> List Your Project
+                  </h3>
+                  <p>
+                    Create detailed listings with photos, plans, and pricing
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor customColorIconbg">
+                    <i class="fa-solid fa-camera customColorIconbg"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor"> 02 </span>
+                    Update Timeline
+                  </h3>
+                  <p>
+                    Keep buyers informed with real-time construction progress
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor customColorIconbg">
+                    <i class="fa-solid fa-camera customColorIconbg"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor"> 03 </span>
+                    Manage Leads
+                  </h3>
+                  <p>
+                    Communicate with potential buyers and answer their queries
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor customColorIconbg">
+                    <i class="fa-solid fa-camera customColorIconbg"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor">04 </span>
+                    Track Performance
+                  </h3>
+                  <p>
+                    Monitor listing views, inquiries, and conversion metrics
+                  </p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="">
+            <mat-card-content>
+              <div id="store-items">
+                <article>
+                  <div class="iconColor customColorIconbg">
+                    <i class="fa-solid fa-camera customColorIconbg"></i>
+                  </div>
+                  <h3 class="mt-2">
+                    <span class="numberColor"> 05 </span> Collect Payments
+                  </h3>
+                  <p>Receive secure payments through our trusted platform</p>
+                </article>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comments">
+    <h2>What Our Users Say</h2>
+    <p class="italic-par">
+      Real stories from builders and buyers
+      <br />
+      who trust <span class="customColor"> BrickNTrack </span> for transparent
+      construction
+    </p>
+
+    <div id="comments-items">
+      <article>
+        <img src="../../assets/images/17657469_5891012.jpg" />
+        <p>
+          "BrickNTrack gave me complete peace of mind during my home purchase. I
+          could track every construction milestone and communicate directly with
+          the builder. The transparency was incredible!"
+        </p>
+        <h3>Priya Sharma</h3>
+        <p>Homebuyer, Mumbai</p>
+      </article>
+      <article>
+        <img src="../../assets/images/17657469_5891012.jpg" />
+        <p>
+          "Since using BrickNTrack, our buyer satisfaction has increased by 40%.
+          The platform helps us maintain transparency and builds trust with our
+          customers from day one."
+        </p>
+        <h3>Rajesh Construction</h3>
+        <p>Builder, Bangalore</p>
+      </article>
+      <article>
+        <img src="../../assets/images/17657469_5891012.jpg" />
+        <p>
+          "We saved over ₹2 lakhs by tracking our construction costs in
+          real-time. The detailed progress updates and photo documentation made
+          us feel involved in every step."
+        </p>
+        <h3>Amit & Neha Patel</h3>
+        <p>Homebuyers, Pune</p>
+      </article>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="class">
+        <h3 class="text-center">
+          See <span class="customColor"> BrickNTrack </span> in Action
+        </h3>
+        <p class="italic-par text-center">
+          Watch how our platform transforms the construction experience for both
+          buyers and builders
+        </p>
+        <div class="text-center">
+          
+          <video class="w-50" src="../../assets/images/458245_Construction_Structure_3840x2160.mp4"></video>
+        </div>
+
+        <div class="text-center">
+          <a class="btn cstomButton btn-primary ml-1" tooltipPosition="top">
+            <i class="fa-solid fa-play"></i> &nbsp; Watch Full Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-3 cudtombg">
+    <div class="sectionClass">
+
+      <h2 class="d-flex justify-content-center ">Start Building with Trust Today</h2>
+    </div>
+    <div class="class">
+      
+      <p class="d-flex justify-content-center italic-par text-center customPadding mb-3">Join thousands of satisfied buyers and builders who choose transparency, <br>reliability, and trust for their construction projects.</p>
+    </div>
+    <div class="d-flex justify-content-center customPadding2  mt-3">
+
+      <a class="btn cstomButton btn-primary ml-1" tooltipPosition="top">
+             <i class="fa-solid fa-user"></i> &nbsp; Register Now
+           </a>
+            <a class="btn cstomButton btn-primary ml-1" tooltipPosition="top">
+             <i class="fa-solid fa-phone"></i> &nbsp; Talk to Sales
+           </a>
+    </div>
+          <div class="d-flex justify-content-center customPadding2 mt-4 ">
+            <span class="mr-1 fs-6 fw-medium"><i class="fa-solid fa-circle-dot"></i> RERA Verified Builders</span>
+            <span class="mr-1 fs-6 fw-medium"> <i class="fa-solid fa-circle-dot"></i> Secure Payment Gateway</span>
+            <span class="fs-6 fw-medium"><i class="fa-solid fa-circle-dot"></i> 24/7 Customer Support</span>
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <p class="fs-6">No setup fees • Free trial available • Money-back guarantee</p>
+          </div>
+  </section>
+
+  <!-- <section id="contacts">
     <div id="contacts-wrap">
       <div class="left-block">
         <p class="italic-par">Contact Us</p>
@@ -249,9 +616,85 @@
         </form>
       </div>
     </div>
-  </section>
+  </section> -->
 </main>
 
-<footer>
-  <p>© Copyright 2025 Construction - All Rights Reserved</p>
-</footer>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Colonne 1 - À propos -->
+                <div class="footer-column">
+                    <h3>BrickNTrack</h3>
+                    <p>Building trust in real estate through transparency, real-time tracking, and verified construction updates.</p>
+
+                    <div class="social-links">
+                        
+                      <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+           
+                    </div>
+                </div>
+
+                <!-- Colonne 2 - Liens rapides -->
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Listings</a></li>
+                        <li><a href="#">Contact</a></li>
+                       
+                    </ul>
+                </div>
+
+                <!-- Colonne 3 - Support -->
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">RERA Compliance</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 4 - Contact -->
+                <div class="footer-column">
+                    <h3>Contact</h3>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tech Hub, Bangalore
+Karnataka, India</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>support@brickntrack.com</span>
+                        </div>
+                    </div>
+
+                  
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy;
+                   2025  BrickNTrack. All rights reserved. Built with transparency in mind. 
+                </p>
+            </div>
+        </div>
+    </footer>
+
+

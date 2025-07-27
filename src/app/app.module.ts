@@ -20,6 +20,7 @@ import { AddPropertyComponent } from './add-property/add-property.component';
 import { CostMonitoringDashboardComponent } from './cost-monitoring-dashboard/cost-monitoring-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ProgressTrackerComponent } from './progress-tracker/progress-tracker.component';
+import { ExplorePropertiesComponent } from './explore-properties/explore-properties.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProgressTrackerComponent } from './progress-tracker/progress-tracker.co
     AddPropertyComponent,
     CostMonitoringDashboardComponent,
     LoginComponent,
-    ProgressTrackerComponent
+    ProgressTrackerComponent,
+    ExplorePropertiesComponent
   ],
   imports: [
     BrowserModule,
