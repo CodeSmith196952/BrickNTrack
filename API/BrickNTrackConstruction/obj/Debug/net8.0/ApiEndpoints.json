@@ -1,0 +1,208 @@
+[
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.BuilderController",
+    "Method": "AddUpdateBuilderAsync",
+    "RelativePath": "api/Builder/addUpdateBuilder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BrickNTrack.Doman.Model.BuilderMasterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.BuilderController",
+    "Method": "GetAllActiveBuilderAsync",
+    "RelativePath": "api/Builder/getAllActiveBuilder",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BrickNTrack.Doman.Model.BuilderMasterResponse, BrickNTrack.Doman, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.BuilderController",
+    "Method": "GetBuilderByIdAsync",
+    "RelativePath": "api/Builder/getBuilderById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "builderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BrickNTrack.Doman.Model.BuilderMasterResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.BuilderController",
+    "Method": "GetAllBuilderAsync",
+    "RelativePath": "api/Builder/setAllBuilder",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BrickNTrack.Doman.Model.BuilderMasterResponse, BrickNTrack.Doman, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.ProjectController",
+    "Method": "AddUpdateProjectAsync",
+    "RelativePath": "api/Project/addUpdateProject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BrickNTrack.Doman.Model.ProjectMasterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.ProjectController",
+    "Method": "GetAllActiveProjectAsync",
+    "RelativePath": "api/Project/getAllActiveProject",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BrickNTrack.Doman.Model.ProjectMasterResponse, BrickNTrack.Doman, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.ProjectController",
+    "Method": "GetAllProjectAsync",
+    "RelativePath": "api/Project/getAllProject",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BrickNTrack.Doman.Model.ProjectMasterResponse, BrickNTrack.Doman, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.ProjectController",
+    "Method": "GetProjectbyIdAsync",
+    "RelativePath": "api/Project/getProjectbyId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BrickNTrack.Doman.Model.ProjectMasterResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.UserManagerController",
+    "Method": "RegisterUser",
+    "RelativePath": "api/UserManager/AddUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BrickNTrack.Doman.Model.UserManagerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.UserManagerController",
+    "Method": "Login",
+    "RelativePath": "api/UserManager/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BrickNTrack.Doman.Model.LoginRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BrickNTrackConstruction.Controllers.BrickNTrackController",
+    "Method": "Get",
+    "RelativePath": "BrickNTrack",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
