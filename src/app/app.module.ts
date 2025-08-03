@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { ProgressTrackerComponent } from './progress-tracker/progress-tracker.component';
 import { ExplorePropertiesComponent } from './explore-properties/explore-properties.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { ExplorePropertiesComponent } from './explore-properties/explore-propert
     CostMonitoringDashboardComponent,
     LoginComponent,
     ProgressTrackerComponent,
-    ExplorePropertiesComponent
+    ExplorePropertiesComponent,
+    
   ],
   imports: [
     BrowserModule,

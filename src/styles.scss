@@ -40,7 +40,15 @@
 }
 
 .ltr {
-  background: #fff;
+  background-image: url(./assets/images/9b3e44eb-a187-407f-9a3f-48835cfb7d71.jpg);
+  background-size: cover;
+    background-repeat: no-repeat;
+}
+.mat-drawer-container
+
+ {
+    background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .p-checkbox-label {
@@ -312,9 +320,7 @@ input[type="file"]::-webkit-file-upload-button {
   background: transparent !important;
 }
 
-.navbar {
-  background: linear-gradient(60deg, #001323, #6da6c7) !important;
-}
+
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   background: transparent !important;

@@ -9,6 +9,11 @@
 //   background-color: $body-color;
 // }
 
+.mat-drawer {
+  background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.87);
+}
+
 a:hover,
 a:focus,
 a {

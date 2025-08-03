@@ -1,13 +1,34 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+  query,
+  stagger
+} from '@angular/animations';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  styleUrls: ['./landing-page.component.scss'],
+    animations: [
+    trigger('listAnimation', [
+      transition(':enter', []), // Disable default enter
+      transition('* => visible', [
+        query('article', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger(100, [
+            animate('500ms ease-out', style({ opacity: 1, transform: 'none' }))
+          ])
+        ])
+      ])
+    ])
+  ]
 })
 export class LandingPageComponent implements OnInit,AfterViewInit {
  @ViewChild('ratesSection') ratesSection!: ElementRef;
-
+ @ViewChild('storeSection', { static: true }) storeSection!: ElementRef;
+  animationState = 'hidden';
   // Target values
   targetValues = {
     projectCount: 500,
@@ -22,7 +43,8 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
   transparencyScore: number = 0;
   transparencyScore2: number = 0;
 
-
+isMenuOpen = false;
+showPopup = true;
    happyBuyers: number = 0;
   verifiedBuilders: number = 0;
   averageRating: number = 0;
@@ -32,14 +54,42 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
   constructor() { }
 
   ngOnInit(): void {
+      // Auto close after 5 seconds
+    // setTimeout(() => {
+    //   this.showPopup = false;
+    // }, 5000);
   }
   ngAfterViewInit(): void {
+
+    
     this.checkIfInView();
+    
+
+ const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        this.animationState = 'visible';
+        observer.disconnect(); // Trigger only once
+      }
+    }, { threshold: 0.3 }); // Adjust threshold as needed
+
+    observer.observe(this.storeSection.nativeElement);
+  
+    
   }
 
+
+
+  
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.checkIfInView();
+  }
+    toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+    closePopup(): void {
+    this.showPopup = false;
   }
 
   checkIfInView() {
