@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./explore-properties.component.scss']
 })
 export class ExplorePropertiesComponent implements OnInit {
-
+isMenuOpen = false;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+   toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }

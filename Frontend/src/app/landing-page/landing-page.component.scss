@@ -499,7 +499,7 @@ h1 {
 }
 .rates-wrap {
 	width: 100%;
-	margin: 0 auto;
+	// margin: 0 auto;
 	max-width: 1140px;
 	justify-content: end;
 	padding: 15px 0;
@@ -527,6 +527,7 @@ h1 {
 }
 .mergepara{
     font-size: 25px !important;
+    color: #fff !important;
 }
 
 #vimeo h2 {
@@ -1735,4 +1736,30 @@ article.customShadow:hover i {
 }
 .customP{
     padding-left: 15px;
+}
+
+.CustomRates {
+  position: relative;
+  background-image: url('../../assets/images/view-luxurious-hotel-interior-space.jpg'); /* Replace with your actual image path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Creates parallax effect */
+
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.customeRateswrap {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 2rem;
+}
+
+#customeRatesblock  {
+  text-align: center;
+  flex: 1 1 200px;
 }

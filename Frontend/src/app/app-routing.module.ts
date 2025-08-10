@@ -25,32 +25,36 @@ import { CostMonitoringDashboardComponent } from "./cost-monitoring-dashboard/co
 import { LoginComponent } from "./login/login.component";
 import { ProgressTrackerComponent } from "./progress-tracker/progress-tracker.component";
 import { ExplorePropertiesComponent } from "./explore-properties/explore-properties.component";
+import { ContactUsComponent } from "./contact-us/contact-us.component";
+import { PropertyInformationComponent } from "./property-information/property-information.component";
+import { UserRegistrationComponent } from "./Admin-Role/user-registration/user-registration.component";
+import { AuthGuard } from "./service/auth-guard.service";
+import { EditProfileComponent } from "./edit-profile/edit-profile.component";
+import { BuilderMasterComponent } from "./Master/builder-master/builder-master.component";
+import { ProjectMasterComponent } from "./Master/project-master/project-master.component";
+
 
 const routes: Routes = [
   { path: "", redirectTo: "/landingPage", pathMatch: "full" },
   { path: "landingPage", component: LandingPageComponent },
   { path: "exploreProperties", component: ExplorePropertiesComponent },
   { path: "login", component: LoginComponent },
+  { path: "contactUs", component: ContactUsComponent },
+  { path: "propertyInformation", component: PropertyInformationComponent },
+
   {
     path: "",
     component: FullComponent,
     children: [
-      { path: "documents", component: DashboardComponent },
-      { path: "property", component: AddPropertyComponent },
-      { path: "costMonitoringDashboard", component: CostMonitoringDashboardComponent },
-      { path: "progressTracker", component: ProgressTrackerComponent },
-      { path: "grid-list", component: GridListComponent },
-      { path: "menu", component: MenuComponent },
-      { path: "tabs", component: TabsComponent },
-      { path: "expansion", component: ExpansionComponent },
-      { path: "chips", component: ChipsComponent },
-      { path: "progress", component: ProgressComponent },
-      { path: "toolbar", component: ToolbarComponent },
-      { path: "progress-snipper", component: ProgressSnipperComponent },
-      { path: "snackbar", component: SnackbarComponent },
-      { path: "slider", component: SliderComponent },
-      { path: "slide-toggle", component: SlideToggleComponent },
-      { path: "tooltip", component: TooltipsComponent },
+      { path: "documents", component: DashboardComponent , canActivate: [AuthGuard]},
+      { path: "property", component: AddPropertyComponent , canActivate: [AuthGuard]},
+      { path: "costMonitoringDashboard", component: CostMonitoringDashboardComponent , canActivate: [AuthGuard]},
+      { path: "progressTracker", component: ProgressTrackerComponent , canActivate: [AuthGuard]},
+      { path: "userRegister", component: UserRegistrationComponent , canActivate: [AuthGuard]},
+      { path: "editProfile", component: EditProfileComponent , canActivate: [AuthGuard]},
+      { path: "buildermaster", component: BuilderMasterComponent , canActivate: [AuthGuard]},
+      { path: "projectmaster", component: ProjectMasterComponent , canActivate: [AuthGuard]},
+     
     ],
   },
 

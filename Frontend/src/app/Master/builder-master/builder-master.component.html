@@ -1,0 +1,317 @@
+<p-toast position="bottom-right"></p-toast>
+<section>
+  <div class="py-2">
+    <h2 class="title-one">
+      <i class="fa-solid fa-building mx-2"></i> Builder Master
+    </h2>
+  </div>
+
+  <div class="mb-3">
+    <mat-card>
+      <mat-card-content>
+        <p-table
+          #dtPallet
+          [value]="builderList"
+          selectionMode="multiple"
+          styleClass="p-datatable-gridlines p-datatable-striped"
+          responsiveLayout="scroll"
+          [rows]="10"
+          [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['palletCode', 'palletName']"
+        >
+          <ng-template pTemplate="caption">
+            <div class="d-flex justify-content-end align-items-center">
+            
+              <div class="d-flex">
+                <span>
+                  <input
+                    type="text"
+                    class="form-control form-control-search"
+                    placeholder="Search"
+                    (input)="
+                      dtPallet.filterGlobal(
+                        $any($event.target).value,
+                        'contains'
+                      )
+                    "
+                  />
+                </span>
+                <a (click)="openBuilderDialog()" class="btn btn-primary ml-1" title="Add Pallet">
+                  <i class="pi pi-plus"></i>
+                </a>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Sr No.</th>
+              <th pSortableColumn="palletCode">Name</th>
+              <th pSortableColumn="palletCode">Owner</th>
+              <th pSortableColumn="palletCode">Contact 1</th>
+              <th pSortableColumn="palletCode">Contact 2</th>
+              <th pSortableColumn="palletName">Tag Line</th>
+              <th pSortableColumn="palletName">Description</th>
+              <th pSortableColumn="palletName">Office Address</th>
+              <th pSortableColumn="palletName">Email Address</th>
+              <th pSortableColumn="palletName">GST No</th>
+              <!-- <th>Status</th> -->
+              <th>Action</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-builder let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ builder.name }}</td>
+              <td>{{ builder.owner }}</td>
+              <td>{{ builder.contact1 }}</td>
+              <td>{{ builder.contact2 }}</td>
+              <td>{{ builder.tagLine }}</td>
+              <td>{{ builder.description }}</td>    
+              <td>{{ builder.officeAddress }}</td>
+              <td>{{ builder.emailAddress }}</td>
+              <td>{{ builder.gstNo }}</td>
+              <!-- <td>Status</td> -->
+              <td>  <i class="fa fa-edit" (click)="editBuilder(builder)" style="cursor: pointer" title="Edit Builder"></i></td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">No Builder found.</td>
+              <td>
+                <i
+                  class="fa fa-edit"
+                  style="cursor: pointer"
+                  title="Edit Pallet"
+                ></i>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">No pallets found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<p-dialog
+  header="Builder Details"
+  [(visible)]="displayBuilderDialog"
+  [modal]="true"
+  [style]="{ width: '30vw' }"
+>
+  <form [formGroup]="builderForm" autocomplete="off">
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <label>Name<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['name'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['name'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['name'].errors['required']"
+            >Name is required</small
+          >
+        </div>
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Contact 1<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="contact1"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['contact1'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['contact1'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['contact1'].errors['required']"
+            >Contact 1 is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Contact 2<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="contact2"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['contact2'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['contact2'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['contact2'].errors['required']"
+            >Contact 2 is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Description<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['description'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['description'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['description'].errors['required']"
+            >Description is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Email<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="email"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['email'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['email'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['email'].errors['required']"
+            >Email is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Office Address<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="officeAddress"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['officeAddress'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['officeAddress'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['officeAddress'].errors['required']"
+            >Office Address is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>GST No<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="gstNo"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['gstNo'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['gstNo'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['gstNo'].errors['required']"
+            >GST No is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Tag Line<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="tagLine"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['tagLine'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['tagLine'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['tagLine'].errors['required']"
+            >Tag Line is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>Owner<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="owner"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['owner'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['owner'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['owner'].errors['required']"
+            >Owner is required</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="d-flex">
+      <div class="form-check Active">
+        <input
+          class="form-check-input"
+          type="radio"
+          [value]="true"
+          id="Active"
+          formControlName="IsActive"
+        />
+        <label for="Active">Active</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          [value]="false"
+          id="InActive"
+          formControlName="IsActive"
+        />
+        <label for="InActive">InActive</label>
+      </div>
+    </div> -->
+  </form>
+
+  <div class="model-footer text-end">
+
+     <button class="btn btn-primary m-2" (click)="saveBuilder()">Submit</button>
+    <button class="btn btn-secondary m-2" (click)="ResetDialog()" *ngIf="ResetVisible">Reset</button>
+    <button class="btn btn-danger m-2" (click)="closeBuilderDialog()">Close</button>
+  </div>
+</p-dialog>

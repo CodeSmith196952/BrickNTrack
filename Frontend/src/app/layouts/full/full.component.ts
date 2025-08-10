@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface sidebarMenu {
   link: string;
   icon: string;
   menu: string;
+  children?: sidebarMenu[];
+   expanded?: boolean;
 }
 
 @Component({
@@ -24,20 +27,54 @@ export class FullComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver,    private router: Router,) { }
 
   routerActive: string = "activelink";
 
   sidebarMenu: sidebarMenu[] = [
+    
     {
       link: "/costMonitoringDashboard",
       icon: "layout",
       menu: "Dashboard",
     },
     {
+      icon: "user",
+      menu: "Admin Role",
+          expanded: false,
+      children: [
+        {
+          link: "/userRegister",
+          icon: "user",
+          menu: "User Register"
+        },
+     
+      ],
+      link: ''
+    },
+    {
       link: "/documents",
-      icon: "home",
+      icon: "folder",
       menu: "Document",
+    },
+        {
+      icon: "",
+      menu: "Master",
+          expanded: false,
+      children: [
+        {
+          link: "/buildermaster",
+          icon: "user",
+          menu: "Builder Master"
+        },
+        {
+          link: "/projectmaster",
+          icon: "user",
+          menu: "Project Master"
+        },
+     
+      ],
+      link: ''
     },
     {
       link: "/property",
@@ -49,6 +86,8 @@ export class FullComponent {
       icon: "info",
       menu: "Progress Tracker",
     },
+
+
     // {
     //   link: "/grid-list",
     //   icon: "file-text",
@@ -115,5 +154,12 @@ export class FullComponent {
     //   menu: "Slide Toggle",
     // },
   ]
+
+  Logout() {
+    window.sessionStorage.clear();
+   
+    this.router.navigate(['./login']);
+    // window.location.reload();
+  }
 
 }

@@ -75,7 +75,10 @@
 .p-ripple {
   padding-right: 0rem !important;
 }
-
+.img-fluid {
+  background-size: cover;
+border-radius: 10px;
+}
 .p-menubar
   .p-menubar-root-list
   > .p-menuitem
@@ -427,18 +430,18 @@ input[type="file"]::-webkit-file-upload-button {
   font-size: 13px !important;
 }
 
-.card-header {
-  border-radius: 3px !important;
-  margin-top: -20px !important;
-  color: rgb(255, 255, 255) !important;
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
-    0 7px 10px -5px rgba(244, 67, 54, 0.4) !important;
-  background: linear-gradient(60deg, #013560, #1075bc) !important;
-  margin: -25px 17px !important;
-  z-index: 1 !important;
-  position: relative !important;
-  border-bottom: none !important;
-}
+// .card-header {
+//   border-radius: 3px !important;
+//   margin-top: -20px !important;
+//   color: rgb(255, 255, 255) !important;
+//   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+//     0 7px 10px -5px rgba(244, 67, 54, 0.4) !important;
+//   background: linear-gradient(60deg, #013560, #1075bc) !important;
+//   margin: -25px 17px !important;
+//   z-index: 1 !important;
+//   position: relative !important;
+//   border-bottom: none !important;
+// }
 .p-inputnumber-buttons-horizontal .p-inputnumber-input {
   text-align: center;
 }
