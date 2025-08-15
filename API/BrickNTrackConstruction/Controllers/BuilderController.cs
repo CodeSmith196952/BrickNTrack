@@ -31,7 +31,7 @@ namespace BrickNTrackConstruction.Controllers
                 return NotFound(result);
         }
 
-        [Route("setAllBuilder")]
+        [Route("getAllBuilder")]
         [HttpGet]
         public async Task<List<BuilderMasterResponse>> GetAllBuilderAsync()
         {

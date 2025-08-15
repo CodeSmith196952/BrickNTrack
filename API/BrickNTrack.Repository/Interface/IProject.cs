@@ -9,5 +9,10 @@ namespace BrickNTrack.Repository.Interface
         Task<List<ProjectMasterResponse>> GetAllActiveProjectAsync();
         Task<ProjectMasterResponse> GetProjectbyIdAsync(int projectId);
         Task<ResultModel> AddUpdateProjectAsync(ProjectMasterRequest request, string username);
+        Task<ResultModel> AddUpdateProjectDataFileAsync(ProjectDataPathRequest request, string userName);
+        Task<ProjectDataPathResponse> GetProjectDataDetailByIdAsync(int projectDataPathId);
+        Task<List<ProjectDataPathResponse>> GetAllActiveProjectDataDetailAsync();
+        Task<List<ProjectDataPathResponse>> GetAllProjectDataDetailAsync();
+        Task<List<ProjectDataPathResponse>> GetProjectDataDetailByProjectIdAsync(int projectId);
     }
 }

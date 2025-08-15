@@ -1,0 +1,17 @@
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Business.deps.json
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Business.dll
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Business.pdb
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Doman.dll
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Repository.dll
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Doman.pdb
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\bin\Debug\net8.0\BrickNTrack.Repository.pdb
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.csproj.AssemblyReference.cache
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.GeneratedMSBuildEditorConfig.editorconfig
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.AssemblyInfoInputs.cache
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.AssemblyInfo.cs
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.csproj.CoreCompileInputs.cache
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTr.4EC5D67C.Up2Date
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.dll
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\refint\BrickNTrack.Business.dll
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\BrickNTrack.Business.pdb
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Business\obj\Debug\net8.0\ref\BrickNTrack.Business.dll

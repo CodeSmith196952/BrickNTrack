@@ -14,7 +14,7 @@
         public int PlannedDuration { get; set; }
         public DateTime? ActualStartDate { get; set; }
         public DateTime? ActualTargetDate { get; set; }
-        public DateTime? ActualDuration { get; set; }
+        public int ActualDuration { get; set; }
         public ProjectMaster ProjectMaster { get; set; }
         public ICollection<ProjectExpenses> ProjectExpenses { get; set; }
     }

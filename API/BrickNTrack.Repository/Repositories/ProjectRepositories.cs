@@ -91,7 +91,7 @@ namespace BrickNTrack.Repository.Repositories
                     _context.ProjectMasters.Add(project);
                     await _context.SaveChangesAsync();
                     retValue.StatusCode = ResultCode.SuccessfullyCreated;
-                    retValue.ErrorMessage = "Proporty added successfully";
+                    retValue.ResponseMessage = "Proporty added successfully";
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace BrickNTrack.Repository.Repositories
                         await _context.SaveChangesAsync();
 
                         retValue.StatusCode = ResultCode.SuccessfullyUpdated;
-                        retValue.ErrorMessage = "Proporty updated successfully";
+                        retValue.ResponseMessage = "Proporty updated successfully";
                     }
                     else
                     {
@@ -148,6 +148,120 @@ namespace BrickNTrack.Repository.Repositories
                 retValue.StatusCode = ResultCode.Invalid;
             }
             return retValue;
+        }
+
+        public async Task<ResultModel> AddUpdateProjectDataFileAsync(ProjectDataPathRequest request, string userName)
+        {
+            ResultModel retValue = new ResultModel();
+            try
+            {
+                var projectDetail = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
+                if (projectDetail != null)
+                {
+                    retValue.StatusCode = ResultCode.RecordNotFound;
+                    retValue.ErrorMessage = "Property not found";
+                    return retValue;
+                }
+                if (request.ProjectDataPathId == 0)
+                {
+                    request.CreatedBy = userName;
+                    request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    var project = _mapper.Map<ProjectDataPath>(request);
+                    _context.ProjectDataPaths.Add(project);
+                    await _context.SaveChangesAsync();
+                    retValue.StatusCode = ResultCode.SuccessfullyCreated;
+                    retValue.ResponseMessage = "Proporty data added successfully";
+                }
+                else
+                {
+                    var projectData = await _context.ProjectDataPaths.FirstOrDefaultAsync(x => x.ProjectDataPathId == request.ProjectDataPathId);
+                    if (projectData != null)
+                    {
+
+                        if (projectData.DataName != request.DataName)
+                            projectData.DataName = request.DataName;
+                        if (projectData.Category != request.Category)
+                            projectData.Category = request.Category;
+                        if (projectData.Path != request.Path)
+                            projectData.Path = request.Path;
+                        if (projectData.FileType != request.FileType)
+                            projectData.FileType = request.FileType;
+                        if (projectData.ProjectId != request.ProjectId)
+                            projectData.ProjectId = request.ProjectId;
+                        projectData.IsActive = request.IsActive;
+                        projectData.ModifiedBy = userName;
+                        projectData.ModifiedDate = CommonHelper.GetISTTime(DateTime.Now);
+                        _context.ProjectDataPaths.Update(projectData);
+                        await _context.SaveChangesAsync();
+
+                        retValue.StatusCode = ResultCode.SuccessfullyUpdated;
+                        retValue.ResponseMessage = "Proporty data updated successfully";
+                    }
+                    else
+                    {
+                        retValue.StatusCode = ResultCode.RecordNotFound;
+                        retValue.ErrorMessage = "Record not found";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                retValue.ErrorMessage = ex.ToString();
+                retValue.StatusCode = ResultCode.Invalid;
+            }
+            return retValue;
+        }
+
+        public async Task<List<ProjectDataPathResponse>> GetAllProjectDataDetailAsync()
+        {
+            try
+            {
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).ToListAsync();
+                return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ProjectDataPathResponse>> GetAllActiveProjectDataDetailAsync()
+        {
+            try
+            {
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).Where(x => x.IsActive == true).ToListAsync();
+                return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<ProjectDataPathResponse> GetProjectDataDetailByIdAsync(int projectDataPathId)
+        {
+            try
+            {
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).FirstOrDefaultAsync(x => x.ProjectDataPathId == projectDataPathId);
+                return _mapper.Map<ProjectDataPathResponse>(projectData);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ProjectDataPathResponse>> GetProjectDataDetailByProjectIdAsync(int projectId)
+        {
+            try
+            {
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).Where(x => x.IsActive == true && x.ProjectId == projectId).ToListAsync();
+                return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

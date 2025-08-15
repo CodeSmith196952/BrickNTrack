@@ -1,5 +1,6 @@
 ﻿using BrickNTrack.Doman.Model;
 using BrickNTrack.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -21,8 +22,8 @@ namespace BrickNTrackConstruction.Controllers
         {
             try
             {
-                var (token, refreshToken) = await _userManager.LoginAsync(request);
-                return Ok(new { token, refreshToken });
+                var result = await _userManager.LoginAsync(request);
+                return Ok(result);
             }
             catch (UnauthorizedAccessException e)
             {
@@ -38,6 +39,34 @@ namespace BrickNTrackConstruction.Controllers
             request.CreatedDate = DateTime.Now;
             request.CreatedBy = userName;
             var result = await _userManager.RegistereUserAsync(request);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("getAllActiveUserDetail")]
+        public async Task<List<UserManagerResponse>> GetAllActiveUserDetailAsyncfdd()
+        {
+            return await _userManager.GetAllActiveUserDetailAsync();
+        }
+
+        [Authorize]
+        [HttpGet("getAllUserDetail")]
+        public async Task<List<UserManagerResponse>> GetAllUserDetailAsync()
+        {
+            return await _userManager.GetAllUserDetailAsync();
+        }
+
+        [Authorize]
+        [HttpGet("getUserDetailById")]
+        public async Task<UserManagerResponse> GetUserDetailByIdAsync([FromQuery] int userId)
+        {
+            return await _userManager.GetUserDetailByIdAsync(userId);
+        }
+
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshTokenAsync([FromQuery] RefreshRequestDTO request)
+        {
+            var result = await _userManager.RefreshTokenAsync(request);
             return Ok(result);
         }
 

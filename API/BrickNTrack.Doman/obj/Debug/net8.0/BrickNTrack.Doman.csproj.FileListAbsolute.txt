@@ -1,6 +1,7 @@
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\bin\Debug\net8.0\BrickNTrack.Doman.deps.json
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\bin\Debug\net8.0\BrickNTrack.Doman.dll
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\bin\Debug\net8.0\BrickNTrack.Doman.pdb
+D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\obj\Debug\net8.0\BrickNTrack.Doman.csproj.AssemblyReference.cache
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\obj\Debug\net8.0\BrickNTrack.Doman.GeneratedMSBuildEditorConfig.editorconfig
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\obj\Debug\net8.0\BrickNTrack.Doman.AssemblyInfoInputs.cache
 D:\CodeSmith\BrickNTrackConstructionProject\BrickNTrackConstruction\BrickNTrack.Doman\obj\Debug\net8.0\BrickNTrack.Doman.AssemblyInfo.cs

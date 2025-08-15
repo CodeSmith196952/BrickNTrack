@@ -1,40 +1,44 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj": {}
+    "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj": {}
   },
   "projects": {
-    "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
+    "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\BrickNTrack.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj",
-        "projectName": "BrickNTrack.Doman",
-        "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj",
-        "packagesPath": "C:\\Users\\Pankaj\\.nuget\\packages\\",
-        "outputPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\obj\\",
+        "projectUniqueName": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\BrickNTrack.Business.csproj",
+        "projectName": "BrickNTrack.Business",
+        "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\BrickNTrack.Business.csproj",
+        "packagesPath": "C:\\Users\\iron2\\.nuget\\packages\\",
+        "outputPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Pankaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\iron2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
+              },
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -72,39 +76,107 @@
         }
       }
     },
-    "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj": {
+    "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
-        "projectName": "BrickNTrack.Repository",
-        "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
-        "packagesPath": "C:\\Users\\Pankaj\\.nuget\\packages\\",
-        "outputPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\obj\\",
+        "projectUniqueName": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj",
+        "projectName": "BrickNTrack.Doman",
+        "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj",
+        "packagesPath": "C:\\Users\\iron2\\.nuget\\packages\\",
+        "outputPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Pankaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\iron2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
+        "projectName": "BrickNTrack.Repository",
+        "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
+        "packagesPath": "C:\\Users\\iron2\\.nuget\\packages\\",
+        "outputPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\iron2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
-                "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
               }
             }
           }
@@ -202,42 +274,42 @@
         }
       }
     },
-    "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj": {
+    "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj",
+        "projectUniqueName": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj",
         "projectName": "BrickNTrackConstruction",
-        "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj",
-        "packagesPath": "C:\\Users\\Pankaj\\.nuget\\packages\\",
-        "outputPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\obj\\",
+        "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrackConstruction\\BrickNTrackConstruction.csproj",
+        "packagesPath": "C:\\Users\\iron2\\.nuget\\packages\\",
+        "outputPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrackConstruction\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Pankaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\iron2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
-                "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\BrickNTrack.Business.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Business\\BrickNTrack.Business.csproj"
               },
-              "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj": {
-                "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj"
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
+              },
+              "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj": {
+                "projectPath": "C:\\SAHIL\\BrickNTrack\\API\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj"
               }
             }
           }

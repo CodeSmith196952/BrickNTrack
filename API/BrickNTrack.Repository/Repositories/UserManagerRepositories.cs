@@ -21,15 +21,15 @@ namespace BrickNTrack.Repository.Repositories
         private readonly BrickNTrackContext _context;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
-        public UserManagerRepositories(BrickNTrackContext context, 
-            IConfiguration configuration, IMapper mapper) 
+        public UserManagerRepositories(BrickNTrackContext context,
+            IConfiguration configuration, IMapper mapper)
         {
             _context = context;
             _config = configuration;
             _mapper = mapper;
         }
 
-        public async Task<(string token, string refreshToken)> LoginAsync(LoginRequestDTO request)
+        public async Task<UserTokenDto> LoginAsync(LoginRequestDTO request)
         {
             var user = await _context.UserManager.FirstOrDefaultAsync(x =>
                 x.UserName == request.Username);
@@ -48,10 +48,19 @@ namespace BrickNTrack.Repository.Repositories
                 UserId = user.Id
             };
 
+            UserTokenDto response = new UserTokenDto();
+            response.UserName = user.UserName;
+            response.FirstName = user.FirstName;
+            response.LastName = user.LastName;
+            response.Email = user.Email;
+            response.MobileNumber = user.MobileNumber;
+            response.JwtToken = token;
+            response.RefreshToken = refreshToken;
+
             _context.Tokens.Add(userToken);
             await _context.SaveChangesAsync();
 
-            return (token, refreshToken);
+            return (response);
         }
 
         public async Task<(string token, string refreshToken)> RefreshTokenAsync(RefreshRequestDTO request)
@@ -135,7 +144,7 @@ namespace BrickNTrack.Repository.Repositories
                 else
                 {
                     var duplicateUser = await _context.UserManager.FirstOrDefaultAsync(x => x.UserName == request.UserName);
-                    if (duplicateUser != null) 
+                    if (duplicateUser != null)
                     {
                         retValue.StatusCode = ResultCode.DuplicateRecord;
                         retValue.ErrorMessage = "Username is already registered";
@@ -155,6 +164,45 @@ namespace BrickNTrack.Repository.Repositories
                 retValue.ErrorMessage = ex.ToString();
             }
             return retValue;
+        }
+
+        public async Task<List<UserManagerResponse>> GetAllActiveUserDetailAsync()
+        {
+            try
+            {
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.IsActive == true).ToListAsync();
+                return _mapper.Map<List<UserManagerResponse>>(users);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<UserManagerResponse>> GetAllUserDetailAsync()
+        {
+            try
+            {
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).ToListAsync();
+                return _mapper.Map<List<UserManagerResponse>>(users);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<UserManagerResponse> GetUserDetailByIdAsync(int userId)
+        {
+            try
+            {
+                var user = await _context.UserManager.Include(x => x.BuilderMaster).FirstOrDefaultAsync(x => x.Id == userId);
+                return _mapper.Map<UserManagerResponse>(user);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

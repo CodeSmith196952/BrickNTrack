@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BrickNTrack.Business\BrickNTrack.Business.csproj" />
     <ProjectReference Include="..\BrickNTrack.Doman\BrickNTrack.Doman.csproj" />
     <ProjectReference Include="..\BrickNTrack.Repository\BrickNTrack.Repository.csproj" />
   </ItemGroup>

@@ -1,4 +1,6 @@
 ﻿using BrickNTrack.Doman.CommonModel;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BrickNTrack.Doman.Model
 {
@@ -19,5 +21,8 @@ namespace BrickNTrack.Doman.Model
         public double Budget { get; set; }
         public string Status { get; set; }
         public int BuilderId { get; set; }
+
+        [NotMapped]
+        public IFormFile? ProfileImageFile { get; set; }
     }
 }

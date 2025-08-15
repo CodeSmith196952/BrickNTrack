@@ -20,7 +20,7 @@ namespace BrickNTrack.Repository.EntityConfiguration
             builder.HasOne(x => x.BuilderMaster)
                 .WithMany(x => x.UserManager)
                 .HasForeignKey(x => x.BuilderId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict).IsRequired(false);
 
             builder.Property(x => x.CreatedBy).IsRequired(false).HasMaxLength(30);
             builder.Property(x => x.ModifiedBy).IsRequired(false).HasMaxLength(30);

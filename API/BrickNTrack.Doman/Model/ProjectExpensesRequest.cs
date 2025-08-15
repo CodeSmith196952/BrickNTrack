@@ -1,6 +1,8 @@
-﻿namespace BrickNTrack.Doman.Model
+﻿using BrickNTrack.Doman.CommonModel;
+
+namespace BrickNTrack.Doman.Model
 {
-    public class ProjectExpensesRequest
+    public class ProjectExpensesRequest : CommonModelEntity
     {
         public int ExpenseId { get; set; }
         public string Details { get; set; }

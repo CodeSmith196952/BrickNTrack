@@ -14,5 +14,18 @@
             public static int DuplicateRecord = 409;
             public static int RecordNotFound = 404;
         }
+
+        public static class  MilestoneStatus
+        {
+            public static string Pending = "Pending";
+            public static string WIP = "WIP";
+            public static string Completed = "Completed";
+        }
+
+        public static class BudgetStatusConstant
+        {
+            public static string OverBudget = "Over budget";
+            public static string InBudget = "In budget";
+        }
     }
 }

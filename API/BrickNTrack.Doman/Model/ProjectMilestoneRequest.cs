@@ -1,6 +1,8 @@
-﻿namespace BrickNTrack.Doman.Model
+﻿using BrickNTrack.Doman.CommonModel;
+
+namespace BrickNTrack.Doman.Model
 {
-    public class ProjectMilestoneRequest
+    public class ProjectMilestoneRequest : CommonModelEntity
     {
         public int MilestoneId { get; set; }
         public int ProjectId { get; set; }
@@ -12,8 +14,5 @@
         public DateTime? PlannedStartDate { get; set; }
         public DateTime? PlannedTargetDate { get; set; }
         public int PlannedDuration { get; set; }
-        public DateTime? ActualStartDate { get; set; }
-        public DateTime? ActualTargetDate { get; set; }
-        public DateTime? ActualDuration { get; set; }
     }
 }

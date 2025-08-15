@@ -1,613 +1,299 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\",
+  "WorkspaceRootPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\repositories\\expensesrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\expensesrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\controllers\\usermanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\usermanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\controllers\\expensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\expensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\controllers\\milestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\milestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\interface\\iexpenses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\interface\\iexpenses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\repositories\\projectmilestonerepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\projectmilestonerepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\controllers\\buildercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\buildercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.doman\\model\\projectmilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectmilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\controllers\\brickntrackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\brickntrackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\usermanagerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\usermanagerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\projectmilestoneconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\projectmilestoneconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\projectmasterconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\projectmasterconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\projectexpensesconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\projectexpensesconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\projectdatapathconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\projectdatapathconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entityconfiguration\\buildermasterconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entityconfiguration\\buildermasterconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\commonentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\commonentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\repositories\\projectrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\repositories\\projectrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\projectrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\repositories\\builderrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\repositories\\builderrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\builderrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\repositories\\usermanagerrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\usermanagerrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.doman\\commonmodel\\applicationconstant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\commonmodel\\applicationconstant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\interface\\iproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\interface\\iproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectmasterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectmasterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\interface\\ibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\interface\\ibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\buildermaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\buildermaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\repositories\\projectmasterrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\repositories\\projectmasterrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\core\\helper\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\core\\helper\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectmasterresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectmasterresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectexpensesresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectexpensesresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectexpensesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectexpensesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\projectexpenses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\projectexpenses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\projectmilestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\projectmilestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectmilestoneresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.doman\\model\\projectmilestoneresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectmilestoneresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\projectdatapathresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectdatapathresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.repository\\entity\\projectmilestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\projectmilestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\projectdatapath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\projectdatapath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\core\\helper\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\core\\helper\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\projectmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\projectmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E2F5C65B-EFFC-4F32-9FF9-9EE019A038A1}|BrickNTrack.Business\\BrickNTrack.Business.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.business\\businesslogic\\projectmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E2F5C65B-EFFC-4F32-9FF9-9EE019A038A1}|BrickNTrack.Business\\BrickNTrack.Business.csproj|solutionrelative:brickntrack.business\\businesslogic\\projectmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\controllers\\buildercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\controllers\\buildercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrack.doman\\model\\projectmasterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\projectmasterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\model\\usermanagerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\model\\usermanagerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrackconstruction\\core\\extension\\servicecollectiondiextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\core\\extension\\servicecollectiondiextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.doman\\commonmodel\\commonmodelentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8F5344D-5F62-449C-829C-716081F45497}|BrickNTrack.Doman\\BrickNTrack.Doman.csproj|solutionrelative:brickntrack.doman\\commonmodel\\commonmodelentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\entity\\usertoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\entity\\usertoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|c:\\users\\iron2\\downloads\\brickntrackconstruction\\brickntrackconstruction\\brickntrack.repository\\interface\\iusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}|BrickNTrack.Repository\\BrickNTrack.Repository.csproj|solutionrelative:brickntrack.repository\\interface\\iusermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|d:\\codesmith\\brickntrackconstructionproject\\brickntrackconstruction\\brickntrackconstruction\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E3073566-FD13-43F5-BED5-5D072002E396}|BrickNTrackConstruction\\BrickNTrackConstruction.csproj|solutionrelative:brickntrackconstruction\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 1,
+      "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 354,
-          "SelectedChildIndex": 5,
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BrickNTrackController.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BrickNTrackController.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\BrickNTrackController.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BrickNTrackController.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\BrickNTrackController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ExpensesController.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ExpensesController.cs",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\ExpensesController.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ExpensesController.cs",
+              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\ExpensesController.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAewDoAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T17:40:33.293Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ProjectDataPathConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectDataPathConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\ProjectDataPathConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectDataPathConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\ProjectDataPathConfiguration.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAkwBoAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:30.037Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BuilderController.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BuilderController.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\BuilderController.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BuilderController.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\BuilderController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAYwBoAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T05:55:12.621Z",
+              "WhenOpened": "2025-08-11T13:17:19.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ProjectController.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ProjectController.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\ProjectController.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ProjectController.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\ProjectController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAAACUAAAAJAAAAAAAAAA==",
+              "Title": "MilestoneController.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\MilestoneController.cs",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\MilestoneController.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\MilestoneController.cs",
+              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\MilestoneController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAIwCcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T07:00:54.435Z",
+              "WhenOpened": "2025-08-11T13:03:20.143Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserManagerController.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\UserManagerController.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\UserManagerController.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\UserManagerController.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\UserManagerController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAwwA0AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "IExpenses.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IExpenses.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Interface\\IExpenses.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IExpenses.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Interface\\IExpenses.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T11:50:20.553Z",
+              "WhenOpened": "2025-08-11T13:00:56.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\appsettings.json",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\appsettings.json",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\appsettings.json",
-              "RelativeToolTip": "BrickNTrackConstruction\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-27T12:24:19.058Z",
+              "Title": "ExpensesRepositories.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ExpensesRepositories.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\ExpensesRepositories.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ExpensesRepositories.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\ExpensesRepositories.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T12:42:18.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProjectMilestoneRepositories.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectMilestoneRepositories.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\ProjectMilestoneRepositories.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectMilestoneRepositories.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\ProjectMilestoneRepositories.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAgwJYAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T11:51:42.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProjectMilestoneRequest.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneRequest.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMilestoneRequest.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneRequest.cs",
+              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMilestoneRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T12:12:04.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProjectController.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ProjectController.cs",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\ProjectController.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\ProjectController.cs",
+              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\ProjectController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAzwCoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-09T08:53:02.308Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "ProjectExpensesConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectExpensesConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\ProjectExpensesConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectExpensesConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\ProjectExpensesConfiguration.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAkwBoAAABbAAAAAAAAAA==",
+              "Title": "BuilderRepositories.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:35.038Z"
+              "WhenOpened": "2025-08-11T12:48:59.456Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProjectMasterConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectMasterConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\ProjectMasterConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectMasterConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\ProjectMasterConfiguration.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAkwCAAAABbAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "ApplicationConstant.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\CommonModel\\ApplicationConstant.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Doman\\CommonModel\\ApplicationConstant.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\CommonModel\\ApplicationConstant.cs",
+              "RelativeToolTip": "BrickNTrack.Doman\\CommonModel\\ApplicationConstant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:39.525Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UserManagerConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\UserManagerConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\UserManagerConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\UserManagerConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\UserManagerConfiguration.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAABkAAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:50.096Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ProjectMilestoneConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectMilestoneConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\ProjectMilestoneConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\ProjectMilestoneConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\ProjectMilestoneConfiguration.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAkwB4AAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:44.648Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BuilderMasterConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\BuilderMasterConfiguration.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\EntityConfiguration\\BuilderMasterConfiguration.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\EntityConfiguration\\BuilderMasterConfiguration.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\EntityConfiguration\\BuilderMasterConfiguration.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAkwBoAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:15.515Z"
+              "WhenOpened": "2025-08-11T12:08:30.508Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "CommonEntity.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\CommonEntity.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\CommonEntity.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\CommonEntity.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\CommonEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ProjectMilestone.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA5wBAAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T16:20:08.048Z"
+              "WhenOpened": "2025-08-11T12:11:49.644Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "IProject.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IProject.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Interface\\IProject.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IProject.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Interface\\IProject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABOAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ProjectRepositories.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
+              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
+              "ViewState": "AgIAANYAAAAAAAAAAAAcwAIBAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T06:59:44.033Z"
+              "WhenOpened": "2025-08-09T08:44:03.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProjectMilestoneResponse.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
+              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA5wBAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T12:12:18.545Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "ProjectRepositories.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\ProjectRepositories.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAywIIAAAAYAAAAAAAAAA==",
+              "Title": "AutoMapperProfile.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
+              "RelativeToolTip": "BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T06:39:57.931Z"
+              "WhenOpened": "2025-08-09T08:55:45.063Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "IBuilder.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IBuilder.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Interface\\IBuilder.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IBuilder.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Interface\\IBuilder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAkAAAAAAAAAA==",
+              "DocumentIndex": 15,
+              "Title": "ProjectMasterRequest.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
+              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T06:20:10.265Z"
+              "WhenOpened": "2025-08-09T08:47:07.24Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "BuilderRepositories.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\BuilderRepositories.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAwwHYAAAAYAAAAAAAAAA==",
+              "Title": "ProjectManager.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Business\\BusinessLogic\\ProjectManager.cs",
+              "RelativeDocumentMoniker": "BrickNTrack.Business\\BusinessLogic\\ProjectManager.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Business\\BusinessLogic\\ProjectManager.cs",
+              "RelativeToolTip": "BrickNTrack.Business\\BusinessLogic\\ProjectManager.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAYwDcAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T05:56:00.369Z"
+              "WhenOpened": "2025-08-09T08:34:39.569Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 14,
-              "Title": "UserManagerRepositories.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\UserManagerRepositories.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\UserManagerRepositories.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\UserManagerRepositories.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\UserManagerRepositories.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAYwCQAAAAMAAAAAAAAAA==",
+              "Title": "BuilderController.cs",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BuilderController.cs",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Controllers\\BuilderController.cs",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\Controllers\\BuilderController.cs",
+              "RelativeToolTip": "BrickNTrackConstruction\\Controllers\\BuilderController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwDoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T06:31:38.954Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "BuilderMaster.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\BuilderMaster.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\BuilderMaster.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\BuilderMaster.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\BuilderMaster.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:40:34.297Z"
+              "WhenOpened": "2025-08-09T08:26:00.075Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "ProjectMasterRequest.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMasterRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:42:39.73Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "ProjectMasterRepositories.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectMasterRepositories.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Repositories\\ProjectMasterRepositories.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Repositories\\ProjectMasterRepositories.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Repositories\\ProjectMasterRepositories.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:57:33.514Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "ProjectMasterResponse.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterResponse.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMasterResponse.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMasterResponse.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMasterResponse.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBMAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:42:24.82Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ProjectExpenses.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectExpenses.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\ProjectExpenses.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectExpenses.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\ProjectExpenses.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:48:05.234Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ProjectExpensesRequest.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectExpensesRequest.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectExpensesRequest.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectExpensesRequest.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectExpensesRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:48:23.499Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "ProjectExpensesResponse.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectExpensesResponse.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectExpensesResponse.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectExpensesResponse.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectExpensesResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:48:40.517Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ProjectMilestone.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\ProjectMilestone.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA+wBIAAABJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:46:02.8Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "AutoMapperProfile.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Core\\Helper\\AutoMapperProfile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAgwAoAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T11:51:45.368Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "ProjectMilestoneResponse.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectMilestoneResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:46:27.359Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ProjectDataPathResponse.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectDataPathResponse.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\ProjectDataPathResponse.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\ProjectDataPathResponse.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\ProjectDataPathResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:44:32.568Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ProjectDataPath.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectDataPath.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\ProjectDataPath.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectDataPath.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\ProjectDataPath.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:44:09.284Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "ProjectMaster.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMaster.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\ProjectMaster.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\ProjectMaster.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\ProjectMaster.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA5wBQAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-28T17:42:03.385Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "UserManager.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\UserManager.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\UserManager.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\UserManager.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\UserManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T11:02:55.399Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Program.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Program.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Program.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Program.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAmwFYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T11:47:50.716Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "UserManagerRequest.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\UserManagerRequest.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\Model\\UserManagerRequest.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\Model\\UserManagerRequest.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\Model\\UserManagerRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T09:43:58.046Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "ServiceCollectionDIExtension.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Extension\\ServiceCollectionDIExtension.cs",
-              "RelativeDocumentMoniker": "BrickNTrackConstruction\\Core\\Extension\\ServiceCollectionDIExtension.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrackConstruction\\Core\\Extension\\ServiceCollectionDIExtension.cs",
-              "RelativeToolTip": "BrickNTrackConstruction\\Core\\Extension\\ServiceCollectionDIExtension.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAywBEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T12:10:45.454Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "CommonModelEntity.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\CommonModel\\CommonModelEntity.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Doman\\CommonModel\\CommonModelEntity.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Doman\\CommonModel\\CommonModelEntity.cs",
-              "RelativeToolTip": "BrickNTrack.Doman\\CommonModel\\CommonModelEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T12:05:39.76Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "UserToken.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\UserToken.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Entity\\UserToken.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Entity\\UserToken.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Entity\\UserToken.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T06:28:41.874Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "IUserManager.cs",
-              "DocumentMoniker": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IUserManager.cs",
-              "RelativeDocumentMoniker": "BrickNTrack.Repository\\Interface\\IUserManager.cs",
-              "ToolTip": "C:\\Users\\iron2\\Downloads\\BrickNTrackConstruction\\BrickNTrackConstruction\\BrickNTrack.Repository\\Interface\\IUserManager.cs",
-              "RelativeToolTip": "BrickNTrack.Repository\\Interface\\IUserManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T09:53:06.135Z"
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\appsettings.json",
+              "RelativeDocumentMoniker": "BrickNTrackConstruction\\appsettings.json",
+              "ToolTip": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrackConstruction\\appsettings.json",
+              "RelativeToolTip": "BrickNTrackConstruction\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-09T08:22:13.699Z"
             }
           ]
         }

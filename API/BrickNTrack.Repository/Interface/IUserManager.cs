@@ -5,8 +5,11 @@ namespace BrickNTrack.Repository.Interface
 {
     public interface IUserManager
     {
-        Task<(string token, string refreshToken)> LoginAsync(LoginRequestDTO request);
+        Task<UserTokenDto> LoginAsync(LoginRequestDTO request);
         Task<(string token, string refreshToken)> RefreshTokenAsync(RefreshRequestDTO request);
         Task<ResultModel> RegistereUserAsync(UserManagerRequest request);
+        Task<UserManagerResponse> GetUserDetailByIdAsync(int userId);
+        Task<List<UserManagerResponse>> GetAllUserDetailAsync();
+        Task<List<UserManagerResponse>> GetAllActiveUserDetailAsync();
     }
 }

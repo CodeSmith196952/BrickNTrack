@@ -9,6 +9,8 @@ namespace BrickNTrackConstruction.Core.Helper
         public AutoMapperProfile()
         {
             CreateMap<UserManagerRequest, UserManager>();
+            CreateMap<UserManager, UserManagerResponse>()
+                .ForMember(dest => dest.BuilderName, opt => opt.MapFrom(src => src.BuilderMaster.Name));
 
             CreateMap<BuilderMasterRequest, BuilderMaster>();
             CreateMap<BuilderMaster, BuilderMasterResponse>();

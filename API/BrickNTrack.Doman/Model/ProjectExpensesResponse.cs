@@ -9,6 +9,6 @@
         public string Category { get; set; }
         public int ProjectMilestoneId { get; set; }
         public string MilestoneName { get; set; }
-        public List<ProjectExpensesResponse> ProjectExpenses { get; set; }
+        public List<ProjectMilestoneResponse> ProjectExpenses { get; set; }
     }
 }
