@@ -192,16 +192,16 @@
         <input
           type="text"
           class="form-control"
-          formControlName="email"
+          formControlName="emailAddress"
           [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['email'].errors
+            'is-invalid': submitted && builderForm.controls['emailAddress'].errors
           }"
         />
         <div
-          *ngIf="submitted && builderForm.controls['email'].errors"
+          *ngIf="submitted && builderForm.controls['emailAddress'].errors"
           class="invalid-feedback"
         >
-          <small *ngIf="builderForm.controls['email'].errors['required']"
+          <small *ngIf="builderForm.controls['emailAddress'].errors['required']"
             >Email is required</small
           >
         </div>
@@ -268,17 +268,36 @@
         <input
           type="text"
           class="form-control"
-          formControlName="owner"
+          formControlName="OwnerName"
           [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['owner'].errors
+            'is-invalid': submitted && builderForm.controls['OwnerName'].errors
           }"
         />
         <div
-          *ngIf="submitted && builderForm.controls['owner'].errors"
+          *ngIf="submitted && builderForm.controls['OwnerName'].errors"
           class="invalid-feedback"
         >
-          <small *ngIf="builderForm.controls['owner'].errors['required']"
+          <small *ngIf="builderForm.controls['OwnerName'].errors['required']"
             >Owner is required</small
+          >
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <label>LangLog<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="LangLog"
+          [ngClass]="{
+            'is-invalid': submitted && builderForm.controls['LangLog'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && builderForm.controls['LangLog'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="builderForm.controls['LangLog'].errors['required']"
+            >LangLog is required</small
           >
         </div>
       </div>

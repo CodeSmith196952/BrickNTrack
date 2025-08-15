@@ -444,31 +444,15 @@ export class UserRegistrationComponent implements OnInit {
   //   this.getAllUsersOnPagination();
   // }
 
-  getAllUsersOnPagination(): void {
-    const query = {
-      // page: this.pagination.page,
-      // pageSize: this.pagination.pageSize,
-      searchText: this.searchText || '',
-      department: this.Filterform.value.Department || '',
-      role: this.Filterform.value.Role || '',
-      approver: this.Filterform.value.Approver || ''
-    };
-    
+  getAllUsersOnPagination() {
+
+    debugger
   
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllUsersOnPagination, query)
+    this.brickntrackService.get<any>(null, ServiceUrl.getAllUserDetail)
       .subscribe(
         response => {
-          this.userManager = response.items.map((user: any) => {
-            const department = this.departmentList.find((dept: any) => dept.deptId === user.deptId);
-            return {
-              ...user,
-              departmentName: department?.departmentName || ''
-            };
-          });
-  
-          // this.pagination.totalTransactionCount = response.totalTransactionCount;
-          // this.pagination.filterRecordCount = response.filterRecordCount;
-          // this.pagination.pageSize = response.pageSize;
+          this.userManager = response
+           
         },
         error => {
           console.error('Error fetching user data:', error);

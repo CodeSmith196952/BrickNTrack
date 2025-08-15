@@ -37,7 +37,7 @@
       'lastName',
       'email',
       'mobileNumber',
-      'role'
+    
     ]"
   >
     <!-- multiple -->
@@ -80,10 +80,7 @@
           Mobile No
           <p-sortIcon field="mobileNumber"></p-sortIcon>
         </th>
-        <th pSortableColumn="role" class="column-center">
-          Role
-          <p-sortIcon field="role"></p-sortIcon>
-        </th>
+      
         <th class="column-center">Action</th>
       </tr>
       <tr></tr>
@@ -110,10 +107,7 @@
           <span class="p-column-title">mobileNumber</span>
           <span class="image-text">{{ filter.mobileNumber }}</span>
         </td>
-        <td class="column-center">
-          <span class="p-column-title">role</span>
-          <span class="image-text">{{ filter.role }}</span>
-        </td>
+     
         <td class="text-primary column-center" title="Edit" pTooltip="Edit">
           <i
             class="editIcon fa fa-key"
@@ -412,32 +406,7 @@
                                     </div> -->
                 </div>
               </div>
-              <div class="col-sm-6">
-                <label for="roleId">Select Role<sup>*</sup></label>
-                <br />
-                <select
-                  name="roleId"
-                  tabindex="7"
-                  [(ngModel)]="userRegistration.roleId"
-                  class="form-control role-select form-select"
-                  formControlName="roleId"
-                  [ngClass]="{ 'is-invalid': submitted && f['roleId'].errors }"
-                  placeholder="--Choose Option--"
-                >
-                  <option value="" disabled>--Choose Option--</option>
-                  <option *ngFor="let role of roles" [ngValue]="role.roleId">
-                    {{ role.roleName }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="submitted && f['roleId'].errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="f['roleId'].errors['required']">
-                    <small> *Role is required.</small>
-                  </div>
-                </div>
-              </div>
+           
             </div>
           </div>
         </form>
@@ -642,32 +611,7 @@
                   readonly
                 />
               </div>
-              <div class="col-sm-6">
-                <label for="roleId" class="form-group">Select Role</label>
-                <select
-                  name="roleId"
-                  id="select-role"
-                  [(ngModel)]="user.roleId"
-                  class="form-control form-select form-edit"
-                  formControlName="roleId"
-                  [ngClass]="{
-                    'is-invalid': editUserFormSubmitted && f1['roleId'].errors
-                  }"
-                >
-                  <option value="0" hidden>--Choose Option--</option>
-                  <option *ngFor="let role of roles" [ngValue]="role.roleId">
-                    {{ role.roleName }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="editUserFormSubmitted && f1['roleId'].errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="f1['roleId'].errors['required']">
-                    *Role is required
-                  </div>
-                </div>
-              </div>
+           
             </div>
           </div>
         </form>
@@ -691,8 +635,10 @@
 <p-dialog
   header="Change Password"
   [(visible)]="display2"
+   [style]="{ width: '30vw' }"
   [draggable]="false"
   [keepInViewport]="true"
+
   [modal]="true"
   styleClass="dialogBox"
 >

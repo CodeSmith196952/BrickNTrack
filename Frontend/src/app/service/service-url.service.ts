@@ -34,11 +34,14 @@ export const ServiceUrl = {
   // Login
   login:"UserManager/login",
   AddUser:"UserManager/AddUser",
+  getAllUserDetail:"UserManager/getAllUserDetail",
 
   //master
-  getAllActiveBuilder: "Builder/getAllActiveBuilder",
+  getAllBuilder: "Builder/getAllBuilder",
   addUpdateBuilder: "Builder/addUpdateBuilder",
   getAllActiveProject:"Project/getAllActiveProject",
-  addUpdateProject:"Project/addUpdateProject"
+  addUpdateProject:"Project/addUpdateProject",
+
+
 
 };  

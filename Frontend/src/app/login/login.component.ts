@@ -161,7 +161,7 @@ export class LoginComponent implements OnInit {
             this.tokenStorage.setUserName(response.userName);
             this.dataService.setUserDetail(response);
             this.dataService.setUserMenu(response.menuAccess);
-            this.tokenStorage.saveToken(response.token);
+            this.tokenStorage.saveToken(response.jwtToken);
             this.tokenStorage.setRefreshToken(response.refreshToken);
             this.tokenStorage.setrevoketoken(response.revoketoken);
             this.tokenStorage.saveUser(response);

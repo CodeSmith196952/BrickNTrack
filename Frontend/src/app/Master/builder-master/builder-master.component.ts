@@ -32,7 +32,7 @@ export class BuilderMasterComponent {
     this.builderForm = this.fb.group({
       builderId: [''],
       name: ['',],
-      owner: ['',],
+      OwnerName: ['',],
       contact2: ['',],
 
       contact1: [''],
@@ -42,8 +42,9 @@ export class BuilderMasterComponent {
       officeAddress: [''],
       emailAddress: [''],
       gstNo: [''],
+      LangLog: [''],
 
-      // isActive: ['', []]
+      isActive: ['', []]
 
 
 
@@ -80,7 +81,7 @@ debugger
 
     if (this.brickntrackService.commonValidation(this.builderForm.get('builderId')?.value)) {
       this.builderForm.get('builderId')?.setValue(0);
-      this.builderForm.get('IsActive')?.setValue(true);
+      this.builderForm.get('isActive')?.setValue(true);
     }
 
 
@@ -127,13 +128,14 @@ debugger
     this.builderForm.patchValue({
       builderId: value.builderId,
       name: value.name,
-      owner: value.owner,
+      OwnerName: value.ownerName,
       contact1: value.contact1,
       contact2: value.contact2,
       tagLine: value.tagLine,
       description: value.description,
       officeAddress: value.officeAddress,
       emailAddress: value.emailAddress,
+      LangLog: value.langLog,
       gstNo: value.gstNo,
       // IsActive: value.IsActive
 
@@ -145,7 +147,7 @@ debugger
 
   getAllActiveBuilders() {
     debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveBuilder)
+    this.brickntrackService.get<any>(null, ServiceUrl.getAllBuilder)
       .subscribe(
         (res) => {
           this.builderList = res
