@@ -18,11 +18,13 @@ export class ProjectMasterComponent {
   displayProjectDialog: boolean = false;
   ActiveButtonVisible: boolean = false
   ResetVisible: any;
+selectedImageFile: File | null = null;
 
 
 
   public userAccessData: any = new UserScreenAccesData();
   title!: string;
+  builderList: any;
   constructor(
     private brickntrackService: brickntrackService,
     private fb: FormBuilder,
@@ -34,7 +36,7 @@ export class ProjectMasterComponent {
       projectId: [''],
 
       projectName: ['',],
-      builderName: ['',],
+      builderId: ['',],
       budget: ['',],
 
       completionDate: [''],
@@ -49,6 +51,7 @@ export class ProjectMasterComponent {
       latlong: [''],
       projectDescription: [''],
       profileImage: [''],
+      ProfileImageFile: [''],
 
       // isActive: ['', []]
 
@@ -68,6 +71,7 @@ export class ProjectMasterComponent {
 
   ngOnInit(): void {
     this.getAllActiveProjects();
+    this.getAllActiveBuilders();
   }
 
 
@@ -78,40 +82,70 @@ export class ProjectMasterComponent {
   }
 
 
-  saveProject() {
-debugger
-    this.submitted = true;
-
-    if (this.projectForm.invalid)
-      return;
-
-    if (this.brickntrackService.commonValidation(this.projectForm.get('projectId')?.value)) {
-      this.projectForm.get('projectId')?.setValue(0);
-      this.projectForm.get('IsActive')?.setValue(true);
-    }
-
-
-    const formData = this.projectForm.value;
-
-    this.brickntrackService.post<any>(ServiceUrl.addUpdateProject, formData)
-      .subscribe(
-        (res) => {
-          Swal.fire("", res.responseMessage, "success");
-
-          this.getAllActiveProjects();
-          this.displayProjectDialog = false;
-        },
-        (err) => {
-
-          Swal.fire("", err.error.errorMessage, "error");
-          this.displayProjectDialog = false;
-        }
-      )
-
+onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.selectedImageFile = input.files[0];
   }
+}
+
+
+saveProject() {
+  debugger
+  this.submitted = true;
+
+  if (this.projectForm.invalid) return;
+
+  if (this.brickntrackService.commonValidation(this.projectForm.get('projectId')?.value)) {
+    this.projectForm.get('projectId')?.setValue(0);
+    this.projectForm.get('IsActive')?.setValue(true);
+  }
+
+  const formValues = this.projectForm.value;
+
+  const formData = new FormData();
+
+  // Append all form fields
+  for (const key in formValues) {
+    if (formValues.hasOwnProperty(key)) {
+      formData.append(key, formValues[key]);
+    }
+  }
+
+  // Append image file if available
+  if (this.selectedImageFile) {
+    formData.append('ProfileImageFile', this.selectedImageFile);
+  }
+
+  this.brickntrackService.post<any>(ServiceUrl.addUpdateProject, formData).subscribe(
+    (res) => {
+      Swal.fire('', res.responseMessage, 'success');
+      this.getAllActiveProjects();
+      this.displayProjectDialog = false;
+    },
+    (err) => {
+      Swal.fire('', err.error.errorMessage, 'error');
+      this.displayProjectDialog = false;
+    }
+  );
+}
+
   acceptNumber(event: any, flag: boolean): void {
     flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
   }
+
+    getAllActiveBuilders() {
+      debugger
+      this.brickntrackService.get<any>(null, ServiceUrl.getAllBuilder)
+        .subscribe(
+          (res) => {
+            this.builderList = res
+          },
+          (err) => {
+            Swal.fire("", err.error.message, "error")
+          }
+        )
+    }
 
   openProjectDialog() {
     debugger

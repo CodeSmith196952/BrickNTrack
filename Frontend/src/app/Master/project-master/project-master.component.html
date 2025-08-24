@@ -156,11 +156,18 @@
 
       <div class="col-sm-6 mb-3">
         <label>Builder Name</label>
-        <input
+            <select class="form-select " formControlName="builderId"
+                                   >
+                                    <option [ngValue]=null [disabled]=true [selected]=true>--Choose Option--</option>
+                                    <option *ngFor="let builder of builderList" [ngValue]="builder.builderId">
+                                        {{builder.name}}
+                                    </option>
+                                </select>
+        <!-- <input
           type="text"
           class="form-control"
           formControlName="builderName"
-        />
+        /> -->
       </div>
 
       <div class="col-sm-6 mb-3">
@@ -266,11 +273,12 @@
 
       <div class="col-sm-6 mb-3">
         <label>Profile Image URL</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="profileImage"
-        />
+       <input
+    type="file"
+    class="form-control"
+    (change)="onFileSelected($event)"
+    accept="image/*"
+  />
       </div>
     </div>
   </form>
