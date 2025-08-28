@@ -163,7 +163,7 @@
         }
       }
     },
-    "/addUpdateMilestons": {
+    "/api/Expenses/addUpdateExpenses": {
       "post": {
         "tags": [
           "Expenses"
@@ -194,7 +194,7 @@
         }
       }
     },
-    "/getAllExpenses": {
+    "/api/Expenses/getAllExpenses": {
       "get": {
         "tags": [
           "Expenses"
@@ -232,7 +232,7 @@
         }
       }
     },
-    "/getAllActiveExpenses": {
+    "/api/Expenses/getAllActiveExpenses": {
       "get": {
         "tags": [
           "Expenses"
@@ -270,7 +270,7 @@
         }
       }
     },
-    "/getAllExpensesById": {
+    "/api/Expenses/getAllExpensesById": {
       "get": {
         "tags": [
           "Expenses"
@@ -309,7 +309,7 @@
         }
       }
     },
-    "/getAllExpensesByMilestoneId": {
+    "/api/Expenses/getAllExpensesByMilestoneId": {
       "get": {
         "tags": [
           "Expenses"
@@ -357,7 +357,7 @@
         }
       }
     },
-    "/api/Milestone/addUpdateMilestons": {
+    "/api/Milestone/addUpdateMilestone": {
       "post": {
         "tags": [
           "Milestone"
@@ -621,6 +621,82 @@
       }
     },
     "/api/Project/getAllActiveProject": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Project/getAllProjectOfBuilder": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectMasterResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Project/getAllActiveProjectOfBuilder": {
       "get": {
         "tags": [
           "Project"
@@ -1126,6 +1202,82 @@
           }
         }
       }
+    },
+    "/api/UserManager/getAllActiveUserDetailOfBuilder": {
+      "get": {
+        "tags": [
+          "UserManager"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UserManager/getAllUserDetailOfBuilder": {
+      "get": {
+        "tags": [
+          "UserManager"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserManagerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1607,8 +1759,12 @@
             "format": "int32"
           },
           "builderName": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
+          },
+          "totalSpend": {
+            "type": "number",
+            "format": "double"
           },
           "builderMaster": {
             "$ref": "#/components/schemas/BuilderMasterResponse"

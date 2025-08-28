@@ -1,12 +1,16 @@
 ﻿using BrickNTrack.Doman.Model;
 using BrickNTrack.Repository.Entity;
 using BrickNTrack.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
 
 namespace BrickNTrackConstruction.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class ExpensesController : ControllerBase
     {
         private readonly IExpenses _expenses;
@@ -16,9 +20,9 @@ namespace BrickNTrackConstruction.Controllers
             _expenses = expenses;
         }
 
-        [Route("addUpdateMilestons")]
+        [Route("addUpdateExpenses")]
         [HttpPost]
-        public async Task<IActionResult> AddUpdateMilestonsAsync([FromBody] ProjectExpensesRequest request)
+        public async Task<IActionResult> AddUpdateExpensesAsync([FromBody] ProjectExpensesRequest request)
         {
             var userName = User.FindFirst(ClaimTypes.Name)?.Value;
             var result = await _expenses.AddUpdateExpensesAsync(request, userName);

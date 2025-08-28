@@ -11,5 +11,7 @@ namespace BrickNTrack.Repository.Interface
         Task<UserManagerResponse> GetUserDetailByIdAsync(int userId);
         Task<List<UserManagerResponse>> GetAllUserDetailAsync();
         Task<List<UserManagerResponse>> GetAllActiveUserDetailAsync();
+        Task<List<UserManagerResponse>> GetAllUserDetailOfBuilderAsync(int builderId);
+        Task<List<UserManagerResponse>> GetAllActiveUserDetailOfBuilderAsync(int builderId);
     }
 }

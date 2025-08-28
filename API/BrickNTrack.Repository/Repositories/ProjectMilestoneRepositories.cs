@@ -28,7 +28,7 @@ namespace BrickNTrack.Repository.Repositories
             ResultModel retValue = new ResultModel();
             try
             {
-                var project = await _context.ProjectMilestones.FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
+                var project = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
                 if (project == null) 
                 {
                     retValue.StatusCode = ResultCode.RecordNotFound;
@@ -39,6 +39,12 @@ namespace BrickNTrack.Repository.Repositories
                 {
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    request.BudgetStatus = BudgetStatusConstant.InBudget;
+                    if (request.PlannedStartDate.HasValue && request.PlannedTargetDate.HasValue)
+                    {
+                        TimeSpan planedDuration = request.PlannedTargetDate.Value - request.PlannedStartDate.Value;
+                        request.PlannedDuration = (int)planedDuration.TotalDays;
+                    }
                     var milestone = _mapper.Map<ProjectMilestone>(request);
                     _context.ProjectMilestones.Add(milestone);
                     await _context.SaveChangesAsync();
@@ -73,7 +79,7 @@ namespace BrickNTrack.Repository.Repositories
 
                         if (request.PlannedStartDate.HasValue && request.PlannedTargetDate.HasValue)
                         {
-                            TimeSpan planedDuration = request.PlannedTargetDate.Value - milestone.PlannedStartDate.Value;
+                            TimeSpan planedDuration = request.PlannedTargetDate.Value - request.PlannedStartDate.Value;
                             milestone.PlannedDuration = (int)planedDuration.TotalDays;
                         }
 

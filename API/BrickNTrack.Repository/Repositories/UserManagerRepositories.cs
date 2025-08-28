@@ -90,6 +90,7 @@ namespace BrickNTrack.Repository.Repositories
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim("UserId", user.Id.ToString()),
+            new Claim("BuilderId", user.BuilderId.ToString()),
             //new Claim(ClaimTypes.Role, user.RoleName)
         };
 
@@ -198,6 +199,32 @@ namespace BrickNTrack.Repository.Repositories
             {
                 var user = await _context.UserManager.Include(x => x.BuilderMaster).FirstOrDefaultAsync(x => x.Id == userId);
                 return _mapper.Map<UserManagerResponse>(user);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<UserManagerResponse>> GetAllActiveUserDetailOfBuilderAsync(int builderId)
+        {
+            try
+            {
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.IsActive == true && x.BuilderId == builderId).ToListAsync();
+                return _mapper.Map<List<UserManagerResponse>>(users);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<UserManagerResponse>> GetAllUserDetailOfBuilderAsync(int builderId)
+        {
+            try
+            {
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.BuilderId == builderId).ToListAsync();
+                return _mapper.Map<List<UserManagerResponse>>(users);
             }
             catch (Exception ex)
             {

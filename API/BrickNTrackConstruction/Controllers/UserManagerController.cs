@@ -70,5 +70,25 @@ namespace BrickNTrackConstruction.Controllers
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpGet("getAllActiveUserDetailOfBuilder")]
+        public async Task<List<UserManagerResponse>> GetAllActiveUserDetailOfBuilderAsync()
+        {
+            var builderId = User.FindFirst("BuilderId")?.Value;
+            if (builderId == null)
+                return null;
+            return await _userManager.GetAllActiveUserDetailOfBuilderAsync(Convert.ToInt32(builderId));
+        }
+
+        [Authorize]
+        [HttpGet("getAllUserDetailOfBuilder")]
+        public async Task<List<UserManagerResponse>> GetAllUserDetailOfBuilderAsync()
+        {
+            var builderId = User.FindFirst("BuilderId")?.Value;
+            if (builderId == null)
+                return null;
+            return await _userManager.GetAllUserDetailOfBuilderAsync(Convert.ToInt32(builderId));
+        }
+
     }
 }

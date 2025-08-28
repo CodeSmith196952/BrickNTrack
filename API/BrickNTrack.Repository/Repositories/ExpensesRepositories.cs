@@ -35,7 +35,7 @@ namespace BrickNTrack.Repository.Repositories
                     retValue.ErrorMessage = "Milestone detail not found";
                     return retValue;
                 }
-                if (request.ProjectMilestoneId == 0)
+                if (request.ExpenseId == 0)
                 {
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);

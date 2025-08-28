@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BrickNTrack.Doman")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5566c449a5b46cf3b6caf8c7ef20c802dd9c464")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("BrickNTrack.Doman")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BrickNTrack.Doman")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -17,9 +17,10 @@ namespace BrickNTrackConstruction.Controllers
         private readonly IProject _project;
         private readonly IProjectManager _projectManager;
 
-        public ProjectController(IProject project)
+        public ProjectController(IProject project, IProjectManager  projectManager)
         {
             _project = project;
+            _projectManager = projectManager;
         }
 
         [Route("addUpdateProject")]
@@ -47,6 +48,28 @@ namespace BrickNTrackConstruction.Controllers
         public async Task<List<ProjectMasterResponse>> GetAllActiveProjectAsync()
         {
             var result = await _project.GetAllActiveProjectAsync();
+            return result;
+        }
+
+        [Route("getAllProjectOfBuilder")]
+        [HttpGet]
+        public async Task<List<ProjectMasterResponse>> GetAllProjectOfBuilderAsync()
+        {
+            var builderId = User.FindFirst("BuilderId")?.Value;
+            if (builderId == null)
+                return null;
+            var result = await _project.GetAllProjectOfBuilderAsync(Convert.ToInt32(builderId));
+            return result;
+        }
+
+        [Route("getAllActiveProjectOfBuilder")]
+        [HttpGet]
+        public async Task<List<ProjectMasterResponse>> GetAllActiveBuilderProjectAsync()
+        {
+            var builderId = User.FindFirst("BuilderId")?.Value;
+            if (builderId == null)
+                return null;
+            var result = await _project.GetAllActiveOfBuilderProjectAsync(Convert.ToInt32(builderId));
             return result;
         }
 

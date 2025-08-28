@@ -14,5 +14,7 @@ namespace BrickNTrack.Repository.Interface
         Task<List<ProjectDataPathResponse>> GetAllActiveProjectDataDetailAsync();
         Task<List<ProjectDataPathResponse>> GetAllProjectDataDetailAsync();
         Task<List<ProjectDataPathResponse>> GetProjectDataDetailByProjectIdAsync(int projectId);
+        Task<List<ProjectMasterResponse>> GetAllActiveOfBuilderProjectAsync(int builderId);
+        Task<List<ProjectMasterResponse>> GetAllProjectOfBuilderAsync(int builderId);
     }
 }

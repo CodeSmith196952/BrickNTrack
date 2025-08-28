@@ -19,7 +19,7 @@ namespace BrickNTrackConstruction.Controllers
             _projectMilestone = projectMilestone;
         }
 
-        [Route("addUpdateMilestons")]
+        [Route("addUpdateMilestone")]
         [HttpPost]
         public async Task<IActionResult> AddUpdateMilestonsAsync([FromBody] ProjectMilestoneRequest request)
         {

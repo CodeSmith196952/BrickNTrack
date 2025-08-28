@@ -17,7 +17,8 @@
         public double Budget { get; set; }
         public string Status { get; set; }
         public int BuilderId { get; set; }
-        public int BuilderName { get; set; }
+        public string BuilderName { get; set; }
+        public double TotalSpend { get; set; }
         public BuilderMasterResponse BuilderMaster { get; set; }
         public List<ProjectDataPathResponse> ProjectDataPath { get; set; }
         public List<ProjectMilestoneResponse> ProjectMilestone{ get; set; }

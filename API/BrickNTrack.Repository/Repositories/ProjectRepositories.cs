@@ -27,8 +27,21 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.ToListAsync();
-                return _mapper.Map<List<ProjectMasterResponse>>(projects);
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).ToListAsync();
+                var projectDetails = projects.Select(project =>
+                {
+                    var response = _mapper.Map<ProjectMasterResponse>(project);
+
+                    // Compute total expenses from all milestones
+                    var totalExpenses = project.ProjectMilestones
+                        .SelectMany(m => m.ProjectExpenses)
+                        .Sum(e => e.Amount);
+
+                    response.TotalSpend = totalExpenses;
+
+                    return response;
+                }).ToList();
+                return projectDetails;
             }
             catch (Exception ex)
             {
@@ -40,8 +53,73 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.Where(x => x.IsActive == true).ToListAsync();
-                return _mapper.Map<List<ProjectMasterResponse>>(projects);
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.IsActive == true).ToListAsync();
+                var projectDetails = projects.Select(project =>
+                {
+                    var response = _mapper.Map<ProjectMasterResponse>(project);
+
+                    // Compute total expenses from all milestones
+                    var totalExpenses = project.ProjectMilestones
+                        .SelectMany(m => m.ProjectExpenses)
+                        .Sum(e => e.Amount);
+
+                    response.TotalSpend = totalExpenses;
+
+                    return response;
+                }).ToList();
+                return projectDetails;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ProjectMasterResponse>> GetAllProjectOfBuilderAsync(int builderId)
+        {
+            try
+            {
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.BuilderId == builderId).ToListAsync();
+                var projectDetails = projects.Select(project =>
+                {
+                    var response = _mapper.Map<ProjectMasterResponse>(project);
+
+                    // Compute total expenses from all milestones
+                    var totalExpenses = project.ProjectMilestones
+                        .SelectMany(m => m.ProjectExpenses)
+                        .Sum(e => e.Amount);
+
+                    response.TotalSpend = totalExpenses;
+
+                    return response;
+                }).ToList();
+                return projectDetails;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ProjectMasterResponse>> GetAllActiveOfBuilderProjectAsync(int builderId)
+        {
+            try
+            {
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.IsActive == true && x.BuilderId == builderId).ToListAsync();
+                var projectDetails = projects.Select(project =>
+                {
+                    var response = _mapper.Map<ProjectMasterResponse>(project);
+
+                    // Compute total expenses from all milestones
+                    var totalExpenses = project.ProjectMilestones
+                        .SelectMany(m => m.ProjectExpenses)
+                        .Sum(e => e.Amount);
+
+                    response.TotalSpend = totalExpenses;
+
+                    return response;
+                }).ToList();
+                return projectDetails;
             }
             catch (Exception ex)
             {
@@ -53,8 +131,17 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ProjectId == projectId);
-                return _mapper.Map<ProjectMasterResponse>(projects);
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).FirstOrDefaultAsync(x => x.ProjectId == projectId);
+                if (projects == null)
+                    return null;
+
+                var totalExpenses = projects.ProjectMilestones
+                        .SelectMany(m => m.ProjectExpenses)
+                        .Sum(e => e.Amount);
+
+                var projectDetails = _mapper.Map<ProjectMasterResponse>(projects);
+                projectDetails.TotalSpend = totalExpenses;
+                return projectDetails;
             }
             catch (Exception ex)
             {

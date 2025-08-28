@@ -25,7 +25,7 @@
         public static class BudgetStatusConstant
         {
             public static string OverBudget = "Over budget";
-            public static string InBudget = "In budget";
+            public static string InBudget = "Under budget";
         }
     }
 }
