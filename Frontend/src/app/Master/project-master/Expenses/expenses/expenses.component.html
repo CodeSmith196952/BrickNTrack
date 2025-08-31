@@ -1,0 +1,184 @@
+<p-toast position="bottom-right"></p-toast>
+<section>
+  <div class="py-2">
+    <h2 class="title-one">
+     <i class="fas fa-sack-dollar mx-2" ></i> Expenses
+    </h2>
+  </div>
+
+  <div class="mb-3">
+    <mat-card>
+      <mat-card-content>
+        <p-table
+          #dtPallet
+          [value]="expensesList"
+          selectionMode="multiple"
+          styleClass="p-datatable-gridlines p-datatable-striped"
+          responsiveLayout="scroll"
+          [rows]="10"
+          [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['palletCode', 'palletName']"
+        >
+          <ng-template pTemplate="caption">
+            <div class="d-flex justify-content-end align-items-center">
+              <div class="d-flex">
+                <span>
+                  <input
+                    type="text"
+                    class="form-control form-control-search"
+                    placeholder="Search"
+                    (input)="
+                      dtPallet.filterGlobal(
+                        $any($event.target).value,
+                        'contains'
+                      )
+                    "
+                  />
+                </span>
+                <a
+                  (click)="openProjectDialog()"
+                  class="btn btn-primary ml-1"
+                  title="Add Pallet"
+                >
+                  <i class="pi pi-plus"></i>
+                </a>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Sr No.</th>
+              <th pSortableColumn="projectName">Vender Supplier</th>
+              <th pSortableColumn="builderName">Category</th>
+              <th pSortableColumn="budget">Details</th>
+              <th pSortableColumn="completionDate">Amount</th>
+           
+
+              <th>Action</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-project let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ project.vendorSupplier }}</td>
+              <td>{{ project.category }}</td>
+              <td>{{ project.details }}</td>
+              <td>{{ project.amount }}</td>
+            
+
+              <td>
+                <i
+                  class="fa fa-edit"
+                  (click)="editexpenses(project)"
+                  style="cursor: pointer"
+                  title="Edit Project"
+                ></i>
+               
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">No Expenses found.</td>
+              <td>
+                <i
+                  class="fa fa-edit"
+                  style="cursor: pointer"
+                  title="Edit Pallet"
+                ></i>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">No Expenses found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<p-dialog
+  header="Expenses Details"
+  [(visible)]="displayProjectDialog"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+>
+  <form [formGroup]="milestoneForm" autocomplete="off">
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <label>Vendor Supplier<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="vendorSupplier"
+       
+        />
+    
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Project Milestone Name</label>
+        <select class="form-select" formControlName="projectMilestoneId">
+          <option [ngValue]="null" [disabled]="true" [selected]="true">
+            --Choose Option--
+          </option>
+          <option
+            *ngFor="let project of milestoneList"
+            [ngValue]="project.milestoneId"
+          >
+            {{ project.milestoneName }}
+          </option>
+        </select>
+        <!-- <input
+          type="text"
+          class="form-control"
+          formControlName="builderName"
+        /> -->
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Amount</label>
+        <input type="number" class="form-control" formControlName="amount" />
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Category</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="category"
+        />
+      </div>
+
+
+
+    
+    </div>
+  </form>
+
+  <div class="model-footer text-end">
+    <button class="btn btn-primary m-2" (click)="saveProjectExpense()">
+      Submit
+    </button>
+    <button
+      class="btn btn-secondary m-2"
+      (click)="ResetDialog()"
+      *ngIf="ResetVisible"
+    >
+      Reset
+    </button>
+    <button class="btn btn-danger m-2" (click)="closeProjectDialog()">
+      Close
+    </button>
+  </div>
+</p-dialog>
+
+

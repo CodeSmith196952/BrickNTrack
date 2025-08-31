@@ -22,7 +22,6 @@
         >
           <ng-template pTemplate="caption">
             <div class="d-flex justify-content-end align-items-center">
-            
               <div class="d-flex">
                 <span>
                   <input
@@ -37,73 +36,83 @@
                     "
                   />
                 </span>
-                <a (click)="openProjectDialog()" class="btn btn-primary ml-1" title="Add Pallet">
+                <a
+                  (click)="openProjectDialog()"
+                  class="btn btn-primary ml-1"
+                  title="Add Pallet"
+                >
                   <i class="pi pi-plus"></i>
                 </a>
               </div>
             </div>
           </ng-template>
 
-           <ng-template pTemplate="header">
-    <tr>
-      <th>Sr No.</th>
-      <th pSortableColumn="projectName">Project Name</th>
-      <th pSortableColumn="builderName">Builder Name</th>
-      <th pSortableColumn="budget">Budget</th>
-      <th pSortableColumn="completionDate">Planned Completion</th>
-      <th pSortableColumn="actualCompletionDate">Actual Completion</th>
-      <th pSortableColumn="startDate">Start Date</th>
-      <th pSortableColumn="actualStartDate">Actual Start Date</th>
-      <th pSortableColumn="completionPercentage">Completion %</th>
-      <th pSortableColumn="status">Status</th>
-      <th pSortableColumn="reraNumber">RERA No</th>
-      <th pSortableColumn="projectAddress">Address</th>
-      <th pSortableColumn="latlong">Lat/Long</th>
-      <th pSortableColumn="projectDescription">Description</th>
-      <th>Profile Image</th>
-      <th>Action</th>
-    </tr>
-  </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Sr No.</th>
+              <th pSortableColumn="projectName">Project Name</th>
+              <th pSortableColumn="builderName">Builder Name</th>
+              <th pSortableColumn="budget">Budget</th>
+              <th pSortableColumn="completionDate">Planned Completion</th>
+              <th pSortableColumn="actualCompletionDate">Actual Completion</th>
+              <th pSortableColumn="startDate">Start Date</th>
+              <th pSortableColumn="actualStartDate">Actual Start Date</th>
+              <th pSortableColumn="completionPercentage">Completion %</th>
+              <th pSortableColumn="status">Status</th>
+              <th pSortableColumn="reraNumber">RERA No</th>
+              <th pSortableColumn="projectAddress">Address</th>
+              <th pSortableColumn="latlong">Lat/Long</th>
+              <th pSortableColumn="projectDescription">Description</th>
+              <th>Profile Image</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
 
-           <ng-template pTemplate="body" let-project let-i="rowIndex">
-    <tr>
-      <td>{{ i + 1 }}</td>
-      <td>{{ project.projectName }}</td>
-      <td>{{ project.builderName }}</td>
-      <td>{{ project.budget }}</td>
-      <td>{{ project.completionDate | date }}</td>
-      <td>{{ project.actualCompletionDate | date }}</td>
-      <td>{{ project.startDate | date }}</td>
-      <td>{{ project.actualStartDate | date }}</td>
-      <td>{{ project.completionPercentage }}%</td>
-      <td>{{ project.status }}</td>
-      <td>{{ project.reraNumber }}</td>
-      <td>{{ project.projectAddress }}</td>
-      <td>{{ project.latlong }}</td>
-      <td>{{ project.projectDescription }}</td>
-      <td>
-        <img
-          *ngIf="project.profileImage"
-          [src]="project.profileImage"
-          alt="Profile"
-          width="50"
-          height="50"
-        />
-      </td>
-      <td>
-        <i
-          class="fa fa-edit"
-          (click)="editProject(project)"
-          style="cursor: pointer"
-          title="Edit Project"
-        ></i>
-      </td>
-    </tr>
-  </ng-template>
+          <ng-template pTemplate="body" let-project let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ project.projectName }}</td>
+              <td>{{ project.builderName }}</td>
+              <td>{{ project.budget }}</td>
+              <td>{{ project.completionDate | date }}</td>
+              <td>{{ project.actualCompletionDate | date }}</td>
+              <td>{{ project.startDate | date }}</td>
+              <td>{{ project.actualStartDate | date }}</td>
+              <td>{{ project.completionPercentage }}%</td>
+              <td>{{ project.status }}</td>
+              <td>{{ project.reraNumber }}</td>
+              <td>{{ project.projectAddress }}</td>
+              <td>{{ project.latlong }}</td>
+              <td>{{ project.projectDescription }}</td>
+              <td>
+                <img
+                  *ngIf="project.profileImage"
+                  [src]="project.profileImage"
+                  alt="Profile"
+                  width="50"
+                  height="50"
+                />
+              </td>
+              <td>
+                <i
+                  class="fa fa-edit"
+                  (click)="editProject(project)"
+                  style="cursor: pointer"
+                  title="Edit Project"
+                ></i>
+                <i
+                  class="fa fa-eye"
+                  (click)="openMilestoneDialog(project.projectId)"
+                  style="cursor: pointer"
+                  title="View Project"
+                ></i>
+              </td>
+            </tr>
+          </ng-template>
 
           <ng-template pTemplate="emptymessage">
             <tr>
-              <td colspan="5">No Builder found.</td>
+              <td colspan="5">No Project  found.</td>
               <td>
                 <i
                   class="fa fa-edit"
@@ -116,7 +125,7 @@
 
           <ng-template pTemplate="emptymessage">
             <tr>
-              <td colspan="5">No pallets found.</td>
+              <td colspan="5">No Project  found.</td>
             </tr>
           </ng-template>
         </p-table>
@@ -156,13 +165,17 @@
 
       <div class="col-sm-6 mb-3">
         <label>Builder Name</label>
-            <select class="form-select " formControlName="builderId"
-                                   >
-                                    <option [ngValue]=null [disabled]=true [selected]=true>--Choose Option--</option>
-                                    <option *ngFor="let builder of builderList" [ngValue]="builder.builderId">
-                                        {{builder.name}}
-                                    </option>
-                                </select>
+        <select class="form-select" formControlName="builderId">
+          <option [ngValue]="null" [disabled]="true" [selected]="true">
+            --Choose Option--
+          </option>
+          <option
+            *ngFor="let builder of builderList"
+            [ngValue]="builder.builderId"
+          >
+            {{ builder.name }}
+          </option>
+        </select>
         <!-- <input
           type="text"
           class="form-control"
@@ -172,11 +185,7 @@
 
       <div class="col-sm-6 mb-3">
         <label>Budget</label>
-        <input
-          type="number"
-          class="form-control"
-          formControlName="budget"
-        />
+        <input type="number" class="form-control" formControlName="budget" />
       </div>
 
       <div class="col-sm-6 mb-3">
@@ -199,11 +208,7 @@
 
       <div class="col-sm-6 mb-3">
         <label>Start Date</label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="startDate"
-        />
+        <input type="date" class="form-control" formControlName="startDate" />
       </div>
 
       <div class="col-sm-6 mb-3">
@@ -228,20 +233,12 @@
 
       <div class="col-sm-6 mb-3">
         <label>Status</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="status"
-        />
+        <input type="text" class="form-control" formControlName="status" />
       </div>
 
       <div class="col-sm-6 mb-3">
         <label>RERA Number</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="reraNumber"
-        />
+        <input type="text" class="form-control" formControlName="reraNumber" />
       </div>
 
       <div class="col-sm-6 mb-3">
@@ -273,12 +270,12 @@
 
       <div class="col-sm-6 mb-3">
         <label>Profile Image URL</label>
-       <input
-    type="file"
-    class="form-control"
-    (change)="onFileSelected($event)"
-    accept="image/*"
-  />
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
       </div>
     </div>
   </form>
@@ -296,4 +293,161 @@
       Close
     </button>
   </div>
+</p-dialog>
+
+<p-dialog
+  header="Project Milestone Details"
+  [(visible)]="showMilestoneDialog"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+>
+  <form
+    [formGroup]="milestoneForm"
+    autocomplete="off"
+    (ngSubmit)="saveMilestone()"
+  >
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <label>Milestone Name <sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="milestoneName"
+          [ngClass]="{
+            'is-invalid':
+              submitted && milestoneForm.controls['milestoneName'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && milestoneForm.controls['milestoneName'].errors"
+          class="invalid-feedback"
+        >
+          <small
+            *ngIf="milestoneForm.controls['milestoneName'].errors['required']"
+            >Milestone Name is required</small
+          >
+        </div>
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Milestone Details</label>
+        <textarea
+          class="form-control"
+          formControlName="milestoneDetails"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Budget <sup>*</sup></label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="budget"
+          [ngClass]="{
+            'is-invalid': submitted && milestoneForm.controls['budget'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && milestoneForm.controls['budget'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="milestoneForm.controls['budget'].errors['required']"
+            >Budget is required</small
+          >
+        </div>
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Budget Status</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="budgetStatus"
+        />
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Status <sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="status"
+          [ngClass]="{
+            'is-invalid': submitted && milestoneForm.controls['status'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && milestoneForm.controls['status'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="milestoneForm.controls['status'].errors['required']"
+            >Status is required</small
+          >
+        </div>
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Planned Start Date</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="plannedStartDate"
+        />
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Planned Target Date</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="plannedTargetDate"
+        />
+      </div>
+
+      <div class="col-sm-6 mb-3">
+        <label>Planned Duration (days) <sup>*</sup></label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="plannedDuration"
+          [ngClass]="{
+            'is-invalid':
+              submitted && milestoneForm.controls['plannedDuration'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && milestoneForm.controls['plannedDuration'].errors"
+          class="invalid-feedback"
+        >
+          <small
+            *ngIf="milestoneForm.controls['plannedDuration'].errors['required']"
+            >Planned Duration is required</small
+          >
+        </div>
+      </div>
+
+      <!-- You can include projectId hidden field if needed -->
+      <input type="hidden" formControlName="projectId" />
+    </div>
+
+    <div class="model-footer text-end">
+      <button type="submit" class="btn btn-primary m-2">Submit</button>
+      <button
+        type="button"
+        class="btn btn-secondary m-2"
+        (click)="resetMilestoneForm()"
+        *ngIf="resetVisible"
+      >
+        Reset
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger m-2"
+        (click)="closeMilestoneDialog()"
+      >
+        Close
+      </button>
+    </div>
+  </form>
 </p-dialog>

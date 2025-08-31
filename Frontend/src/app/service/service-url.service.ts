@@ -39,8 +39,11 @@ export const ServiceUrl = {
   //master
   getAllBuilder: "Builder/getAllBuilder",
   addUpdateBuilder: "Builder/addUpdateBuilder",
-  getAllActiveProject:"Project/getAllActiveProject",
+  getAllProjectOfBuilder:"Project/getAllProjectOfBuilder",
   addUpdateProject:"Project/addUpdateProject",
+  addUpdateMilestone:"Milestone/addUpdateMilestone",
+  getAllActiveMilestones:"Milestone/getAllActiveMilestones",
+  getAllActiveExpenses:"Expenses/getAllActiveExpenses",
 
 
 

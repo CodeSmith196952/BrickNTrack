@@ -51,6 +51,8 @@ import { UserRegistrationComponent } from "./Admin-Role/user-registration/user-r
 import { BuilderMasterComponent } from "./Master/builder-master/builder-master.component";
 import { ProjectMasterComponent } from "./Master/project-master/project-master.component";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
+import { ProjectmilestoneComponent } from './Master/project-master/Project-milestone/projectmilestone/projectmilestone.component';
+import { ExpensesComponent } from './Master/project-master/Expenses/expenses/expenses.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { EditProfileComponent } from "./edit-profile/edit-profile.component";
     UserRegistrationComponent,
     BuilderMasterComponent,
     EditProfileComponent,
+    ProjectmilestoneComponent,
+    ExpensesComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,8 @@ import { AuthGuard } from "./service/auth-guard.service";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { BuilderMasterComponent } from "./Master/builder-master/builder-master.component";
 import { ProjectMasterComponent } from "./Master/project-master/project-master.component";
+import { ProjectmilestoneComponent } from "./Master/project-master/Project-milestone/projectmilestone/projectmilestone.component";
+import { ExpensesComponent } from "./Master/project-master/Expenses/expenses/expenses.component";
 
 
 const routes: Routes = [
@@ -54,6 +56,8 @@ const routes: Routes = [
       { path: "editProfile", component: EditProfileComponent , canActivate: [AuthGuard]},
       { path: "buildermaster", component: BuilderMasterComponent , canActivate: [AuthGuard]},
       { path: "projectmaster", component: ProjectMasterComponent , canActivate: [AuthGuard]},
+      { path: "projectmilestone", component: ProjectmilestoneComponent , canActivate: [AuthGuard]},
+      { path: "expenses", component: ExpensesComponent , canActivate: [AuthGuard]},
      
     ],
   },

@@ -94,6 +94,16 @@ export class FullComponent {
           icon: "user",
           menu: "Project Master"
         },
+        {
+          link: "/projectmilestone",
+          icon: "user",
+          menu: "Project Milestone"
+        },
+        {
+          link: "/expenses",
+          icon: "user",
+          menu: "Expenses"
+        },
      
       ],
       link: ''
@@ -103,11 +113,11 @@ export class FullComponent {
       icon: "disc",
       menu: "Property Listing",
     },
-    {
-      link: "/progressTracker",
-      icon: "info",
-      menu: "Progress Tracker",
-    },
+    // {
+    //   link: "/progressTracker",
+    //   icon: "info",
+    //   menu: "Progress Tracker",
+    // },
 
 
     // {

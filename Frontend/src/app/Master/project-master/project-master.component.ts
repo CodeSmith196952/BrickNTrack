@@ -20,6 +20,12 @@ export class ProjectMasterComponent {
   ResetVisible: any;
 selectedImageFile: File | null = null;
 
+selectedProject: ProjectMilestoneRequest | null = null;
+showMilestoneDialog: boolean = false;
+milestoneForm!: FormGroup;
+
+resetVisible = false;
+
 
 
   public userAccessData: any = new UserScreenAccesData();
@@ -50,8 +56,8 @@ selectedImageFile: File | null = null;
       projectAddress: [''],
       latlong: [''],
       projectDescription: [''],
-      profileImage: [''],
-      ProfileImageFile: [''],
+      ProfileImage : [''],
+      // ProfileImageFile: [''],
 
       // isActive: ['', []]
 
@@ -72,6 +78,20 @@ selectedImageFile: File | null = null;
   ngOnInit(): void {
     this.getAllActiveProjects();
     this.getAllActiveBuilders();
+
+
+    this.milestoneForm = this.fb.group({
+      milestoneId: [0],
+      projectId: [0, Validators.required],
+      milestoneName: ['', Validators.required],
+      milestoneDetails: [''],
+      budget: [0, Validators.required],
+      budgetStatus: [''],
+      status: ['', Validators.required],
+      plannedStartDate: [null],
+      plannedTargetDate: [null],
+      plannedDuration: [0, Validators.required],
+    });
   }
 
 
@@ -91,32 +111,33 @@ onFileSelected(event: Event): void {
 
 
 saveProject() {
-  debugger
+  debugger;
   this.submitted = true;
 
   if (this.projectForm.invalid) return;
 
+  // Custom validation
   if (this.brickntrackService.commonValidation(this.projectForm.get('projectId')?.value)) {
     this.projectForm.get('projectId')?.setValue(0);
     this.projectForm.get('IsActive')?.setValue(true);
   }
 
   const formValues = this.projectForm.value;
-
   const formData = new FormData();
 
-  // Append all form fields
+  // Append all form fields except 'profileImage' to avoid duplication
   for (const key in formValues) {
-    if (formValues.hasOwnProperty(key)) {
+    if (formValues.hasOwnProperty(key) && key !== 'ProfileImage') {
       formData.append(key, formValues[key]);
     }
   }
 
-  // Append image file if available
+  // Append selected image file if available
   if (this.selectedImageFile) {
-    formData.append('ProfileImageFile', this.selectedImageFile);
+    formData.append('ProfileImage', this.selectedImageFile); // Match API expected key
   }
 
+  // Submit form data
   this.brickntrackService.post<any>(ServiceUrl.addUpdateProject, formData).subscribe(
     (res) => {
       Swal.fire('', res.responseMessage, 'success');
@@ -129,7 +150,6 @@ saveProject() {
     }
   );
 }
-
   acceptNumber(event: any, flag: boolean): void {
     flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
   }
@@ -146,6 +166,47 @@ saveProject() {
           }
         )
     }
+
+ openMilestoneDialog(projectId: number) {
+  this.submitted = false;
+  this.resetVisible = false;
+  this.showMilestoneDialog = true;
+
+  this.milestoneForm.reset({
+    milestoneId: 0,
+    projectId: projectId,
+    milestoneName: '',
+    milestoneDetails: '',
+    budget: 0,
+    budgetStatus: '',
+    status: '',
+    plannedStartDate: null,
+    plannedTargetDate: null,
+    plannedDuration: 0,
+  });
+}
+
+
+resetMilestoneForm() {
+  this.milestoneForm.reset({
+    milestoneId: 0,
+    projectId: this.milestoneForm.get('projectId')?.value || 0,
+    milestoneName: '',
+    milestoneDetails: '',
+    budget: 0,
+    budgetStatus: '',
+    status: '',
+    plannedStartDate: null,
+    plannedTargetDate: null,
+    plannedDuration: 0,
+  });
+  this.submitted = false;
+  this.resetVisible = false;
+}
+
+closeMilestoneDialog() {
+  this.showMilestoneDialog = false;
+}
 
   openProjectDialog() {
     debugger
@@ -168,7 +229,7 @@ saveProject() {
     this.projectForm.patchValue({
       projectId: value.projectId,
       projectName: value.projectName,
-      builderName: value.builderName,
+      builderId: value.builderId,
       budget: value.budget,
       completionDate: value.completionDate,
       actualCompletionDate: value.actualCompletionDate,
@@ -180,15 +241,41 @@ saveProject() {
       projectAddress: value.projectAddress,
       latlong: value.latlong,
       projectDescription: value.projectDescription,
-      profileImage: value.profileImage
+      ProfileImage: value.profileImage
     })
 
 
   }
 
+
+   saveMilestone() {
+    debugger
+    this.submitted = true;
+
+    if (this.milestoneForm.invalid) {
+      return;
+    }
+
+    const formData = this.milestoneForm.value;
+
+    this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formData)
+      .subscribe(
+        (res) => {
+          Swal.fire('', res.responseMessage, 'success');
+          this.showMilestoneDialog = false;
+          // Refresh your milestone list here if needed
+        },
+        (err) => {
+          Swal.fire('', err.error.errorMessage, 'error');
+          this.showMilestoneDialog = false;
+        }
+      );
+  }
+
+
   getAllActiveProjects() {
     debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveProject)
+    this.brickntrackService.get<any>(null, ServiceUrl.getAllProjectOfBuilder)
       .subscribe(
         (res) => {
           this.projectList = res
@@ -199,4 +286,21 @@ saveProject() {
       )
   }
 
+}
+
+
+
+
+
+export interface ProjectMilestoneRequest {
+  milestoneId: number;
+  projectId: number;
+  milestoneName: string;
+  milestoneDetails: string;
+  budget: number;
+  budgetStatus?: string;
+  status: string;
+  plannedStartDate?: Date;
+  plannedTargetDate?: Date;
+  plannedDuration: number;
 }

@@ -61,46 +61,55 @@ export class AuthInterceptor implements HttpInterceptor {
       headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
     });
   }
+private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  if (!this.isRefreshing) {
+    this.isRefreshing = true;
+    this.refreshTokenSubject.next(null);
 
-  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+    const refreshToken = sessionStorage.getItem('refresh-token');
+    this.tokenModel.token = refreshToken || '';
 
-      const refreshToken = sessionStorage.getItem('refresh-token'); // ✅ get refresh token
-      this.tokenModel.token = refreshToken || '';
+    if (refreshToken) {
+      return this.brickntrackService
+        .post<any>(ServiceUrl.refreshToken, this.tokenModel)
+        .pipe(
+          switchMap((response) => {
+            this.isRefreshing = false;
 
-      if (refreshToken) {
-        return this.brickntrackService
-          .post<any>(ServiceUrl.refreshToken, this.tokenModel)
-          .pipe(
-            switchMap((response) => {
-              if (response.jwtToken) {
-                this.isRefreshing = false;
+            if (response?.jwtToken) {
+              sessionStorage.setItem('auth-token', response.jwtToken);
+              sessionStorage.setItem('refresh-token', response.refreshToken);
 
-                // ✅ Save new tokens to session storage
-                sessionStorage.setItem('auth-token', response.jwtToken);
-                sessionStorage.setItem('refresh-token', response.refreshToken);
-
-                this.refreshTokenSubject.next(response.jwtToken);
-                return next.handle(this.addTokenHeader(request, response.jwtToken));
-              } else {
-                this.isRefreshing = false;
-                sessionStorage.clear();
-                return throwError(() => 'Token refresh failed.');
-              }
-            }),
-            catchError((error) => {
-              console.log(error);
-              this.isRefreshing = false;
-              sessionStorage.clear();
-              return throwError(() => error);
-            })
-          );
-      }
+              this.refreshTokenSubject.next(response.jwtToken);
+              return next.handle(this.addTokenHeader(request, response.jwtToken));
+            } else {
+              this.router.navigate(['/login']);
+              return throwError(() => 'Refresh failed');
+            }
+          }),
+          catchError((error) => {
+            this.isRefreshing = false;
+            this.router.navigate(['/login']);
+            return throwError(() => error);
+          })
+        );
+    } else {
+      this.router.navigate(['/login']);
     }
-    return next.handle(request);
   }
+
+  // If already refreshing, wait for the new token
+  return this.refreshTokenSubject.pipe(
+    switchMap((token: string | null) => {
+      if (token) {
+        return next.handle(this.addTokenHeader(request, token));
+      } else {
+        return throwError(() => 'Token refresh in progress failed.');
+      }
+    })
+  );
+}
+
 }
 
 export const authInterceptorProviders = [
