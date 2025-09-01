@@ -164,46 +164,8 @@
       </div>
 
       <div class="col-sm-6 mb-3">
-        <label>Builder Name</label>
-        <select class="form-select" formControlName="builderId">
-          <option [ngValue]="null" [disabled]="true" [selected]="true">
-            --Choose Option--
-          </option>
-          <option
-            *ngFor="let builder of builderList"
-            [ngValue]="builder.builderId"
-          >
-            {{ builder.name }}
-          </option>
-        </select>
-        <!-- <input
-          type="text"
-          class="form-control"
-          formControlName="builderName"
-        /> -->
-      </div>
-
-      <div class="col-sm-6 mb-3">
         <label>Budget</label>
         <input type="number" class="form-control" formControlName="budget" />
-      </div>
-
-      <div class="col-sm-6 mb-3">
-        <label>Completion Date</label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="completionDate"
-        />
-      </div>
-
-      <div class="col-sm-6 mb-3">
-        <label>Actual Completion Date</label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="actualCompletionDate"
-        />
       </div>
 
       <div class="col-sm-6 mb-3">
@@ -212,28 +174,37 @@
       </div>
 
       <div class="col-sm-6 mb-3">
-        <label>Actual Start Date</label>
+        <label>Completion Date</label>
+        <input type="date" class="form-control" formControlName="completionDate" />
+      </div>
+
+      <!-- <div class="col-sm-6 mb-3">
+        <label>Completion Date</label>
         <input
-          type="date"
-          class="form-control"
-          formControlName="actualStartDate"
-        />
+          type="date" class="form-control" formControlName="completionDate" />
+      </div> -->
+
+      <div class="col-sm-6 mb-3">
+        <label>Status</label>
+        <select class="form-select" formControlName="status">
+          <option ngValue="New" [selected]="true">
+            New
+          </option>
+          <option ngValue="In Progress" >
+            In Progress
+          </option>
+          <option ngValue="Completed" >
+            Completed
+          </option>
+          <option ngValue="Hold" >
+            Hold
+          </option>
+        </select>
       </div>
 
       <div class="col-sm-6 mb-3">
         <label>Completion %</label>
-        <input
-          type="number"
-          class="form-control"
-          formControlName="completionPercentage"
-          min="0"
-          max="100"
-        />
-      </div>
-
-      <div class="col-sm-6 mb-3">
-        <label>Status</label>
-        <input type="text" class="form-control" formControlName="status" />
+        <input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100" />
       </div>
 
       <div class="col-sm-6 mb-3">

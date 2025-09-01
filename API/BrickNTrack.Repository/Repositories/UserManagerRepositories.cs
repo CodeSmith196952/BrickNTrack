@@ -44,7 +44,7 @@ namespace BrickNTrack.Repository.Repositories
             {
                 JwtToken = token,
                 RefreshToken = refreshToken,
-                Expiration = DateTime.UtcNow.AddMinutes(15),
+                Expiration = DateTime.UtcNow.AddMinutes(int.Parse(_config["JwtSettings:DurationInMinutes"]!)),
                 UserId = user.Id
             };
 
@@ -63,7 +63,7 @@ namespace BrickNTrack.Repository.Repositories
             return (response);
         }
 
-        public async Task<(string token, string refreshToken)> RefreshTokenAsync(RefreshRequestDTO request)
+        public async Task<RefreshResponseDTO> RefreshTokenAsync(RefreshRequestDTO request)
         {
             var tokenEntry = await _context.Tokens.Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.RefreshToken == request.RefreshToken);
@@ -76,11 +76,15 @@ namespace BrickNTrack.Repository.Repositories
 
             tokenEntry.JwtToken = newToken;
             tokenEntry.RefreshToken = newRefresh;
-            tokenEntry.Expiration = DateTime.UtcNow.AddMinutes(15);
+            tokenEntry.Expiration = DateTime.UtcNow.AddMinutes(int.Parse(_config["JwtSettings:RefreshTokenTTL"]!));
 
             await _context.SaveChangesAsync();
-
-            return (newToken, newRefresh);
+            var refreshTokenResponse = new RefreshResponseDTO()
+            {
+                JwtToken = newToken,
+                RefreshToken = newRefresh
+            };
+            return refreshTokenResponse;
         }
 
         public string GenerateToken(UserManager user)
@@ -93,7 +97,7 @@ namespace BrickNTrack.Repository.Repositories
             new Claim("BuilderId", user.BuilderId.ToString()),
             //new Claim(ClaimTypes.Role, user.RoleName)
         };
-
+            Console.WriteLine(DateTime.Now.AddMinutes(int.Parse(_config["JwtSettings:DurationInMinutes"]!)));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

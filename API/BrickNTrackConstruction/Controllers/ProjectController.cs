@@ -1,7 +1,6 @@
 ﻿using BrickNTrack.Business.BusinessLogic;
 using BrickNTrack.Doman.Model;
 using BrickNTrack.Repository.Interface;
-using BrickNTrack.Repository.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -25,9 +24,13 @@ namespace BrickNTrackConstruction.Controllers
 
         [Route("addUpdateProject")]
         [HttpPost]
-        public async Task<IActionResult> AddUpdateProjectAsync([FromBody] ProjectMasterRequest request)
+        public async Task<IActionResult> AddUpdateProjectAsync([FromForm] ProjectMasterRequest request)
         {
             var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            var builderId = User.FindFirst("BuilderId")?.Value;
+            if (builderId == null)
+                return NotFound("Please login again.");
+            request.BuilderId = Convert.ToInt32(builderId);
             var result = await _projectManager.AddUpdateImageAsync(request, userName);
             if (result.StatusCode == ResultCode.SuccessfullyCreated || result.StatusCode == ResultCode.SuccessfullyUpdated)
                 return Ok(result);

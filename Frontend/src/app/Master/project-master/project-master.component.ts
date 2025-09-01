@@ -38,32 +38,7 @@ resetVisible = false;
 
   ) {
 
-    this.projectForm = this.fb.group({
-      projectId: [''],
-
-      projectName: ['',],
-      builderId: ['',],
-      budget: ['',],
-
-      completionDate: [''],
-
-      actualCompletionDate: [''],
-      startDate: [''],
-      actualStartDate: [''],
-      completionPercentage: [''],
-      status: [''],
-      reraNumber: [''],
-      projectAddress: [''],
-      latlong: [''],
-      projectDescription: [''],
-      ProfileImage : [''],
-      // ProfileImageFile: [''],
-
-      // isActive: ['', []]
-
-
-
-    });
+    
     // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
 
   }
@@ -77,8 +52,8 @@ resetVisible = false;
 
   ngOnInit(): void {
     this.getAllActiveProjects();
-    this.getAllActiveBuilders();
-
+    //this.getAllActiveBuilders();
+    this.ResetProjectForm();
 
     this.milestoneForm = this.fb.group({
       milestoneId: [0],
@@ -94,11 +69,33 @@ resetVisible = false;
     });
   }
 
+  ResetProjectForm(){
+    this.projectForm = this.fb.group({
+      projectId: [''],
+
+      projectName: ['',],
+      budget: ['',],
+
+      completionDate: [''],
+
+      startDate: [''],
+      completionPercentage: [0],
+      status: ['New'],
+      reraNumber: [''],
+      projectAddress: [''],
+      latlong: [''],
+      projectDescription: ['']
+      // ProfileImageFile: [''],
+
+      // isActive: ['', []]
+    });
+  }
+
 
   ResetDialog() {
     this.submitted = false;
 
-    this.projectForm.reset();
+    this.ResetProjectForm();
   }
 
 
@@ -134,7 +131,7 @@ saveProject() {
 
   // Append selected image file if available
   if (this.selectedImageFile) {
-    formData.append('ProfileImage', this.selectedImageFile); // Match API expected key
+    formData.append('ProfileImageFile', this.selectedImageFile); // Match API expected key
   }
 
   // Submit form data
@@ -229,19 +226,15 @@ closeMilestoneDialog() {
     this.projectForm.patchValue({
       projectId: value.projectId,
       projectName: value.projectName,
-      builderId: value.builderId,
       budget: value.budget,
       completionDate: value.completionDate,
-      actualCompletionDate: value.actualCompletionDate,
       startDate: value.startDate,
-      actualStartDate: value.actualStartDate,
       completionPercentage: value.completionPercentage,
       status: value.status,
       reraNumber: value.reraNumber,
       projectAddress: value.projectAddress,
       latlong: value.latlong,
-      projectDescription: value.projectDescription,
-      ProfileImage: value.profileImage
+      projectDescription: value.projectDescription
     })
 
 

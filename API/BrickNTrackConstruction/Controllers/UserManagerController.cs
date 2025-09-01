@@ -64,7 +64,7 @@ namespace BrickNTrackConstruction.Controllers
         }
 
         [HttpPost("RefreshToken")]
-        public async Task<IActionResult> RefreshTokenAsync([FromQuery] RefreshRequestDTO request)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshRequestDTO request)
         {
             var result = await _userManager.RefreshTokenAsync(request);
             return Ok(result);

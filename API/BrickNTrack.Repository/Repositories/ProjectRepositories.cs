@@ -195,10 +195,10 @@ namespace BrickNTrack.Repository.Repositories
                             project.StartDate = request.StartDate;
                         if (project.CompletionDate != request.CompletionDate)
                             project.CompletionDate = request.CompletionDate;
-                        if (project.ActualStartDate != request.ActualStartDate)
-                            project.ActualStartDate = request.ActualStartDate;
-                        if (project.ActualCompletionDate != request.ActualCompletionDate)
-                            project.ActualCompletionDate = request.ActualCompletionDate;
+                        //if (project.ActualStartDate != request.ActualStartDate)
+                        //    project.ActualStartDate = request.ActualStartDate;
+                        //if (project.ActualCompletionDate != request.ActualCompletionDate)
+                        //    project.ActualCompletionDate = request.ActualCompletionDate;
                         if (project.ProjectAddress != request.ProjectAddress)
                             project.ProjectAddress = request.ProjectAddress;
                         if (project.Latlong != request.Latlong)

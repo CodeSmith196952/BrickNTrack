@@ -40,6 +40,7 @@ namespace BrickNTrack.Business.BusinessLogic
                     }
 
                     var virtualImagePath = filePath.Replace(imageLocalPath, imageVirtualPath);
+                    virtualImagePath = virtualImagePath.Replace("\\", "/");
                     request.ProfileImage = virtualImagePath;
                 }
 
