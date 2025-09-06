@@ -15,6 +15,7 @@
         public DateTime? ActualStartDate { get; set; }
         public DateTime? ActualTargetDate { get; set; }
         public int ActualDuration { get; set; }
+        public int MilestoneCompletionPer { get; set; }
         public ProjectMaster ProjectMaster { get; set; }
         public ICollection<ProjectExpenses> ProjectExpenses { get; set; }
     }

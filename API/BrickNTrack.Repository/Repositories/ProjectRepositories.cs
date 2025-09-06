@@ -243,7 +243,7 @@ namespace BrickNTrack.Repository.Repositories
             try
             {
                 var projectDetail = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
-                if (projectDetail != null)
+                if (projectDetail == null)
                 {
                     retValue.StatusCode = ResultCode.RecordNotFound;
                     retValue.ErrorMessage = "Property not found";

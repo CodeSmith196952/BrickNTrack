@@ -86,7 +86,7 @@ namespace BrickNTrack.Business.BusinessLogic
 
                     var virtualImagePath = filePath.Replace(imageLocalPath, imageVirtualPath);
                     request.Path = virtualImagePath;
-                    request.FileType = fileExtension;
+                    request.FileType = fileExtension.Replace(".","").ToUpper();
                 }
                 return await _project.AddUpdateProjectDataFileAsync(request, userName);
             }

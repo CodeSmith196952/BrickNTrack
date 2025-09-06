@@ -14,5 +14,6 @@ namespace BrickNTrack.Doman.Model
         public DateTime? PlannedStartDate { get; set; }
         public DateTime? PlannedTargetDate { get; set; }
         public int PlannedDuration { get; set; }
+        public int MilestoneCompletionPer { get; set; }
     }
 }

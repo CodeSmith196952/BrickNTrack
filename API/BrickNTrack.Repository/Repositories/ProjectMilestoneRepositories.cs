@@ -40,6 +40,7 @@ namespace BrickNTrack.Repository.Repositories
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
                     request.BudgetStatus = BudgetStatusConstant.InBudget;
+                    request.Status = MilestoneStatus.New;
                     if (request.PlannedStartDate.HasValue && request.PlannedTargetDate.HasValue)
                     {
                         TimeSpan planedDuration = request.PlannedTargetDate.Value - request.PlannedStartDate.Value;
@@ -56,7 +57,7 @@ namespace BrickNTrack.Repository.Repositories
                     var milestone = await _context.ProjectMilestones.FirstOrDefaultAsync(x => x.MilestoneId == request.MilestoneId);
                     if (milestone != null)
                     {
-                        if (request.MilestoneId != milestone.ProjectId)
+                        if (request.ProjectId != milestone.ProjectId)
                             milestone.ProjectId = request.ProjectId;
 
                         if (request.MilestoneName != milestone.MilestoneName)
@@ -77,21 +78,26 @@ namespace BrickNTrack.Repository.Repositories
                         if (request.PlannedTargetDate != milestone.PlannedTargetDate)
                             milestone.PlannedTargetDate = request.PlannedTargetDate;
 
+                        if (request.MilestoneCompletionPer != milestone.MilestoneCompletionPer)
+                            milestone.MilestoneCompletionPer = request.MilestoneCompletionPer;
+
                         if (request.PlannedStartDate.HasValue && request.PlannedTargetDate.HasValue)
                         {
                             TimeSpan planedDuration = request.PlannedTargetDate.Value - request.PlannedStartDate.Value;
                             milestone.PlannedDuration = (int)planedDuration.TotalDays;
                         }
 
-                        if (request.Status == MilestoneStatus.WIP)
+                        if (request.Status == MilestoneStatus.InProgress)
                             milestone.ActualStartDate = CommonHelper.GetISTTime(DateTime.Now);
                         else if (request.Status == MilestoneStatus.Completed)
                         {
                             milestone.ActualTargetDate = CommonHelper.GetISTTime(DateTime.Now);
                             TimeSpan actualDuration = milestone.ActualTargetDate.Value - milestone.ActualStartDate.Value;
                             milestone.ActualDuration = (int)actualDuration.TotalDays;
+                            milestone.IsActive = false;
                         }
-                        milestone.IsActive = request.IsActive;
+                        if (request.Status == MilestoneStatus.Completed)
+                            milestone.IsActive = request.IsActive;
                         milestone.ModifiedBy = username;
                         milestone.ModifiedDate = CommonHelper.GetISTTime(DateTime.Now);
                         _context.ProjectMilestones.Update(milestone);

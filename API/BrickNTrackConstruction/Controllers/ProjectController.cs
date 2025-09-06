@@ -86,7 +86,7 @@ namespace BrickNTrackConstruction.Controllers
 
         [Route("addUpdatePropertyImages")]
         [HttpPost]
-        public async Task<IActionResult> AddUpdatePropertyImagesAsync([FromBody] ProjectDataPathRequest request)
+        public async Task<IActionResult> AddUpdatePropertyImagesAsync([FromForm] ProjectDataPathRequest request)
         {
             var userName = User.FindFirst(ClaimTypes.Name)?.Value;
             var result = await _projectManager.AddUpdatePropertyImagesAsync(request, userName);

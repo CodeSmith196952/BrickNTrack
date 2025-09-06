@@ -16,5 +16,6 @@
         public DateTime? ActualTargetDate { get; set; }
         public int ActualDuration { get; set; }
         public string ProjectName { get; set; }
+        public int MilestoneCompletionPer { get; set; }
     }
 }

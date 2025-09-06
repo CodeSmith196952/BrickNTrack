@@ -17,9 +17,11 @@
 
         public static class  MilestoneStatus
         {
+            public static string New = "New";
             public static string Pending = "Pending";
-            public static string WIP = "WIP";
+            public static string InProgress = "In Progress";
             public static string Completed = "Completed";
+            public static string Hold = "Hold";
         }
 
         public static class BudgetStatusConstant
