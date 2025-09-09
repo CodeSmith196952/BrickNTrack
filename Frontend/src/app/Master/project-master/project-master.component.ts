@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
 import { ServiceUrl } from 'src/app/service/service-url.service';
@@ -31,7 +32,7 @@ resetVisible = false;
   public userAccessData: any = new UserScreenAccesData();
   title!: string;
   builderList: any;
-  constructor(
+  constructor(private router: Router,
     private brickntrackService: brickntrackService,
     private fb: FormBuilder,
 
@@ -216,29 +217,10 @@ closeMilestoneDialog() {
 
   closeProjectDialog() {
     this.displayProjectDialog = false;
-
   }
-  editProject(value: any) {
-    this.title = "Edit Project ";
-    this.displayProjectDialog = true
-    this.ActiveButtonVisible = true
-    this.ResetVisible = false
-    this.projectForm.patchValue({
-      projectId: value.projectId,
-      projectName: value.projectName,
-      budget: value.budget,
-      completionDate: value.completionDate,
-      startDate: value.startDate,
-      completionPercentage: value.completionPercentage,
-      status: value.status,
-      reraNumber: value.reraNumber,
-      projectAddress: value.projectAddress,
-      latlong: value.latlong,
-      projectDescription: value.projectDescription
-    })
-
-
-  }
+editProject(project: any) {
+  this.router.navigate(['projectmilestone', project.projectId]);
+}
 
 
    saveMilestone() {

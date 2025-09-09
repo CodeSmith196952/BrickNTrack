@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
 import { ServiceUrl } from 'src/app/service/service-url.service';
@@ -35,6 +36,7 @@ resetVisible = false;
   expensesList: any;
   constructor(
     private brickntrackService: brickntrackService,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
 
 
@@ -68,7 +70,15 @@ resetVisible = false;
 
 
   ngOnInit(): void {
-    this.getAllActiveExpenses();
+
+       const milestoneId = this.route.snapshot.paramMap.get('id');
+  if (milestoneId) {
+    this.getAllActiveExpenses(milestoneId);
+  }
+
+   
+
+    // this.getAllActiveExpenses();
   
     this.getAllActiveMilestone();
 
@@ -145,7 +155,7 @@ resetVisible = false;
         (res) => {
           Swal.fire('', res.responseMessage, 'success');
           this.showMilestoneDialog = false;
-          this.getAllActiveExpenses()
+          // this.getAllActiveExpenses()
         },
         (err) => {
           Swal.fire('', err.error.errorMessage, 'error');
@@ -155,9 +165,10 @@ resetVisible = false;
   }
 
 
-  getAllActiveExpenses() {
+  getAllActiveExpenses(milestoneId : string) {
     debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveExpenses)
+      const payload = { milestoneId  };
+    this.brickntrackService.get<any>(null, ServiceUrl.getAllExpensesByMilestoneId,payload)
       .subscribe(
         (res) => {
           this.expensesList = res

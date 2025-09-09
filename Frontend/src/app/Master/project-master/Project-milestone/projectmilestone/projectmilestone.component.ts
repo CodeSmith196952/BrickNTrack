@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
 import { ServiceUrl } from 'src/app/service/service-url.service';
@@ -19,7 +20,7 @@ export class ProjectmilestoneComponent {
   ActiveButtonVisible: boolean = false
   ResetVisible: any;
 selectedImageFile: File | null = null;
-
+expandedProjectId: number | null = null;
 
 showMilestoneDialog: boolean = false;
 milestoneForm!: FormGroup;
@@ -32,7 +33,8 @@ resetVisible = false;
   title!: string;
   builderList: any;
   projectList: any;
-  constructor(
+  constructor(private route: ActivatedRoute,
+    private router: Router,
     private brickntrackService: brickntrackService,
     private fb: FormBuilder,
 
@@ -70,9 +72,16 @@ resetVisible = false;
 
 
   ngOnInit(): void {
-    this.getAllActiveMilestone();
+debugger
+     const projectId = this.route.snapshot.paramMap.get('id');
+  if (projectId) {
+    this.getAllActiveMilestone(projectId);
+  }
+
+
+    // this.getAllActiveMilestone();
   
-    this.getAllActiveProjects();
+    // this.getAllActiveProjects();
 
 
   }
@@ -106,7 +115,7 @@ saveMilestone() {
   this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formValues).subscribe(
     (res) => {
       Swal.fire('', res.responseMessage, 'success');
-      this.getAllActiveMilestone();
+      // this.getAllActiveMilestone();
       this.displayProjectDialog = false;
     },
     (err) => {
@@ -206,19 +215,27 @@ closeMilestoneDialog() {
   }
 
 
-  getAllActiveMilestone() {
-    debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveMilestones)
-      .subscribe(
-        (res) => {
-          this.milestoneList = res
-        },
-        (err) => {
-          Swal.fire("", err.error.message, "error")
-        }
-      )
-  }
+getAllActiveMilestone(projectId: string) {
+  debugger;
+  const payload = { projectId };
+  this.brickntrackService.get<any>(null,ServiceUrl.getMilestonesByProjectId,payload)
+    .subscribe(
+      (res) => {
+        this.milestoneList = res;
+      },
+      (err) => {
+        Swal.fire("", err.error.message, "error");
+      }
+    );
+}
 
+
+
+  viewExpense(milestone: any) {
+    debugger
+      this.router.navigate(['expenses', milestone.milestoneId]);
+
+}
 
     getAllActiveProjects() {
       debugger
@@ -232,7 +249,14 @@ closeMilestoneDialog() {
           }
         )
     }
-  
+  toggleCard(projectId: number | null) {
+    if (this.expandedProjectId === projectId) {
+      this.expandedProjectId = null; // collapse
+    } else {
+      this.expandedProjectId = projectId; // expand
+    }
+  }
+
 
 }
 

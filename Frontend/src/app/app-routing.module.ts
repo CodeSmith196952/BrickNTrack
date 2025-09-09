@@ -56,8 +56,8 @@ const routes: Routes = [
       { path: "editProfile", component: EditProfileComponent , canActivate: [AuthGuard]},
       { path: "buildermaster", component: BuilderMasterComponent , canActivate: [AuthGuard]},
       { path: "projectmaster", component: ProjectMasterComponent , canActivate: [AuthGuard]},
-      { path: "projectmilestone", component: ProjectmilestoneComponent , canActivate: [AuthGuard]},
-      { path: "expenses", component: ExpensesComponent , canActivate: [AuthGuard]},
+      { path: "projectmilestone/:id", component: ProjectmilestoneComponent , canActivate: [AuthGuard]},
+      { path: "expenses/:id", component: ExpensesComponent , canActivate: [AuthGuard]},
      
     ],
   },

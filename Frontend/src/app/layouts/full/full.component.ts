@@ -94,16 +94,16 @@ export class FullComponent {
           icon: "user",
           menu: "Project Master"
         },
-        {
-          link: "/projectmilestone",
-          icon: "user",
-          menu: "Project Milestone"
-        },
-        {
-          link: "/expenses",
-          icon: "user",
-          menu: "Expenses"
-        },
+        // {
+        //   link: "/projectmilestone",
+        //   icon: "user",
+        //   menu: "Project Milestone"
+        // },
+        // {
+        //   link: "/expenses",
+        //   icon: "user",
+        //   menu: "Expenses"
+        // },
      
       ],
       link: ''

@@ -33,6 +33,9 @@ import { TabViewModule } from "primeng/tabview";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputNumberModule } from "primeng/inputnumber";
 
+//newmodule
+
+
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { ComponentsModule } from "./components/components.module";
