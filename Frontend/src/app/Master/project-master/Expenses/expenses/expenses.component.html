@@ -1,6 +1,15 @@
 <p-toast position="bottom-right"></p-toast>
 
 <div class="row g-3">
+    <div class="d-flex justify-content-end">
+
+    <button
+    class="btn btn-outline-secondary btn-sm"
+    (click)="openProjectDialog()"
+  >
+    <i class="fa fa-plus me-1"></i> Add Expenses
+  </button>
+  </div>
   <div
     class="col-md-6 col-lg-4"
     *ngFor="let expense of expensesList; let i = index"
@@ -9,13 +18,10 @@
       <!-- Background image container -->
       <div
         class="card-bg-image text-white h-100 d-flex flex-column justify-content-between"
-        [ngStyle]="{
-          'background-image':
-            'url(' + (expense.imageUrl || '../../../../../assets/images/20770216_Sandy_Bus-41_Single-12.jpg') + ')'
-        }"
+       
       >
         <!-- Semi-transparent overlay for readability -->
-        <div class="bg-dark bg-opacity-60 h-100 p-3">
+        <div class="h-100 p-3">
           <mat-card-header class="custom text-white">
             <div
               mat-card-avatar
@@ -27,7 +33,7 @@
             <mat-card-subtitle>{{ expense.details }}</mat-card-subtitle>
           </mat-card-header>
 
-          <mat-card-content class="text-white">
+          <mat-card-content class="text-dark">
             <p class="mb-1">
               <strong>Vendor Supplier:</strong> {{ expense.vendorSupplier }}
             </p>
@@ -40,7 +46,7 @@
 
           <mat-card-actions class="d-flex justify-content-center px-3 mt-3">
             <button
-              class="btn btn-outline-light btn-sm"
+              class="btn btn-outline-primary btn-sm"
               (click)="editexpenses(expense); $event.stopPropagation()"
             >
               <i class="fa fa-edit me-1"></i> Edit

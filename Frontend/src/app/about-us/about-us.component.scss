@@ -11,7 +11,7 @@ header {
 
 header::after {
 	content: " ";
-	background-image: url('../../assets/images/banner.jpg');
+	background-image: url('../../assets/images/aboutus.png');
 	background-position: left;
 	background-size: cover;
 	position: absolute;
@@ -1702,7 +1702,7 @@ article.customShadow:hover i {
     text-decoration: none;
     padding: 6px 12px;
   
-    color: white;
+    color: black;
     border-radius: 4px;
   }
 
@@ -1769,16 +1769,4 @@ article.customShadow:hover i {
 #customeRatesblock  {
   text-align: center;
   flex: 1 1 200px;
-}
-
-
-
-
-
-.customBandage {
-  background: aliceblue;
-  color: #2563eb;
-  font-size: 10px;
-  border-radius: 1rem;
-  padding: 0rem 1rem 0rem 1rem;
 }

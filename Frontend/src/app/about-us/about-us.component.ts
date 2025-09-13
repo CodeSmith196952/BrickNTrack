@@ -8,19 +8,11 @@ import {
   stagger
 } from '@angular/animations';
 
-
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
-import Swal from 'sweetalert2';
-import { ServiceUrl } from '../service/service-url.service';
-
-
 @Component({
-  selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'],
-    animations: [
+  selector: 'app-about-us',
+  templateUrl: './about-us.component.html',
+  styleUrls: ['./about-us.component.scss'],
+      animations: [
     trigger('listAnimation', [
       transition(':enter', []), // Disable default enter
       transition('* => visible', [
@@ -34,7 +26,7 @@ import { ServiceUrl } from '../service/service-url.service';
     ])
   ]
 })
-export class LandingPageComponent implements OnInit,AfterViewInit {
+export class AboutUsComponent {
  @ViewChild('ratesSection') ratesSection!: ElementRef;
  @ViewChild('storeSection', { static: true }) storeSection!: ElementRef;
   animationState = 'hidden';
@@ -58,16 +50,11 @@ showPopup = true;
   verifiedBuilders: number = 0;
   averageRating: number = 0;
   satisfactionRate: number = 0;
-visibleSlidesCount = 1
+
   animated = false;
-  projectList: any;
-  projectDataList: any;
-  constructor(private router: Router,
-      private brickntrackService: brickntrackService,
-      private fb: FormBuilder,) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getAllActiveProjects()
       // Auto close after 5 seconds
     // setTimeout(() => {
     //   this.showPopup = false;
@@ -136,71 +123,5 @@ visibleSlidesCount = 1
   }
 
 
-     getAllActiveProjects() {
-        debugger
-        this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveProject)
-          .subscribe(
-            (res) => {
-              this.projectList = res
-              this.getAllProjectDataDetail();
-            },
-            (err) => {
-              Swal.fire("", err.error.message, "error")
-            }
-          )
-      }
-     getAllProjectDataDetail() {
-        debugger
-        this.brickntrackService.get<any>(null, ServiceUrl.getAllProjectDataDetail)
-          .subscribe(
-            (res) => {
-              this.projectDataList = res
   
-                this.projectList = this.projectList.map((project: { projectId: any; }) => {
-            const relatedMedia = this.projectDataList.filter((data: { projectId: any; }) => data.projectId === project.projectId);
-            return {
-              ...project,
-              media: relatedMedia
-            };
-          });
-  
-            },
-            (err) => {
-              Swal.fire("", err.error.message, "error")
-            }
-          )
-      }
-    sanitizeImagePath(path: string): string {
-    if (!path) return 'assets/images/no-image.jpg'; // fallback image
-  
-    // Example: Replace local path with public server URL
-    return path.replace("D://BrickNTrack//", "https://yourdomain.com/assets/").replace(/\\/g, "/");
-  }
-  
-  getProjectImagePath(project: any): string {
-    if (project.media && project.media.length > 0) {
-      return this.sanitizeImagePath(project.media[0].path);
-    }
-    return 'assets/images/no-image.jpg'; // default image
-  }
-   get projectSlides(): any[][] {
-    const chunkSize = 3;
-    const slides: any[][] = [];
-
-    const visibleProjects = this.projectList.slice(0, this.visibleSlidesCount * chunkSize);
-
-    for (let i = 0; i < visibleProjects.length; i += chunkSize) {
-      slides.push(visibleProjects.slice(i, i + chunkSize));
-    }
-    return slides;
-  }
-
-  viewMore() {
-    this.visibleSlidesCount += 1;
-  }
-
-  get hasMoreProjects(): boolean {
-    return this.visibleSlidesCount * 3 < this.projectList.length;
-  }
-
 }

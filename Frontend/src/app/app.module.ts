@@ -56,6 +56,7 @@ import { ProjectMasterComponent } from "./Master/project-master/project-master.c
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { ProjectmilestoneComponent } from './Master/project-master/Project-milestone/projectmilestone/projectmilestone.component';
 import { ExpensesComponent } from './Master/project-master/Expenses/expenses/expenses.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ExpensesComponent } from './Master/project-master/Expenses/expenses/exp
     EditProfileComponent,
     ProjectmilestoneComponent,
     ExpensesComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,

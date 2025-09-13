@@ -47,6 +47,8 @@ export const ServiceUrl = {
   getAllActiveExpenses:"Expenses/getAllActiveExpenses",
   getAllExpensesByMilestoneId:"Expenses/getAllExpensesByMilestoneId",
 
+  getAllActiveProject :"Project/getAllActiveProject",
+  getAllProjectDataDetail :"Project/getAllProjectDataDetail",
 
 
 };  

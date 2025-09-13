@@ -1,15 +1,15 @@
 .project-card {
   cursor: pointer;
   border-radius: 12px;
-  background: linear-gradient(135deg, #e1a734, #ffffff);
-  color: white;
+  // background: linear-gradient(135deg, #e1a734, #ffffff);
+  color: black;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 8px 20px rgba(37, 117, 252, 0.2);
 
   mat-card-header,
   mat-card-content,
   mat-card-actions {
-    color: white;
+    color: black;
   }
   i{
     font-size: 1rem;
@@ -30,7 +30,7 @@
 
   .project-avatar {
     background: rgba(255, 255, 255, 0.2);
-    color: white;
+    color: burlywood;
   }
 
   &:hover {
@@ -85,7 +85,7 @@
 
 .project-card .mat-card-title,
 .project-card .mat-card-subtitle {
-  color: #fff;
+  color: black;
 }
 
 .bg-opacity-50 {

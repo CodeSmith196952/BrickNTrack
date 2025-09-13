@@ -34,6 +34,7 @@ import { BuilderMasterComponent } from "./Master/builder-master/builder-master.c
 import { ProjectMasterComponent } from "./Master/project-master/project-master.component";
 import { ProjectmilestoneComponent } from "./Master/project-master/Project-milestone/projectmilestone/projectmilestone.component";
 import { ExpensesComponent } from "./Master/project-master/Expenses/expenses/expenses.component";
+import { AboutUsComponent } from "./about-us/about-us.component";
 
 
 const routes: Routes = [
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: "exploreProperties", component: ExplorePropertiesComponent },
   { path: "login", component: LoginComponent },
   { path: "contactUs", component: ContactUsComponent },
-  { path: "propertyInformation", component: PropertyInformationComponent },
+  { path: "aboutUs", component: AboutUsComponent },
+  { path: "propertyInformation/:id", component: PropertyInformationComponent },
 
   {
     path: "",

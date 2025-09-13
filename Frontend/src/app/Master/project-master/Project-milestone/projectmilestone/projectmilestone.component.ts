@@ -157,6 +157,7 @@ closeMilestoneDialog() {
     debugger
     this.displayProjectDialog = true;
     this.ResetVisible = true;
+    this.milestoneForm.reset()
     this.ActiveButtonVisible = false;
     this.ResetDialog();
     this.title = "Add Project"
@@ -167,10 +168,13 @@ closeMilestoneDialog() {
 
   }
   editProject(value: any) {
+    debugger
     this.title = "Edit Milestone ";
     this.displayProjectDialog = true
     this.ActiveButtonVisible = true
     this.ResetVisible = false
+    const plannedStartDate = value.plannedStartDate?.split('T')[0];
+  const plannedTargetDate = value.plannedTargetDate?.split('T')[0];
     this.milestoneForm.patchValue({
       milestoneId: value.milestoneId,
       projectId: value.projectId,
@@ -178,8 +182,8 @@ closeMilestoneDialog() {
       milestoneDetails: value.milestoneDetails,
       plannedDuration: value.plannedDuration,
       budget: value.budget,
-      plannedStartDate: value.plannedStartDate,
-      plannedTargetDate: value.plannedTargetDate,
+      plannedStartDate: plannedStartDate,
+      plannedTargetDate: plannedTargetDate,
       budgetStatus: value.budgetStatus,
  
       status: value.status,

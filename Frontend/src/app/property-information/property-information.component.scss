@@ -698,3 +698,15 @@ footer {
     margin-bottom: 20px; /* Adds spacing between stacked columns */
   }
 }
+
+
+.customPadding{
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}.my-story-img img {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+.my-story-img img:hover {
+  border-color: #007bff;
+}

@@ -111,6 +111,7 @@ resetVisible = false;
     debugger
     this.displayProjectDialog = true;
     this.ResetVisible = true;
+    this.milestoneForm.reset()
     this.ActiveButtonVisible = false;
     this.ResetDialog();
     this.title = "Add Expenses"

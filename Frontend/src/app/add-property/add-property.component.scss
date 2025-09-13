@@ -40,3 +40,9 @@ border-radius: 10px;
         background: aliceblue;
     border-radius: 1rem;
 }
+@media (min-width: 576px) {
+    .col-sm-4 {
+        flex: 0 0 auto;
+        width: 32.333333%;
+    }
+}
