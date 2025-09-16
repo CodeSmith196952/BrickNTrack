@@ -39,7 +39,26 @@ resetVisible = false;
 
   ) {
 
-    
+    this.projectForm = this.fb.group({
+  projectId: [''],
+
+  projectName: ['', Validators.required],
+  budget: ['', Validators.required],
+
+  completionDate: ['', Validators.required],
+  startDate: ['', Validators.required],
+
+  completionPercentage: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+  status: ['New', Validators.required],
+
+  reraNumber: ['', Validators.required],
+  projectAddress: ['', Validators.required],
+  latlong: ['', Validators.required],
+  projectDescription: ['', Validators.required]
+
+  // If you decide to include ProfileImageFile:
+  // ProfileImageFile: [null, Validators.required],
+});
     // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
 
   }
@@ -54,7 +73,7 @@ resetVisible = false;
   ngOnInit(): void {
     this.getAllActiveProjects();
     //this.getAllActiveBuilders();
-    this.ResetProjectForm();
+    // this.ResetProjectForm();
 
     this.milestoneForm = this.fb.group({
       milestoneId: [0],
@@ -111,8 +130,11 @@ onFileSelected(event: Event): void {
 saveProject() {
   debugger;
   this.submitted = true;
-
-  if (this.projectForm.invalid) return;
+  this.projectForm.markAllAsTouched();
+  this.projectForm.updateValueAndValidity();
+   if (this.projectForm.invalid) {
+    return;
+  }
 
   // Custom validation
   if (this.brickntrackService.commonValidation(this.projectForm.get('projectId')?.value)) {
@@ -143,7 +165,7 @@ saveProject() {
       this.displayProjectDialog = false;
     },
     (err) => {
-      Swal.fire('', err.error.errorMessage, 'error');
+      Swal.fire('', err.error.title, 'error');
       this.displayProjectDialog = false;
     }
   );
@@ -211,6 +233,7 @@ closeMilestoneDialog() {
     this.displayProjectDialog = true;
     this.ResetVisible = true;
     this.ActiveButtonVisible = false;
+    this.ResetProjectForm()
     this.ResetDialog();
     this.title = "Add Project"
   }

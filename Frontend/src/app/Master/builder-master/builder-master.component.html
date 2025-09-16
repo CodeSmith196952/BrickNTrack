@@ -110,227 +110,154 @@
 >
   <form [formGroup]="builderForm" autocomplete="off">
     <div class="row">
+      <!-- Name -->
       <div class="col-sm-6 mb-3">
-        <label>Name<sup>*</sup></label>
+        <label>Name <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="name"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['name'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['name'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['name'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['name'].errors['required']"
-            >Name is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['name'].invalid" class="invalid-feedback">
+          <small>Name is required</small>
         </div>
       </div>
 
+      <!-- Contact 1 -->
       <div class="col-sm-6 mb-3">
-        <label>Contact 1<sup>*</sup></label>
+        <label>Contact 1 <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="contact1"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['contact1'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['contact1'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['contact1'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['contact1'].errors['required']"
-            >Contact 1 is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['contact1'].invalid" class="invalid-feedback">
+          <small>Contact 1 is required</small>
         </div>
       </div>
+
+      <!-- Contact 2 -->
       <div class="col-sm-6 mb-3">
-        <label>Contact 2<sup>*</sup></label>
+        <label>Contact 2 <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="contact2"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['contact2'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['contact2'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['contact2'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['contact2'].errors['required']"
-            >Contact 2 is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['contact2'].invalid" class="invalid-feedback">
+          <small>Contact 2 is required</small>
         </div>
       </div>
+
+      <!-- Description -->
       <div class="col-sm-6 mb-3">
-        <label>Description<sup>*</sup></label>
+        <label>Description <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="description"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['description'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['description'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['description'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['description'].errors['required']"
-            >Description is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['description'].invalid" class="invalid-feedback">
+          <small>Description is required</small>
         </div>
       </div>
+
+      <!-- Email -->
       <div class="col-sm-6 mb-3">
-        <label>Email<sup>*</sup></label>
+        <label>Email <sup>*</sup></label>
         <input
-          type="text"
+          type="email"
           class="form-control"
           formControlName="emailAddress"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['emailAddress'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['emailAddress'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['emailAddress'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['emailAddress'].errors['required']"
-            >Email is required</small
-          >
-        </div>
+     <div *ngIf="submitted && builderForm.controls['emailAddress'].invalid" class="invalid-feedback">
+  <small *ngIf="builderForm.controls['emailAddress'].errors?.['required']">Email is required</small>
+  <small *ngIf="builderForm.controls['emailAddress'].errors?.['email']">Invalid email format</small>
+</div>
+
       </div>
+
+      <!-- Office Address -->
       <div class="col-sm-6 mb-3">
-        <label>Office Address<sup>*</sup></label>
+        <label>Office Address <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="officeAddress"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['officeAddress'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['officeAddress'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['officeAddress'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['officeAddress'].errors['required']"
-            >Office Address is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['officeAddress'].invalid" class="invalid-feedback">
+          <small>Office Address is required</small>
         </div>
       </div>
+
+      <!-- GST No -->
       <div class="col-sm-6 mb-3">
-        <label>GST No<sup>*</sup></label>
+        <label>GST No <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="gstNo"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['gstNo'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['gstNo'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['gstNo'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['gstNo'].errors['required']"
-            >GST No is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['gstNo'].invalid" class="invalid-feedback">
+          <small>GST No is required</small>
         </div>
       </div>
+
+      <!-- Tag Line -->
       <div class="col-sm-6 mb-3">
-        <label>Tag Line<sup>*</sup></label>
+        <label>Tag Line <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="tagLine"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['tagLine'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['tagLine'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['tagLine'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['tagLine'].errors['required']"
-            >Tag Line is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['tagLine'].invalid" class="invalid-feedback">
+          <small>Tag Line is required</small>
         </div>
       </div>
+
+      <!-- Owner -->
       <div class="col-sm-6 mb-3">
-        <label>Owner<sup>*</sup></label>
+        <label>Owner <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="OwnerName"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['OwnerName'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['OwnerName'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['OwnerName'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['OwnerName'].errors['required']"
-            >Owner is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['OwnerName'].invalid" class="invalid-feedback">
+          <small>Owner is required</small>
         </div>
       </div>
+
+      <!-- LangLog -->
       <div class="col-sm-6 mb-3">
-        <label>LangLog<sup>*</sup></label>
+        <label>Lat/Lng <sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="LangLog"
-          [ngClass]="{
-            'is-invalid': submitted && builderForm.controls['LangLog'].errors
-          }"
+          [ngClass]="{ 'is-invalid': submitted && builderForm.controls['LangLog'].invalid }"
         />
-        <div
-          *ngIf="submitted && builderForm.controls['LangLog'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="builderForm.controls['LangLog'].errors['required']"
-            >LangLog is required</small
-          >
+        <div *ngIf="submitted && builderForm.controls['LangLog'].invalid" class="invalid-feedback">
+          <small>Lat/Lng is required</small>
         </div>
       </div>
     </div>
-
-    <!-- <div class="d-flex">
-      <div class="form-check Active">
-        <input
-          class="form-check-input"
-          type="radio"
-          [value]="true"
-          id="Active"
-          formControlName="IsActive"
-        />
-        <label for="Active">Active</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          [value]="false"
-          id="InActive"
-          formControlName="IsActive"
-        />
-        <label for="InActive">InActive</label>
-      </div>
-    </div> -->
   </form>
 
   <div class="model-footer text-end">
-
-     <button class="btn btn-primary m-2" (click)="saveBuilder()">Submit</button>
+    <button class="btn btn-primary m-2" (click)="saveBuilder()">Submit</button>
     <button class="btn btn-secondary m-2" (click)="ResetDialog()" *ngIf="ResetVisible">Reset</button>
     <button class="btn btn-danger m-2" (click)="closeBuilderDialog()">Close</button>
   </div>
 </p-dialog>
+

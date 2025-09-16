@@ -29,26 +29,21 @@ export class BuilderMasterComponent {
 
   ) {
 
-    this.builderForm = this.fb.group({
-      builderId: [''],
-      name: ['',],
-      OwnerName: ['',],
-      contact2: ['',],
+this.builderForm = this.fb.group({
+  builderId: [''], // Assuming builderId is optional
+  name: ['', Validators.required],
+  OwnerName: ['', Validators.required],
+  contact2: ['', Validators.required],
+  contact1: ['', Validators.required],
+  tagLine: ['', Validators.required],
+  description: ['', Validators.required],
+  officeAddress: ['', Validators.required],
+  emailAddress: ['', [Validators.required, Validators.email]], // Add email validation too
+  gstNo: ['', Validators.required],
+  LangLog: ['', Validators.required],
+  isActive: ['', []] // Optional, as it's commented out in the HTML
+});
 
-      contact1: [''],
-
-      tagLine: [''],
-      description: [''],
-      officeAddress: [''],
-      emailAddress: [''],
-      gstNo: [''],
-      LangLog: [''],
-
-      isActive: ['', []]
-
-
-
-    });
     // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
 
   }

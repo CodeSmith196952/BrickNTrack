@@ -142,6 +142,7 @@
 >
   <form [formGroup]="projectForm" autocomplete="off">
     <div class="row">
+      <!-- Project Name -->
       <div class="col-sm-6 mb-3">
         <label>Project Name<sup>*</sup></label>
         <input
@@ -163,82 +164,223 @@
         </div>
       </div>
 
+      <!-- Budget -->
       <div class="col-sm-6 mb-3">
-        <label>Budget</label>
-        <input type="number" class="form-control" formControlName="budget" />
-      </div>
-
-      <div class="col-sm-6 mb-3">
-        <label>Start Date</label>
-        <input type="date" class="form-control" formControlName="startDate" />
-      </div>
-
-      <div class="col-sm-6 mb-3">
-        <label>Completion Date</label>
-        <input type="date" class="form-control" formControlName="completionDate" />
-      </div>
-
-      <!-- <div class="col-sm-6 mb-3">
-        <label>Completion Date</label>
+        <label>Budget<sup>*</sup></label>
         <input
-          type="date" class="form-control" formControlName="completionDate" />
-      </div> -->
+          type="number"
+          class="form-control"
+          formControlName="budget"
+          [ngClass]="{
+            'is-invalid': submitted && projectForm.controls['budget'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls['budget'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['budget'].errors['required']">
+            Budget is required
+          </small>
+        </div>
+      </div>
 
+      <!-- Start Date -->
       <div class="col-sm-6 mb-3">
-        <label>Status</label>
-        <select class="form-select" formControlName="status">
-          <option ngValue="New" [selected]="true">
-            New
-          </option>
-          <option ngValue="In Progress" >
-            In Progress
-          </option>
-          <option ngValue="Completed" >
-            Completed
-          </option>
-          <option ngValue="Hold" >
-            Hold
-          </option>
+        <label>Start Date<sup>*</sup></label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="startDate"
+          [ngClass]="{
+            'is-invalid': submitted && projectForm.controls['startDate'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls['startDate'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['startDate'].errors['required']">
+            Start Date is required
+          </small>
+        </div>
+      </div>
+
+      <!-- Completion Date -->
+      <div class="col-sm-6 mb-3">
+        <label>Completion Date<sup>*</sup></label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="completionDate"
+          [ngClass]="{
+            'is-invalid':
+              submitted && projectForm.controls['completionDate'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls['completionDate'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['completionDate'].errors['required']">
+            Completion Date is required
+          </small>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="col-sm-6 mb-3">
+        <label>Status<sup>*</sup></label>
+        <select
+          class="form-select"
+          formControlName="status"
+          [ngClass]="{
+            'is-invalid': submitted && projectForm.controls['status'].errors
+          }"
+        >
+          <option ngValue="New" [selected]="true">New</option>
+          <option ngValue="In Progress">In Progress</option>
+          <option ngValue="Completed">Completed</option>
+          <option ngValue="Hold">Hold</option>
         </select>
+        <div
+          *ngIf="submitted && projectForm.controls['status'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['status'].errors['required']">
+            Status is required
+          </small>
+        </div>
       </div>
 
+      <!-- Completion Percentage -->
       <div class="col-sm-6 mb-3">
-        <label>Completion %</label>
-        <input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100" />
+        <label>Completion %<sup>*</sup></label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="completionPercentage"
+          min="0"
+          max="100"
+          [ngClass]="{
+            'is-invalid':
+              submitted && projectForm.controls['completionPercentage'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls['completionPercentage'].errors"
+          class="invalid-feedback"
+        >
+          <small
+            *ngIf="projectForm.controls['completionPercentage'].errors['required']"
+          >
+            Completion % is required
+          </small>
+          <small
+            *ngIf="projectForm.controls['completionPercentage'].errors['min']"
+          >
+            Minimum is 0
+          </small>
+          <small
+            *ngIf="projectForm.controls['completionPercentage'].errors['max']"
+          >
+            Maximum is 100
+          </small>
+        </div>
       </div>
 
+      <!-- RERA Number -->
       <div class="col-sm-6 mb-3">
-        <label>RERA Number</label>
-        <input type="text" class="form-control" formControlName="reraNumber" />
+        <label>RERA Number<sup>*</sup></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="reraNumber"
+          [ngClass]="{
+            'is-invalid':
+              submitted && projectForm.controls['reraNumber'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls['reraNumber'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['reraNumber'].errors['required']">
+            RERA Number is required
+          </small>
+        </div>
       </div>
 
+      <!-- Project Address -->
       <div class="col-sm-6 mb-3">
-        <label>Project Address</label>
+        <label>Project Address<sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="projectAddress"
+          [ngClass]="{
+            'is-invalid':
+              submitted && projectForm.controls['projectAddress'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && projectForm.controls['projectAddress'].errors"
+          class="invalid-feedback"
+        >
+          <small
+            *ngIf="projectForm.controls['projectAddress'].errors['required']"
+          >
+            Project Address is required
+          </small>
+        </div>
       </div>
 
+      <!-- Latitude, Longitude -->
       <div class="col-sm-6 mb-3">
-        <label>Latitude, Longitude</label>
+        <label>Latitude, Longitude<sup>*</sup></label>
         <input
           type="text"
           class="form-control"
           formControlName="latlong"
           placeholder="lat,long"
+          [ngClass]="{
+            'is-invalid': submitted && projectForm.controls['latlong'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && projectForm.controls['latlong'].errors"
+          class="invalid-feedback"
+        >
+          <small *ngIf="projectForm.controls['latlong'].errors['required']">
+            Latitude and Longitude are required
+          </small>
+        </div>
       </div>
 
+      <!-- Project Description -->
       <div class="col-sm-6 mb-3">
-        <label>Project Description</label>
+        <label>Project Description<sup>*</sup></label>
         <textarea
           class="form-control"
           formControlName="projectDescription"
+          [ngClass]="{
+            'is-invalid':
+              submitted && projectForm.controls['projectDescription'].errors
+          }"
         ></textarea>
+        <div
+          *ngIf="submitted && projectForm.controls['projectDescription'].errors"
+          class="invalid-feedback"
+        >
+          <small
+            *ngIf="projectForm.controls['projectDescription'].errors['required']"
+          >
+            Project Description is required
+          </small>
+        </div>
       </div>
 
+      <!-- Profile Image URL -->
       <div class="col-sm-6 mb-3">
         <label>Profile Image URL</label>
         <input
@@ -265,6 +407,7 @@
     </button>
   </div>
 </p-dialog>
+
 
 <p-dialog
   header="Project Milestone Details"
