@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickNTrackConstruction", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickNTrack.Repository", "BrickNTrack.Repository\BrickNTrack.Repository.csproj", "{0AA6FC5F-4D2E-4BC5-A186-A38988A38CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickNTrack.Doman", "BrickNTrack.Doman\BrickNTrack.Doman.csproj", "{D8F5344D-5F62-449C-829C-716081F45497}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickNTrack.Domain", "BrickNTrack.Domain\BrickNTrack.Domain.csproj", "{D8F5344D-5F62-449C-829C-716081F45497}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickNTrack.Business", "BrickNTrack.Business\BrickNTrack.Business.csproj", "{E2F5C65B-EFFC-4F32-9FF9-9EE019A038A1}"
 EndProject

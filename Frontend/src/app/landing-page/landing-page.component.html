@@ -146,9 +146,13 @@
           <div class="col-md-4" *ngFor="let project of slide">
             <mat-card class="mb-4">
               <mat-card-content>
-                <img class="img-fluid mb-2"
-                     [src]="getProjectImagePath(project)"
-                     alt="Project Image" />
+                <div style="height: 180px; border-radius: 8px; overflow: hidden; margin-bottom: 12px;">
+                  <img *ngIf="project.profileImage" [src]="project.profileImage" alt="{{ project.projectName }}"
+                       style="width: 100%; height: 100%; object-fit: cover;">
+                  <div *ngIf="!project.profileImage" style="width:100%; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display:flex; align-items:center; justify-content:center;">
+                    <i class="fa-solid fa-building" style="font-size: 40px; color: rgba(255,255,255,0.5);"></i>
+                  </div>
+                </div>
 
                 <div><strong>{{ project.projectName }}</strong></div>
                 <div>{{ project.projectAddress }}</div>

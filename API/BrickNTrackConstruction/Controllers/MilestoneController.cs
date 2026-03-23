@@ -1,9 +1,9 @@
-﻿using BrickNTrack.Doman.Model;
-using BrickNTrack.Repository.Interface;
+using BrickNTrack.Business.Services;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
 
 namespace BrickNTrackConstruction.Controllers
 {
@@ -12,55 +12,61 @@ namespace BrickNTrackConstruction.Controllers
     [Authorize]
     public class MilestoneController : ControllerBase
     {
-        private readonly IProjectMilestone _projectMilestone;
+        private readonly IMilestoneService _milestoneService;
 
-        public MilestoneController(IProjectMilestone projectMilestone)
+        public MilestoneController(IMilestoneService milestoneService)
         {
-            _projectMilestone = projectMilestone;
+            _milestoneService = milestoneService;
         }
 
-        [Route("addUpdateMilestone")]
-        [HttpPost]
-        public async Task<IActionResult> AddUpdateMilestonsAsync([FromBody] ProjectMilestoneRequest request)
+        [HttpPost("addUpdateMilestone")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult>> AddUpdateMilestone([FromBody] ProjectMilestoneRequest request)
         {
-            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var result = await _projectMilestone.AddUpdateMilestonsAsync(request, userName);
-            if (result.StatusCode == ResultCode.SuccessfullyCreated || result.StatusCode == ResultCode.SuccessfullyUpdated)
-                return Ok(result);
-            else
-                return NotFound(result);
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _milestoneService.AddUpdateMilestoneAsync(request, userName);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllMilestones")]
-        [HttpGet]
-        public async Task<List<ProjectMilestoneResponse>> GetAllMilestonesAsync()
+        [HttpGet("getAllMilestones")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ServiceResult<List<ProjectMilestoneResponse>>>> GetAllMilestones()
         {
-            var result = await _projectMilestone.GetAllMilestonesAsync();
-            return result;
+            var result = await _milestoneService.GetAllMilestonesAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllActiveMilestones")]
-        [HttpGet]
-        public async Task<List<ProjectMilestoneResponse>> GetAllActiveMilestonesAsync()
+        [HttpGet("getAllActiveMilestones")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<List<ProjectMilestoneResponse>>>> GetAllActiveMilestones()
         {
-            var result = await _projectMilestone.GetAllActiveMilestonesAsync();
-            return result;
+            var result = await _milestoneService.GetAllActiveMilestonesAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getMilestonesById")]
-        [HttpGet]
-        public async Task<ProjectMilestoneResponse> GetMilestonesByIdAsync([FromQuery] int milestoneId)
+        [HttpGet("getMilestonesById")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<ProjectMilestoneResponse>>> GetMilestonesById([FromQuery] int milestoneId)
         {
-            var result = await _projectMilestone.GetMilestonesByIdAsync(milestoneId);
-            return result;
+            var result = await _milestoneService.GetMilestoneByIdAsync(milestoneId);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getMilestonesByProjectId")]
-        [HttpGet]
-        public async Task<List<ProjectMilestoneResponse>> GetMilestonesByProjectIdAsync([FromQuery] int projectId)
+        [HttpGet("getMilestonesByProjectId")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<List<ProjectMilestoneResponse>>>> GetMilestonesByProjectId([FromQuery] int projectId)
         {
-            var result = await _projectMilestone.GetMilestonesByProjectIdAsync(projectId);
-            return result;
+            var result = await _milestoneService.GetMilestonesByProjectIdAsync(projectId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpDelete("deleteMilestone")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult>> DeleteMilestone([FromQuery] int milestoneId)
+        {
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _milestoneService.SoftDeleteMilestoneAsync(milestoneId, userName);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

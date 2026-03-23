@@ -1649,17 +1649,17 @@
           }
         }
       },
-      "BrickNTrack.Doman/1.0.0": {
+      "BrickNTrack.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "5.0.17"
         },
         "compile": {
-          "bin/placeholder/BrickNTrack.Doman.dll": {}
+          "bin/placeholder/BrickNTrack.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/BrickNTrack.Doman.dll": {}
+          "bin/placeholder/BrickNTrack.Domain.dll": {}
         }
       }
     }
@@ -4725,10 +4725,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "BrickNTrack.Doman/1.0.0": {
+    "BrickNTrack.Domain/1.0.0": {
       "type": "project",
-      "path": "../BrickNTrack.Doman/BrickNTrack.Doman.csproj",
-      "msbuildProject": "../BrickNTrack.Doman/BrickNTrack.Doman.csproj"
+      "path": "../BrickNTrack.Domain/BrickNTrack.Domain.csproj",
+      "msbuildProject": "../BrickNTrack.Domain/BrickNTrack.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4737,7 +4737,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.0",
       "BCrypt.Lite >= 1.0.0",
       "BCrypt.Net-Next >= 4.0.3",
-      "BrickNTrack.Doman >= 1.0.0",
+      "BrickNTrack.Domain >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.18",
       "Microsoft.EntityFrameworkCore >= 9.0.7",
       "Microsoft.EntityFrameworkCore.Abstractions >= 9.0.7",
@@ -4750,43 +4750,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Pankaj\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "/Users/asadhu/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
+      "projectUniqueName": "/Users/asadhu/personal/naveen/BrickNTrack/API/BrickNTrack.Repository/BrickNTrack.Repository.csproj",
       "projectName": "BrickNTrack.Repository",
-      "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\BrickNTrack.Repository.csproj",
-      "packagesPath": "C:\\Users\\Pankaj\\.nuget\\packages\\",
-      "outputPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Repository\\obj\\",
+      "projectPath": "/Users/asadhu/personal/naveen/BrickNTrack/API/BrickNTrack.Repository/BrickNTrack.Repository.csproj",
+      "packagesPath": "/Users/asadhu/.nuget/packages/",
+      "outputPath": "/Users/asadhu/personal/naveen/BrickNTrack/API/BrickNTrack.Repository/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Pankaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "/Users/asadhu/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj": {
-              "projectPath": "D:\\CodeSmith\\BrickNTrackConstructionProject\\BrickNTrackConstruction\\BrickNTrack.Doman\\BrickNTrack.Doman.csproj"
+            "/Users/asadhu/personal/naveen/BrickNTrack/API/BrickNTrack.Domain/BrickNTrack.Domain.csproj": {
+              "projectPath": "/Users/asadhu/personal/naveen/BrickNTrack/API/BrickNTrack.Domain/BrickNTrack.Domain.csproj"
             }
           }
         }
@@ -4795,13 +4784,7 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -4880,8 +4863,20 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.125/libexec/sdk/8.0.125/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 12.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

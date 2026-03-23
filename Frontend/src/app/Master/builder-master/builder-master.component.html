@@ -1,104 +1,114 @@
 <p-toast position="bottom-right"></p-toast>
-<section>
-  <div class="py-2">
-    <h2 class="title-one">
-      <i class="fa-solid fa-building mx-2"></i> Builder Master
+
+<!-- ===== BUILDER VIEW: Own Company Profile ===== -->
+<section *ngIf="!isAdmin && myBuilder">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-size:22px; font-weight:700; color:#1e293b; margin:0;">
+      <i class="fa-solid fa-building me-2"></i>My Company Profile
     </h2>
+    <button class="btn btn-primary" (click)="editBuilder(myBuilder)">
+      <i class="fa-solid fa-pen me-1"></i> Edit Profile
+    </button>
   </div>
 
-  <div class="mb-3">
-    <mat-card>
-      <mat-card-content>
-        <p-table
-          #dtPallet
-          [value]="builderList"
-          selectionMode="multiple"
-          styleClass="p-datatable-gridlines p-datatable-striped"
-          responsiveLayout="scroll"
-          [rows]="10"
-          [paginator]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [globalFilterFields]="['palletCode', 'palletName']"
-        >
-          <ng-template pTemplate="caption">
-            <div class="d-flex justify-content-end align-items-center">
-            
-              <div class="d-flex">
-                <span>
-                  <input
-                    type="text"
-                    class="form-control form-control-search"
-                    placeholder="Search"
-                    (input)="
-                      dtPallet.filterGlobal(
-                        $any($event.target).value,
-                        'contains'
-                      )
-                    "
-                  />
-                </span>
-                <a (click)="openBuilderDialog()" class="btn btn-primary ml-1" title="Add Pallet">
-                  <i class="pi pi-plus"></i>
-                </a>
-              </div>
-            </div>
-          </ng-template>
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        {{ myBuilder.name?.charAt(0)?.toUpperCase() }}
+      </div>
+      <div class="profile-info">
+        <h3>{{ myBuilder.name }}
+          <i *ngIf="myBuilder.isVerified" class="fa-solid fa-circle-check" style="color:#1da1f2; font-size:18px;" title="Verified"></i>
+        </h3>
+        <p class="tagline" *ngIf="myBuilder.tagLine">{{ myBuilder.tagLine }}</p>
+      </div>
+    </div>
 
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Sr No.</th>
-              <th pSortableColumn="palletCode">Name</th>
-              <th pSortableColumn="palletCode">Owner</th>
-              <th pSortableColumn="palletCode">Contact 1</th>
-              <th pSortableColumn="palletCode">Contact 2</th>
-              <th pSortableColumn="palletName">Tag Line</th>
-              <th pSortableColumn="palletName">Description</th>
-              <th pSortableColumn="palletName">Office Address</th>
-              <th pSortableColumn="palletName">Email Address</th>
-              <th pSortableColumn="palletName">GST No</th>
-              <!-- <th>Status</th> -->
-              <th>Action</th>
-            </tr>
-          </ng-template>
+    <p class="description" *ngIf="myBuilder.description">{{ myBuilder.description }}</p>
 
-          <ng-template pTemplate="body" let-builder let-i="rowIndex">
-            <tr>
-              <td>{{ i + 1 }}</td>
-              <td>{{ builder.name }}</td>
-              <td>{{ builder.owner }}</td>
-              <td>{{ builder.contact1 }}</td>
-              <td>{{ builder.contact2 }}</td>
-              <td>{{ builder.tagLine }}</td>
-              <td>{{ builder.description }}</td>    
-              <td>{{ builder.officeAddress }}</td>
-              <td>{{ builder.emailAddress }}</td>
-              <td>{{ builder.gstNo }}</td>
-              <!-- <td>Status</td> -->
-              <td>  <i class="fa fa-edit" (click)="editBuilder(builder)" style="cursor: pointer" title="Edit Builder"></i></td>
-            </tr>
-          </ng-template>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <i class="fa-solid fa-user"></i>
+        <div><small>Owner</small><strong>{{ myBuilder.ownerName }}</strong></div>
+      </div>
+      <div class="detail-item">
+        <i class="fa-solid fa-phone"></i>
+        <div><small>Contact</small><strong>{{ myBuilder.contact1 }}</strong></div>
+      </div>
+      <div class="detail-item">
+        <i class="fa-solid fa-envelope"></i>
+        <div><small>Email</small><strong>{{ myBuilder.emailAddress }}</strong></div>
+      </div>
+      <div class="detail-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div><small>Office</small><strong>{{ myBuilder.officeAddress }}</strong></div>
+      </div>
+      <div class="detail-item">
+        <i class="fa-solid fa-id-card"></i>
+        <div><small>GST No</small><strong>{{ myBuilder.gstNo }}</strong></div>
+      </div>
+      <div class="detail-item" *ngIf="myBuilder.contact2">
+        <i class="fa-solid fa-phone"></i>
+        <div><small>Alt. Contact</small><strong>{{ myBuilder.contact2 }}</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="5">No Builder found.</td>
-              <td>
-                <i
-                  class="fa fa-edit"
-                  style="cursor: pointer"
-                  title="Edit Pallet"
-                ></i>
-              </td>
-            </tr>
-          </ng-template>
+<!-- ===== ADMIN VIEW: All Builders as Cards ===== -->
+<section *ngIf="isAdmin">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-size:22px; font-weight:700; color:#1e293b; margin:0;">
+      <i class="fa-solid fa-building me-2"></i>Builder Master
+    </h2>
+    <button class="btn btn-primary" (click)="openBuilderDialog()">
+      <i class="fa-solid fa-plus me-1"></i> Add Builder
+    </button>
+  </div>
 
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="5">No Builder found.</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </mat-card-content>
-    </mat-card>
+  <div class="row g-3">
+    <div class="col-sm-4" *ngFor="let builder of builderList">
+      <div class="builder-card">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="bc-avatar">{{ builder.name?.charAt(0)?.toUpperCase() }}</div>
+          <div>
+            <h6 class="mb-0">{{ builder.name }}
+              <i *ngIf="builder.isVerified" class="fa-solid fa-circle-check" style="color:#1da1f2; font-size:13px;"></i>
+            </h6>
+            <small class="text-muted">{{ builder.tagLine }}</small>
+          </div>
+        </div>
+        <p class="text-muted mb-2" style="font-size:13px; line-height:1.4;" *ngIf="builder.description">
+          {{ (builder.description || '') | slice:0:100 }}{{ (builder.description || '').length > 100 ? '...' : '' }}
+        </p>
+        <div class="bc-details">
+          <span><i class="fa-solid fa-user me-1"></i>{{ builder.ownerName }}</span>
+          <span><i class="fa-solid fa-phone me-1"></i>{{ builder.contact1 }}</span>
+          <span><i class="fa-solid fa-envelope me-1"></i>{{ builder.emailAddress }}</span>
+        </div>
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-outline-primary btn-sm flex-grow-1" (click)="editBuilder(builder)">
+            <i class="fa-solid fa-pen me-1"></i>Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="builderList?.length === 0 && !loading" class="text-center p-5">
+    <p class="text-muted">No builders found.</p>
+  </div>
+</section>
+
+<!-- No profile yet -->
+<section *ngIf="!isAdmin && !myBuilder && !loading">
+  <div class="text-center p-5">
+    <i class="fa-solid fa-building" style="font-size:48px; color:#cbd5e1;"></i>
+    <h4 class="mt-3">No Company Profile Yet</h4>
+    <p class="text-muted">Set up your company profile to start listing properties.</p>
+    <button class="btn btn-primary" (click)="openBuilderDialog()">
+      <i class="fa-solid fa-plus me-1"></i> Create Profile
+    </button>
   </div>
 </section>
 

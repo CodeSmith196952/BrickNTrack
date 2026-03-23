@@ -1,0 +1,39 @@
+<div class="emi-calculator p-3 border rounded">
+  <h5><i class="fa-solid fa-calculator me-2"></i>EMI Calculator</h5>
+
+  <div class="row g-3 mt-2">
+    <div class="col-sm-6">
+      <label class="form-label">Loan Amount (&#8377;)</label>
+      <input type="number" class="form-control" [(ngModel)]="loanAmount">
+    </div>
+    <div class="col-sm-6">
+      <label class="form-label">Down Payment (%)</label>
+      <input type="number" class="form-control" [(ngModel)]="downPayment" (ngModelChange)="onDownPaymentChange()" min="0" max="100">
+    </div>
+    <div class="col-sm-6">
+      <label class="form-label">Interest Rate (% p.a.)</label>
+      <input type="number" class="form-control" [(ngModel)]="interestRate" step="0.1" min="1" max="20">
+    </div>
+    <div class="col-sm-6">
+      <label class="form-label">Tenure (years)</label>
+      <input type="number" class="form-control" [(ngModel)]="loanTenure" min="1" max="30">
+    </div>
+  </div>
+
+  <div class="emi-result mt-3 p-3 rounded" style="background: #f0f4ff;">
+    <div class="row text-center">
+      <div class="col-4">
+        <small class="text-muted">Monthly EMI</small>
+        <h5 class="text-primary mb-0">&#8377;{{ monthlyEmi | number }}</h5>
+      </div>
+      <div class="col-4">
+        <small class="text-muted">Total Interest</small>
+        <h5 class="text-warning mb-0">&#8377;{{ totalInterest | number }}</h5>
+      </div>
+      <div class="col-4">
+        <small class="text-muted">Total Payment</small>
+        <h5 class="mb-0">&#8377;{{ totalPayment | number }}</h5>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,8 +10,9 @@
         public string MobileNumber { get; set; }
         public string PasswordHash { get; set; }
         public bool AcceptTerms { get; set; }
+        public string Role { get; set; } = "Builder";
         public string? ResetToken { get; set; }
-        public int BuilderId { get; set; }
+        public int? BuilderId { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
         public BuilderMaster BuilderMaster { get; set; }
     }

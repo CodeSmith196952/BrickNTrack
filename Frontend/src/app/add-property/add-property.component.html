@@ -1,316 +1,491 @@
-<!-- <section>
-  <div class="class">
-    <mat-card class="">
-      <mat-card-content>
-        
-        <div class="row mt-4">
-          <div class="col-sm-2 mb-4">
-            <div class="class">
-              <input
-                type="text"
-                class="form-control"
-                name=""
-                id=""
-                placeholder="Search Properties"
-              />
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="class">
-              <select name="" class="form-select form-control" id="">
-                <option value="" selected disabled hidden>All Types</option>
-                <option value="">Legal</option>
-                <option value="">Structural</option>
-                <option value="">Financial</option>
-                <option value="">Marketing</option>
-                <option value="">Sales Agreement</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="class">
-              <select name="" class="form-select form-control" id="">
-                <option value="" selected disabled hidden>
-                  All Cities
-                </option>
-                <option value="">Pune</option>
-                <option value="">Mumbai</option>
-                <option value="">Banglore</option>
-                <option value="">Delhi</option>
-              </select>
-            </div>
-          </div>
-           <div class="col-sm-2 mb-4">
-            <div class="class">
-              <input
-                type="text"
-                class="form-control"
-                name=""
-                id=""
-                placeholder="Search"
-              />
-            </div>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</section> -->
+<!-- KPI Cards -->
 <section>
-<div class="row d-flex justify-content-between">
-  <!-- Total Properties -->
-  <div class="col-sm-3">
-    <mat-card class="diff">
-      <mat-card-content>
-        <div>
-          <p class="clildDiff">Total Properties</p>
-          <h3 class="op-7 fw-bolder clildDiff">{{ length }}</h3>
-        </div>
-        <div class="customIcon">
-          <i class="fa-solid fa-house"></i>
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-building"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Properties</span>
+        <span class="kpi-value">{{ length }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green"><i class="fa-solid fa-check-circle"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Active Listings</span>
+        <span class="kpi-value">{{ activeCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon amber"><i class="fa-solid fa-hard-hat"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Under Construction</span>
+        <span class="kpi-value">{{ underConstructionCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Avg. Price</span>
+        <span class="kpi-value">&#8377;{{ averageBudget | number: '1.0-0' }}</span>
+      </div>
+    </div>
   </div>
-
-  <!-- Active Listings -->
-  <div class="col-sm-3">
-    <mat-card class="diff2">
-      <mat-card-content>
-        <div>
-          <p class="clildDiff">Active Listings</p>
-          <h3 class="op-7 fw-bolder clildDiff">{{ activeCount }}</h3>
-        </div>
-        <div class="customIcon">
-          <i class="fa-solid fa-calendar"></i>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Under Construction -->
-  <div class="col-sm-3">
-    <mat-card class="diff3">
-      <mat-card-content>
-        <div>
-          <p class="clildDiff">Under Construction</p>
-          <h3 class="op-7 fw-bolder clildDiff">{{ underConstructionCount }}</h3>
-        </div>
-        <div class="customIcon">
-          <i class="fa-solid fa-calendar"></i>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Avg. Price -->
-  <div class="col-sm-3">
-    <mat-card class="diff3">
-      <mat-card-content>
-        <div>
-          <p class="clildDiff">Avg. Price</p>
-          <h3 class="op-7 fw-bolder clildDiff">₹{{ averageBudget | number: '1.0-0' }}</h3>
-        </div>
-        <div class="customIcon">
-          <i class="fa-solid fa-indian-rupee-sign"></i>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-
 </section>
 
-<section class="d-flex justify-content-between">
-    <div class="col-sm-4" *ngFor="let project of projectList">
-  <mat-card>
-    <mat-card-content>
-      <div>
-        <!-- Use first media image if available, otherwise fallback image -->
-        <img
-          class="img-fluid"
-          [src]="project.profileImage"
-          alt="Project Image"
-        />
-      </div>
-
-      <div>
-        <p><strong>{{ project.projectName }}</strong></p>
-      </div>
-
-      <div>
-        <p>{{ project.projectAddress }}</p>
-      </div>
-
-      <div class="d-flex">
-        <p>Budget: ₹{{ project.budget }}</p>
-        &nbsp;&nbsp;&nbsp;
-        <p>Completion: {{ project.completionPercentage }}%</p>
-      </div>
-
-      <div class="d-flex justify-content-between">
-        <div>
-          <p class="customBandage">Builder: {{ project.builderMaster?.name }}</p>
-        </div>
-        <div>
-          <p class="customBandage">Status: {{ project.status }}</p>
-        </div>
-      </div>
-
-      <div class="d-flex">
-        <p><i class="fa-solid fa-indian-rupee-sign"></i> &nbsp;<strong>₹{{ project.budget }}</strong></p>
-        &nbsp;
-        <p class="customBandage">Est. Completion: {{ project.completionDate | date }}</p>
-      </div>
-
-      <div class="mt-4 d-flex justify-content-center">
-        <a [routerLink]="['/propertyInformation', project.projectId]" class="btn btn-primary ml-1" tooltipPosition="top">
-          View Details
-        </a>
-        <a (click)="openProjectDialog(project)" class="btn btn-primary ml-1" tooltipPosition="top">
-        <i class="fas fa-edit"></i>
-        </a>
-      </div>
-
-      <!-- Show additional project data (images, etc.) -->
-     
-
-    </mat-card-content>
-  </mat-card>
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 style="font-weight:700; color:#1e293b; margin:0;">My Properties</h5>
+  <button class="btn btn-primary" (click)="addNewProperty()">
+    <i class="fa-solid fa-plus me-1"></i> Add Property
+  </button>
 </div>
+
+<section class="property-grid">
+  <div *ngFor="let project of projectList">
+    <app-property-card
+      [property]="project"
+      [showEdit]="true"
+      (onEdit)="openProjectDialog($event)">
+    </app-property-card>
+  </div>
 </section>
 
-
-
-
+<!-- ===== Add/Edit Property Dialog ===== -->
 <p-dialog
-  header="Project Details"
+  [header]="title || 'Property Details'"
   [(visible)]="displayProjectDialog"
   [modal]="true"
-  [style]="{ width: '40vw' }"
+  [style]="{ width: '55vw', maxHeight: '90vh' }"
+  [contentStyle]="{ overflow: 'auto' }"
+  (onHide)="closeProjectDialog()"
 >
+  <!-- Tab Navigation -->
+  <div class="dialog-tabs">
+    <button class="dialog-tab" [class.active]="activeTab === 'basic'" (click)="activeTab = 'basic'">
+      <i class="fa-solid fa-building"></i> Basic Details
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'location'" (click)="activeTab = 'location'">
+      <i class="fa-solid fa-location-dot"></i> Location
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'features'" (click)="activeTab = 'features'">
+      <i class="fa-solid fa-indian-rupee-sign"></i> Features
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'media'" (click)="activeTab = 'media'">
+      <i class="fa-solid fa-images"></i> Media
+    </button>
+  </div>
+
   <form [formGroup]="projectForm" autocomplete="off">
-    <div class="row">
-      <div class="col-sm-6 mb-3">
-        <label>Project Name<sup>*</sup></label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="projectName"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['projectName'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['projectName'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['projectName'].errors['required']">
-            Project Name is required
-          </small>
+
+    <!-- ===== TAB: Basic Details ===== -->
+    <div class="tab-content" *ngIf="activeTab === 'basic'">
+      <h6 class="section-title">Basic Information</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label>Property Title<sup>*</sup></label>
+          <input type="text" class="form-control" formControlName="projectName"
+                 placeholder="e.g., 2 BHK Apartment in Pune"
+                 [ngClass]="{'is-invalid': submitted && projectForm.controls['projectName'].errors}">
+          <div *ngIf="submitted && projectForm.controls['projectName'].errors" class="invalid-feedback">
+            <small *ngIf="projectForm.controls['projectName'].errors['required']">Property Title is required</small>
+          </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+          <label>Property Type<sup>*</sup></label>
+          <select class="form-select" formControlName="propertyType">
+            <option value="">Select property type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Apartment,Villa">Apartment & Villa</option>
+            <option value="Plot">Plot</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Township">Township</option>
+          </select>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+          <label>Status</label>
+          <select class="form-select" formControlName="status">
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Hold">Hold</option>
+          </select>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+          <label>Budget (INR)<sup>*</sup></label>
+          <input type="number" class="form-control" formControlName="budget" placeholder="e.g., 5000000">
+        </div>
+
+        <div class="col-sm-12 mb-3">
+          <label>Description<sup>*</sup></label>
+          <textarea class="form-control" formControlName="projectDescription" rows="3"
+                    placeholder="Detailed description of the property..."></textarea>
+        </div>
+
+        <div class="col-sm-12 mb-2">
+          <label class="mb-2" style="font-size:12px; font-weight:600; color:#6b7280;">Approvals</label>
+          <div class="d-flex gap-3 flex-wrap">
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isReraApproved"><span>RERA Approved</span></label>
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isHmdaApproved"><span>HMDA Approved</span></label>
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isDtcpApproved"><span>DTCP Approved</span></label>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isReraApproved')?.value">
+          <label>RERA Number</label>
+          <input type="text" class="form-control" formControlName="reraNumber" placeholder="e.g., P52100003466">
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isHmdaApproved')?.value">
+          <label>HMDA Number</label>
+          <input type="text" class="form-control" formControlName="hmdaNumber" placeholder="HMDA approval number">
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isDtcpApproved')?.value">
+          <label>DTCP Number</label>
+          <input type="text" class="form-control" formControlName="dtcpNumber" placeholder="DTCP approval number">
         </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Budget</label>
-        <input type="number" class="form-control" formControlName="budget" />
+      <h6 class="section-title mt-3">Timeline</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label>Start Date</label>
+          <input type="date" class="form-control" formControlName="startDate">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Completion Date</label>
+          <input type="date" class="form-control" formControlName="completionDate">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Completion %</label>
+          <input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: Location ===== -->
+    <div class="tab-content" *ngIf="activeTab === 'location'">
+      <h6 class="section-title">Address</h6>
+      <div class="row">
+        <div class="col-sm-12 mb-3">
+          <label>Full Address<sup>*</sup></label>
+          <input type="text" class="form-control" formControlName="projectAddress" placeholder="Full project address">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>City</label>
+          <input type="text" class="form-control" formControlName="city" placeholder="e.g., Hyderabad">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>State</label>
+          <input type="text" class="form-control" formControlName="state" placeholder="e.g., Telangana">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Locality</label>
+          <input type="text" class="form-control" formControlName="locality" placeholder="e.g., Hitech City">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Pincode</label>
+          <input type="text" class="form-control" formControlName="pincode" placeholder="e.g., 500081">
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Start Date</label>
-        <input type="date" class="form-control" formControlName="startDate" />
+      <h6 class="section-title mt-3">Map Coordinates</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label>Latitude</label>
+          <input type="text" class="form-control" formControlName="latitude" placeholder="e.g., 17.4401">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Longitude</label>
+          <input type="text" class="form-control" formControlName="longitude" placeholder="e.g., 78.3489">
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: Features ===== -->
+    <div class="tab-content" *ngIf="activeTab === 'features'">
+      <h6 class="section-title">Property Specifications</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label>Bedrooms</label>
+          <input type="number" class="form-control" formControlName="bedrooms" min="0">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Bathrooms</label>
+          <input type="number" class="form-control" formControlName="bathrooms" min="0">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Area (sq.ft)</label>
+          <input type="number" class="form-control" formControlName="areaSqFt">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Price per sq.ft</label>
+          <input type="number" class="form-control" formControlName="pricePerSqFt">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Carpet Area</label>
+          <input type="number" class="form-control" formControlName="carpetArea">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Super Built-Up Area</label>
+          <input type="number" class="form-control" formControlName="superBuiltUpArea">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Furnishing Status</label>
+          <select class="form-select" formControlName="furnishingStatus">
+            <option value="">Select</option>
+            <option value="Unfurnished">Unfurnished</option>
+            <option value="Semi-Furnished">Semi-Furnished</option>
+            <option value="Fully Furnished">Fully Furnished</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Facing Direction</label>
+          <select class="form-select" formControlName="facingDirection">
+            <option value="">Select</option>
+            <option *ngFor="let d of facingOptions" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Possession Status</label>
+          <select class="form-select" formControlName="possessionStatus">
+            <option value="">Select</option>
+            <option value="Ready to Move">Ready to Move</option>
+            <option value="Under Construction">Under Construction</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Floor Number</label>
+          <input type="number" class="form-control" formControlName="floorNumber">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Total Floors</label>
+          <input type="number" class="form-control" formControlName="totalFloors">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Parking Count</label>
+          <input type="number" class="form-control" formControlName="parkingCount">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Balcony Count</label>
+          <input type="number" class="form-control" formControlName="balconyCount">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Transaction Type</label>
+          <select class="form-select" formControlName="transactionType">
+            <option value="">Select</option>
+            <option value="New">New</option>
+            <option value="Resale">Resale</option>
+          </select>
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Completion Date</label>
-        <input type="date" class="form-control" formControlName="completionDate" />
+      <div class="row mt-2">
+        <div class="col-sm-4 mb-3">
+          <label class="toggle-checkbox">
+            <input type="checkbox" formControlName="isGatedCommunity">
+            <span>Gated Community</span>
+          </label>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label class="toggle-checkbox">
+            <input type="checkbox" formControlName="isFeatured">
+            <span>Featured Property</span>
+          </label>
+        </div>
       </div>
 
-      <!-- <div class="col-sm-6 mb-3">
-        <label>Completion Date</label>
-        <input
-          type="date" class="form-control" formControlName="completionDate" />
-      </div> -->
+      <!-- Unit Configurations -->
+      <h6 class="section-title mt-4">
+        Unit Configurations
+        <button type="button" class="btn btn-sm btn-outline-primary ms-2" (click)="addUnitConfig()">
+          <i class="fa-solid fa-plus me-1"></i>Add Configuration
+        </button>
+      </h6>
+      <div class="unit-configs">
+        <div class="unit-card" *ngFor="let unit of unitConfigs; let i = index">
+          <div class="unit-header">
+            <strong>{{ unit.unitName || 'Configuration ' + (i+1) }}</strong>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeUnitConfig(i)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 mb-2">
+              <label>Unit Name</label>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="unit.unitName" [ngModelOptions]="{standalone: true}" placeholder="e.g., 3 BHK Standard">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Unit Type</label>
+              <select class="form-select form-select-sm" [(ngModel)]="unit.unitType" [ngModelOptions]="{standalone: true}">
+                <option value="">Select</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Villa">Villa</option>
+                <option value="Penthouse">Penthouse</option>
+                <option value="Plot">Plot</option>
+              </select>
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Bedrooms</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.bedrooms" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Bathrooms</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.bathrooms" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Carpet Area</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.carpetArea" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Price</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.price" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Total Units</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.totalUnits" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Available Units</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="unit.availableUnits" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label>Facing</label>
+              <select class="form-select form-select-sm" [(ngModel)]="unit.facingDirection" [ngModelOptions]="{standalone: true}">
+                <option value="">Select</option>
+                <option *ngFor="let d of facingOptions" [value]="d">{{ d }}</option>
+              </select>
+            </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Status</label>
-        <select class="form-select" formControlName="status">
-          <option ngValue="New" [selected]="true">
-            New
-          </option>
-          <option ngValue="In Progress" >
-            In Progress
-          </option>
-          <option ngValue="Completed" >
-            Completed
-          </option>
-          <option ngValue="Hold" >
-            Hold
-          </option>
-        </select>
+            <!-- Floor Plan per unit config -->
+            <div class="col-sm-12 mb-2">
+              <label>Floor Plan Image</label>
+              <div class="floor-plan-upload">
+                <input type="file" class="form-control form-control-sm" accept="image/*"
+                       (change)="onFloorPlanSelected($event, i)">
+                <div class="floor-plan-preview" *ngIf="unit.floorPlanPreview">
+                  <img [src]="unit.floorPlanPreview" alt="Floor Plan">
+                  <button type="button" class="remove-preview" (click)="removeFloorPlan(i)">
+                    <i class="fa-solid fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="no-units-msg" *ngIf="unitConfigs.length === 0">
+          <i class="fa-solid fa-cubes"></i>
+          <p>No unit configurations added yet. Click "Add Configuration" to define different unit types.</p>
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Completion %</label>
-        <input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100" />
+      <!-- Amenities Picker -->
+      <h6 class="section-title mt-4">Amenities</h6>
+      <p class="text-muted" style="font-size:13px;">Select the amenities available in this property</p>
+      <div class="amenity-picker" *ngFor="let cat of amenityCategories">
+        <h6 class="amenity-category">{{ cat }}</h6>
+        <div class="amenity-grid">
+          <div class="amenity-chip" *ngFor="let a of amenitiesByCategory[cat]"
+               [class.selected]="isAmenitySelected(a.amenityId)"
+               (click)="toggleAmenity(a.amenityId)">
+            <i [class]="a.icon" class="amenity-icon"></i>
+            <span>{{ a.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: Media ===== -->
+    <div class="tab-content" *ngIf="activeTab === 'media'">
+      <h6 class="section-title">Profile Image</h6>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+          <small class="text-muted">Main property image shown in listings</small>
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>RERA Number</label>
-        <input type="text" class="form-control" formControlName="reraNumber" />
+      <h6 class="section-title mt-4">Property Photos</h6>
+      <p class="text-muted" style="font-size:13px;">Upload multiple photos of the property. These will be shown in the property detail gallery.</p>
+
+      <!-- Upload Area -->
+      <div class="media-upload-area" (click)="mediaFileInput.click()"
+           (dragover)="$event.preventDefault()" (drop)="onMediaDrop($event)">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <p>Drag & drop photos here or <span>click to browse</span></p>
+        <small>JPG, PNG, WebP up to 5MB each</small>
+        <input #mediaFileInput type="file" multiple accept="image/*" style="display:none" (change)="onMediaFilesSelected($event)">
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Project Address</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="projectAddress"
-        />
+      <!-- Pending Uploads -->
+      <div class="media-grid" *ngIf="pendingMediaFiles.length > 0">
+        <h6 class="section-subtitle">New Photos ({{ pendingMediaFiles.length }})</h6>
+        <div class="media-items">
+          <div class="media-item" *ngFor="let file of pendingMediaFiles; let i = index">
+            <img [src]="file.preview" alt="Preview">
+            <div class="media-item-overlay">
+              <input type="text" class="media-name-input" [(ngModel)]="file.name" [ngModelOptions]="{standalone: true}" placeholder="Photo name">
+              <select class="media-cat-select" [(ngModel)]="file.category" [ngModelOptions]="{standalone: true}">
+                <option value="Exterior">Exterior</option>
+                <option value="Interior">Interior</option>
+                <option value="Amenities">Amenities</option>
+                <option value="Floor Plan">Floor Plan</option>
+                <option value="Construction">Construction</option>
+                <option value="Other">Other</option>
+              </select>
+              <button type="button" class="media-remove-btn" (click)="removePendingMedia(i)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Latitude, Longitude</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="latlong"
-          placeholder="lat,long"
-        />
+      <!-- Existing Photos (when editing) -->
+      <div class="media-grid" *ngIf="existingMedia.length > 0">
+        <h6 class="section-subtitle mt-3">Existing Photos ({{ existingMedia.length }})</h6>
+        <div class="media-items">
+          <div class="media-item" *ngFor="let media of existingMedia">
+            <img [src]="media.path" alt="{{ media.dataName }}">
+            <div class="media-item-info">
+              <span class="media-name">{{ media.dataName }}</span>
+              <span class="media-cat-badge">{{ media.category }}</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Project Description</label>
-        <textarea
-          class="form-control"
-          formControlName="projectDescription"
-        ></textarea>
+      <div class="no-media-msg" *ngIf="pendingMediaFiles.length === 0 && existingMedia.length === 0">
+        <i class="fa-solid fa-image"></i>
+        <p>No photos uploaded yet</p>
       </div>
 
-      <div class="col-sm-6 mb-3">
-        <label>Profile Image URL</label>
-        <input
-          type="file"
-          class="form-control"
-          (change)="onFileSelected($event)"
-          accept="image/*"
-        />
+      <!-- Document Uploads -->
+      <h6 class="section-title mt-4">Documents</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label>Brochure URL</label>
+          <input type="text" class="form-control" formControlName="brochureUrl" placeholder="Link to brochure PDF">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Video Tour URL</label>
+          <input type="text" class="form-control" formControlName="videoTourUrl" placeholder="YouTube or video link">
+        </div>
       </div>
     </div>
   </form>
 
-  <div class="model-footer text-end">
-    <button class="btn btn-primary m-2" (click)="saveProject()">Submit</button>
-    <button
-      class="btn btn-secondary m-2"
-      (click)="ResetDialog()"
-      *ngIf="ResetVisible"
-    >
-      Reset
-    </button>
-    <button class="btn btn-danger m-2" (click)="closeProjectDialog()">
-      Close
-    </button>
+  <!-- Dialog Footer -->
+  <div class="dialog-footer">
+    <button class="btn btn-outline-secondary" (click)="closeProjectDialog()">Cancel</button>
+    <div class="dialog-footer-right">
+      <button class="btn btn-outline-primary" (click)="saveProject()" *ngIf="ResetVisible">
+        <i class="fa-solid fa-save me-1"></i>Save as Draft
+      </button>
+      <button class="btn btn-primary" (click)="saveProject()">
+        <i class="fa-solid fa-check me-1"></i>{{ isEditMode ? 'Update Property' : 'Submit' }}
+      </button>
+    </div>
   </div>
 </p-dialog>

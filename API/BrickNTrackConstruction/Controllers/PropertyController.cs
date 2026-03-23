@@ -1,5 +1,6 @@
-﻿using BrickNTrack.Doman.Model;
-using BrickNTrack.Repository.Interface;
+using BrickNTrack.Business.Services;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrickNTrackConstruction.Controllers
@@ -8,19 +9,25 @@ namespace BrickNTrackConstruction.Controllers
     [ApiController]
     public class PropertyController : ControllerBase
     {
-        private readonly IProject _project;
+        private readonly IProjectService _projectService;
 
-        public PropertyController(IProject project)
+        public PropertyController(IProjectService projectService)
         {
-            _project = project;
+            _projectService = projectService;
         }
 
-        [Route("getAllActiveProject")]
-        [HttpGet]
-        public async Task<List<ProjectMasterResponse>> GetAllActiveProjectAsync()
+        [HttpGet("getAllActiveProject")]
+        public async Task<ActionResult<ServiceResult<List<ProjectMasterResponse>>>> GetAllActiveProject()
         {
-            var result = await _project.GetAllActiveProjectAsync();
-            return result;
+            var result = await _projectService.GetAllActiveProjectAsync();
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<ServiceResult<PaginatedResult<ProjectMasterResponse>>>> SearchProperties([FromQuery] PaginatedRequest request)
+        {
+            var result = await _projectService.GetProjectsPaginatedAsync(request);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

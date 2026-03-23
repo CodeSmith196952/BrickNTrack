@@ -1,219 +1,178 @@
-<section>
-  <div class="class">
-    <h2>Cost Monitoring Dashboard</h2>
-  </div>
-  <div class="class">
-    <p>Track your construction expenses and budget utilization</p>
-  </div>
-  <div class="row d-flex justify-content-between">
-    <div class="col-sm-3">
-      <mat-card class="diff">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Total Budget</p>
-            <h3 class="op-7 fw-bolder clildDiff">₹2,500,000</h3>
-            <p class="clildDiff">Project allocation</p>
-          </div>
-          <div class="customIcon">
-            <i class="fa-solid fa-dollar-sign"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
+<div class="cost-page" *ngIf="selectedProject; else loadingTpl">
+  <div class="page-header">
+    <div>
+      <h1>Cost Monitoring</h1>
+      <p>Track expenses and budget utilization</p>
     </div>
-    <div class="col-sm-3">
-      <mat-card class="diff2">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Total Spent</p>
-            <h3 class="op-7 fw-bolder clildDiff">₹1,847,500</h3>
-            <p class="clildDiff">Expenses to date</p>
-          </div>
-          <div class="customIcon">
-            <i class="fa-solid fa-arrow-trend-up"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-sm-3">
-      <mat-card class="diff3">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Remaining Budget</p>
-            <h3 class="op-7 fw-bolder clildDiff">₹652,500</h3>
-            <p class="clildDiff">Available balance</p>
-          </div>
-          <div class="customIcon">
-            <i class="fa-solid fa-arrow-trend-up"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-sm-3">
-      <mat-card class="diff3">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Budget Utilization</p>
-            <h3 class="op-7 fw-bolder clildDiff customBottom">73.9%</h3>
-            <span><progress id="file" value="64" max="100">32%</progress></span>
-            <p class="clildDiff customBottom2">On track</p>
-          </div>
-          <div class="customIcon">
-            <i class="fa-solid fa-circle"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
+    <div class="d-flex gap-2 align-items-center">
+      <div class="project-selector" *ngIf="projects.length > 1">
+        <select (change)="selectProject(+$any($event.target).value)">
+          <option *ngFor="let p of projects" [value]="p.projectId">{{ p.projectName }}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm" (click)="addExpenseMode = true" *ngIf="!addExpenseMode">
+        <i class="fa-solid fa-plus me-1"></i>Add Expense
+      </button>
     </div>
   </div>
-</section>
 
-<section>
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="class">
-        <mat-card class="">
-          <mat-card-content>
-            <h3>Stage-wise Cost Breakdown</h3>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Stage</th>
-                  <th scope="col">Budgeted</th>
-                  <th scope="col">Spent</th>
-                  <th scope="col">Progress</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Foundation</th>
-                  <td>₹500,000</td>
-                  <td>₹470,000</td>
-                  <td>@mdo</td>
-                  <td>Critical</td>
-                  <td>@25 Jun 2025</td>
-                </tr>
-                <tr>
-                  <th scope="row">Foundation</th>
-                  <td>₹500,000</td>
-                  <td>₹470,000</td>
-                  <td>@mdo</td>
-                  <td>Critical</td>
-                  <td>@25 Jun 2025</td>
-                </tr>
-                <tr>
-                  <th scope="row">Foundation</th>
-                  <td>₹500,000</td>
-                  <td>₹470,000</td>
-                  <td>@mdo</td>
-                  <td>Critical</td>
-                  <td>@25 Jun 2025</td>
-                </tr>
-              </tbody>
-            </table>
-          </mat-card-content>
-        </mat-card>
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-wallet"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Budget</span>
+        <span class="kpi-value">₹{{ totalBudget | number:'1.0-0' }}</span>
       </div>
     </div>
-    <div class="col-sm-4">
-      <mat-card class="">
-        <mat-card-content> </mat-card-content>
-      </mat-card>
+    <div class="kpi-card">
+      <div class="kpi-icon amber"><i class="fa-solid fa-arrow-trend-up"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Spent</span>
+        <span class="kpi-value">₹{{ totalSpent | number:'1.0-0' }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green"><i class="fa-solid fa-piggy-bank"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Remaining</span>
+        <span class="kpi-value">₹{{ remaining | number:'1.0-0' }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" [ngClass]="utilization > 90 ? 'red' : 'green'">
+        <i class="fa-solid fa-gauge-high"></i>
+      </div>
+      <div class="kpi-data">
+        <span class="kpi-label">Utilization</span>
+        <span class="kpi-value">{{ utilization | number:'1.0-1' }}%</span>
+        <div class="util-bar"><div class="util-fill" [style.width.%]="utilization" [ngClass]="{'fill-danger': utilization > 90, 'fill-safe': utilization <= 90}"></div></div>
+      </div>
     </div>
   </div>
-</section>
 
-<section>
-  <mat-card class="">
-    <mat-card-content>
-      <div class="d-flex justify-content-between">
-        <div class="class">
-          <h3>Recent Expenses</h3>
+  <!-- Add Expense Inline Form -->
+  <div class="panel add-expense-panel" *ngIf="addExpenseMode">
+    <div class="panel-header">
+      <h3><i class="fa-solid fa-plus-circle me-2"></i>Add New Expense</h3>
+      <button class="btn btn-outline-secondary btn-sm" (click)="addExpenseMode = false"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <div class="add-expense-form">
+      <div class="row g-3">
+        <div class="col-sm-3">
+          <label>Details</label>
+          <input type="text" class="form-control" [(ngModel)]="newExpense.details" placeholder="e.g., Steel supply">
         </div>
-        <div class="d-flex">
-          <div class="mr-1">
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="Search Expenses"
-              class="form-control"
-            />
-          </div>
-          <div class="mr-1">
-            <select name="" id="" class="form-select">
-              <option value="" selected hidden disabled>All Categories</option>
-              <option value="">Material</option>
-              <option value="">Labor</option>
-              <option value="">Equiments</option>
-              <option value="">Miscellaneous</option>
-            </select>
-          </div>
-          <div class="mr-1">
-            <select name="" id="" class="form-select">
-              <option value="" selected disabled hidden>All Status</option>
-              <option value="">Paid</option>
-              <option value="">Pending</option>
-              <option value="">PArtial Paid</option>
-            </select>
-          </div>
-          <div class="class">
-            <a class="btn btn-primary ml-1" tooltipPosition="top">
-              <i class="fa-solid fa-download"></i> Export
-            </a>
-          </div>
+        <div class="col-sm-2">
+          <label>Amount (₹)</label>
+          <input type="number" class="form-control" [(ngModel)]="newExpense.amount" placeholder="0">
+        </div>
+        <div class="col-sm-2">
+          <label>Category</label>
+          <select class="form-select" [(ngModel)]="newExpense.category">
+            <option value="">Select</option>
+            <option value="Civil">Civil</option>
+            <option value="Materials">Materials</option>
+            <option value="Labour">Labour</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label>Vendor</label>
+          <input type="text" class="form-control" [(ngModel)]="newExpense.vendorSupplier" placeholder="Vendor name">
+        </div>
+        <div class="col-sm-2">
+          <label>Milestone</label>
+          <select class="form-select" [(ngModel)]="newExpense.projectMilestoneId">
+            <option value="">Select</option>
+            <option *ngFor="let s of selectedProject.stageWiseCosts" [value]="s.milestoneId || 0">{{ s.stageName }}</option>
+          </select>
+        </div>
+        <div class="col-sm-1 d-flex align-items-end">
+          <button class="btn btn-primary w-100" (click)="saveExpense()" [disabled]="!newExpense.details || !newExpense.amount">
+            <i class="fa-solid fa-check"></i>
+          </button>
         </div>
       </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Stage</th>
-            <th scope="col">Item</th>
-            <th scope="col">Category</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Unit Cost</th>
-            <th scope="col">Total Cost</th>
-            <th scope="col">Status</th>
-            <th scope="col">Vendor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">25/06/2025</th>
-            <td>Foundation</td>
-            <td>Cement bags</td>
-            <td>Material</td>
-            <td>100 Bags</td>
-            <td>₹350</td>
-            <td>₹35,000</td>
-            <td>Paid</td>
-            <td>ABC Suppliers</td>
-          </tr>
-           <tr>
-            <th scope="row">25/06/2025</th>
-            <td>Foundation</td>
-            <td>Cement bags</td>
-            <td>Material</td>
-            <td>100 Bags</td>
-            <td>₹350</td>
-            <td>₹35,000</td>
-            <td>Paid</td>
-            <td>ABC Suppliers</td>
-          </tr>
-           <tr>
-            <th scope="row">25/06/2025</th>
-            <td>Foundation</td>
-            <td>Cement bags</td>
-            <td>Material</td>
-            <td>100 Bags</td>
-            <td>₹350</td>
-            <td>₹35,000</td>
-            <td>Paid</td>
-            <td>ABC Suppliers</td>
-          </tr>
-        </tbody>
-      </table>
-    </mat-card-content>
-  </mat-card>
-</section>
+    </div>
+  </div>
+
+  <!-- Stage Breakdown - Full Width -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3><i class="fa-solid fa-layer-group me-2"></i>Stage Breakdown</h3>
+      <span class="text-muted" style="font-size:13px;">{{ selectedProject.stageWiseCosts?.length || 0 }} stages ·
+        Health:
+        <strong [ngClass]="{'text-success': utilization <= 75, 'text-warning': utilization > 75 && utilization <= 90, 'text-danger': utilization > 90}">
+          {{ utilization > 90 ? 'Critical' : utilization > 75 ? 'Warning' : 'Healthy' }}
+        </strong>
+      </span>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-card" *ngFor="let stage of selectedProject.stageWiseCosts" (click)="navigateToExpenses(stage)">
+        <div class="stage-card-header">
+          <span class="stage-name">{{ stage.stageName }}</span>
+          <span class="stage-pct" [ngClass]="{
+            'pct-over': stage.budget > 0 && stage.spent > stage.budget,
+            'pct-warn': stage.budget > 0 && (stage.spent / stage.budget * 100) > 75 && stage.spent <= stage.budget,
+            'pct-ok': stage.budget > 0 && (stage.spent / stage.budget * 100) <= 75
+          }">
+            {{ stage.budget > 0 ? (stage.spent / stage.budget * 100 | number:'1.0-1') : '0' }}%
+          </span>
+        </div>
+        <div class="stage-bar"><div class="stage-fill" [style.width.%]="stage.budget > 0 ? Math.min(stage.spent / stage.budget * 100, 100) : 0" [ngClass]="{'fill-danger': stage.spent > stage.budget, 'fill-safe': stage.spent <= stage.budget}"></div></div>
+        <div class="stage-amounts">
+          <div class="amt-item"><small>Budgeted</small><strong>₹{{ stage.budget | number:'1.0-0' }}</strong></div>
+          <div class="amt-item"><small>Spent</small><strong>₹{{ stage.spent | number:'1.0-0' }}</strong></div>
+          <div class="amt-item"><small>Remaining</small><strong [ngClass]="{'text-danger': (stage.budget - stage.spent) < 0}">₹{{ (stage.budget - stage.spent) | number:'1.0-0' }}</strong></div>
+        </div>
+        <div class="stage-action">
+          <small class="text-primary"><i class="fa-solid fa-arrow-right me-1"></i>View expenses</small>
+        </div>
+      </div>
+      <div *ngIf="!selectedProject.stageWiseCosts?.length" class="empty-msg">No stage data yet</div>
+    </div>
+  </div>
+
+  <!-- Recent Expenses - Full Width -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3><i class="fa-solid fa-receipt me-2"></i>Recent Expenses</h3>
+      <span class="text-muted" style="font-size:13px;" *ngIf="selectedProject.recentExpenses?.length">
+        {{ selectedProject.recentExpenses.length }} entries · Total: ₹{{ totalSpent | number:'1.0-0' }}
+      </span>
+    </div>
+    <div class="expense-table">
+      <div class="exp-header">
+        <span class="exp-col-detail">Details</span>
+        <span class="exp-col-cat">Category</span>
+        <span class="exp-col-vendor">Vendor</span>
+        <span class="exp-col-amt">Amount</span>
+        <span class="exp-col-status">Status</span>
+      </div>
+      <div class="exp-row" *ngFor="let exp of selectedProject.recentExpenses">
+        <span class="exp-col-detail">
+          <div class="exp-icon-mini" [ngClass]="{'exp-civil': exp.category==='Civil', 'exp-mat': exp.category==='Materials', 'exp-lab': exp.category==='Labour'}">
+            <i class="fa-solid" [ngClass]="{'fa-hard-hat': exp.category==='Civil', 'fa-cubes': exp.category==='Materials', 'fa-users': exp.category==='Labour', 'fa-receipt': !exp.category}"></i>
+          </div>
+          <strong>{{ exp.details }}</strong>
+        </span>
+        <span class="exp-col-cat"><span class="cat-badge">{{ exp.category || 'Other' }}</span></span>
+        <span class="exp-col-vendor">{{ exp.vendorSupplier || '-' }}</span>
+        <span class="exp-col-amt"><strong>₹{{ exp.amount | number:'1.0-0' }}</strong></span>
+        <span class="exp-col-status">
+          <span class="status-dot" [ngClass]="{'dot-paid': exp.paymentStatus==='Paid', 'dot-pending': exp.paymentStatus!=='Paid'}"></span>
+          {{ exp.paymentStatus || 'Pending' }}
+        </span>
+      </div>
+      <div *ngIf="!selectedProject.recentExpenses?.length" class="empty-msg">No expenses yet. Click "Add Expense" to get started.</div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="text-center p-5" *ngIf="loading"><div class="spinner-border text-primary"></div><p class="mt-2 text-muted">Loading...</p></div>
+  <div class="text-center p-5" *ngIf="!loading"><i class="fa-solid fa-chart-line" style="font-size:48px;color:#cbd5e1;"></i><h4 class="mt-3">No cost data</h4><p class="text-muted">Add projects with milestones and expenses to see cost monitoring.</p></div>
+</ng-template>

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
-import { ServiceUrl } from 'src/app/service/service-url.service';
-import { UserScreenAccesData } from 'src/app/service/user-model.service';
+import { takeUntil } from 'rxjs/operators';
+import { ApiService } from 'src/app/core/services/api.service';
+import { Project } from 'src/app/core/models/project.model';
+import { CrudBaseComponent } from 'src/app/shared/base/crud-base.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,69 +12,124 @@ import Swal from 'sweetalert2';
   templateUrl: './project-master.component.html',
   styleUrls: ['./project-master.component.scss']
 })
-export class ProjectMasterComponent {
-  projectForm!: FormGroup;
-  projectList: any;
-  submitted = false;
-  displayProjectDialog: boolean = false;
-  ActiveButtonVisible: boolean = false
+export class ProjectMasterComponent extends CrudBaseComponent<Project> implements OnInit {
+  ActiveButtonVisible = false;
   ResetVisible: any;
-selectedImageFile: File | null = null;
+  selectedImageFile: File | null = null;
+  selectedProject: any = null;
+  showMilestoneDialog = false;
+  milestoneForm!: FormGroup;
+  resetVisible = false;
+  searchTerm = '';
 
-selectedProject: ProjectMilestoneRequest | null = null;
-showMilestoneDialog: boolean = false;
-milestoneForm!: FormGroup;
+  // Amenities
+  allAmenities: any[] = [];
+  amenitiesByCategory: { [key: string]: any[] } = {};
+  selectedAmenityIds: number[] = [];
 
-resetVisible = false;
+  get amenityCategories(): string[] { return Object.keys(this.amenitiesByCategory); }
+  toggleAmenity(id: number): void { const idx = this.selectedAmenityIds.indexOf(id); if (idx >= 0) this.selectedAmenityIds.splice(idx, 1); else this.selectedAmenityIds.push(id); }
+  isAmenitySelected(id: number): boolean { return this.selectedAmenityIds.includes(id); }
 
-
-
-  public userAccessData: any = new UserScreenAccesData();
-  title!: string;
-  builderList: any;
-  constructor(private router: Router,
-    private brickntrackService: brickntrackService,
-    private fb: FormBuilder,
-
-
-  ) {
-
-    this.projectForm = this.fb.group({
-  projectId: [''],
-
-  projectName: ['', Validators.required],
-  budget: ['', Validators.required],
-
-  completionDate: ['', Validators.required],
-  startDate: ['', Validators.required],
-
-  completionPercentage: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
-  status: ['New', Validators.required],
-
-  reraNumber: ['', Validators.required],
-  projectAddress: ['', Validators.required],
-  latlong: ['', Validators.required],
-  projectDescription: ['', Validators.required]
-
-  // If you decide to include ProfileImageFile:
-  // ProfileImageFile: [null, Validators.required],
-});
-    // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
-
+  get filteredProjects(): any[] {
+    if (!this.searchTerm?.trim()) return this.projectList || [];
+    const term = this.searchTerm.toLowerCase();
+    return (this.projectList || []).filter((p: any) =>
+      p.projectName?.toLowerCase().includes(term) ||
+      p.projectAddress?.toLowerCase().includes(term) ||
+      p.status?.toLowerCase().includes(term)
+    );
   }
-  // public noWhitespaceValidator(control: FormControl) {
-  //   const isWhitespace = (control.value || '').trim().length === 0;
-  //   const isValid = !isWhitespace;
-  //   return isValid ? null : { 'whitespace': true };
-  // }
 
+  // Template aliases
+  get projectList() { return this.items; }
+  set projectList(val) { this.items = val; }
+  get projectForm() { return this.form; }
+  set projectForm(val) { this.form = val; }
+  get displayProjectDialog() { return this.displayDialog; }
+  set displayProjectDialog(val) { this.displayDialog = val; }
 
+  builderList: any;
+  activeTab: 'basic' | 'location' | 'features' | 'media' = 'basic';
+  facingOptions = ['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'];
+  protected apiService: ApiService;
+  protected fb: FormBuilder;
+  get listEndpoint() { return 'Project/getAllProjectOfBuilder'; }
+  get saveEndpoint() { return 'Project/addUpdateProject'; }
+  get entityName() { return 'Project'; }
 
-  ngOnInit(): void {
-    this.getAllActiveProjects();
-    //this.getAllActiveBuilders();
-    // this.ResetProjectForm();
+  constructor(private router: Router, api: ApiService, fb: FormBuilder) {
+    super();
+    this.apiService = api;
+    this.fb = fb;
+  }
 
+  buildForm(): FormGroup {
+    return this.fb.group({
+      projectId: [''],
+      projectName: ['', Validators.required],
+      budget: ['', Validators.required],
+      completionDate: [''],
+      startDate: [''],
+      completionPercentage: [0, [Validators.min(0), Validators.max(100)]],
+      status: ['New', Validators.required],
+      reraNumber: [''],
+      hmdaNumber: [''],
+      dtcpNumber: [''],
+      approvalType: [''],
+      isReraApproved: [false],
+      isHmdaApproved: [false],
+      isDtcpApproved: [false],
+      projectAddress: ['', Validators.required],
+      latitude: [''],
+      longitude: [''],
+      city: [''],
+      state: [''],
+      locality: [''],
+      pincode: [''],
+      projectDescription: ['', Validators.required],
+      propertyType: [''],
+      bedrooms: [''],
+      bathrooms: [''],
+      areaSqFt: [''],
+      pricePerSqFt: [''],
+      carpetArea: [''],
+      superBuiltUpArea: [''],
+      furnishingStatus: [''],
+      facingDirection: [''],
+      possessionStatus: [''],
+      floorNumber: [''],
+      totalFloors: [''],
+      parkingCount: [''],
+      parkingType: [''],
+      balconyCount: [''],
+      transactionType: [''],
+      ownershipType: [''],
+      maintenanceCharges: [''],
+      amenities: [''],
+      isGatedCommunity: [false],
+      isFeatured: [false],
+      hasPowerBackup: [false],
+      hasWaterSupply: [false],
+      brochureUrl: [''],
+      videoTourUrl: [''],
+      propertyAge: ['']
+    });
+  }
+
+  override ngOnInit(): void {
+    this.form = this.buildForm();
+    this.loadItems();
+    this.apiService.get<any[]>('Amenity/all').subscribe(res => {
+      if (res.success && res.data) {
+        this.allAmenities = res.data;
+        this.amenitiesByCategory = {};
+        for (const a of this.allAmenities) {
+          if (!this.amenitiesByCategory[a.category]) this.amenitiesByCategory[a.category] = [];
+          this.amenitiesByCategory[a.category].push(a);
+        }
+      }
+    });
     this.milestoneForm = this.fb.group({
       milestoneId: [0],
       projectId: [0, Validators.required],
@@ -89,205 +144,159 @@ resetVisible = false;
     });
   }
 
-  ResetProjectForm(){
-    this.projectForm = this.fb.group({
-      projectId: [''],
-
-      projectName: ['',],
-      budget: ['',],
-
-      completionDate: [''],
-
-      startDate: [''],
-      completionPercentage: [0],
-      status: ['New'],
-      reraNumber: [''],
-      projectAddress: [''],
-      latlong: [''],
-      projectDescription: ['']
-      // ProfileImageFile: [''],
-
-      // isActive: ['', []]
-    });
+  ResetProjectForm() {
+    this.form = this.buildForm();
   }
-
 
   ResetDialog() {
     this.submitted = false;
-
     this.ResetProjectForm();
   }
 
-
-onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.selectedImageFile = input.files[0];
-  }
-}
-
-
-saveProject() {
-  debugger;
-  this.submitted = true;
-  this.projectForm.markAllAsTouched();
-  this.projectForm.updateValueAndValidity();
-   if (this.projectForm.invalid) {
-    return;
-  }
-
-  // Custom validation
-  if (this.brickntrackService.commonValidation(this.projectForm.get('projectId')?.value)) {
-    this.projectForm.get('projectId')?.setValue(0);
-    this.projectForm.get('IsActive')?.setValue(true);
-  }
-
-  const formValues = this.projectForm.value;
-  const formData = new FormData();
-
-  // Append all form fields except 'profileImage' to avoid duplication
-  for (const key in formValues) {
-    if (formValues.hasOwnProperty(key) && key !== 'ProfileImage') {
-      formData.append(key, formValues[key]);
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile = input.files[0];
     }
   }
 
-  // Append selected image file if available
-  if (this.selectedImageFile) {
-    formData.append('ProfileImageFile', this.selectedImageFile); // Match API expected key
-  }
-
-  // Submit form data
-  this.brickntrackService.post<any>(ServiceUrl.addUpdateProject, formData).subscribe(
-    (res) => {
-      Swal.fire('', res.responseMessage, 'success');
-      this.getAllActiveProjects();
-      this.displayProjectDialog = false;
-    },
-    (err) => {
-      Swal.fire('', err.error.title, 'error');
-      this.displayProjectDialog = false;
-    }
-  );
-}
-  acceptNumber(event: any, flag: boolean): void {
-    flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
-  }
-
-    getAllActiveBuilders() {
-      debugger
-      this.brickntrackService.get<any>(null, ServiceUrl.getAllBuilder)
-        .subscribe(
-          (res) => {
-            this.builderList = res
-          },
-          (err) => {
-            Swal.fire("", err.error.message, "error")
-          }
-        )
-    }
-
- openMilestoneDialog(projectId: number) {
-  this.submitted = false;
-  this.resetVisible = false;
-  this.showMilestoneDialog = true;
-
-  this.milestoneForm.reset({
-    milestoneId: 0,
-    projectId: projectId,
-    milestoneName: '',
-    milestoneDetails: '',
-    budget: 0,
-    budgetStatus: '',
-    status: '',
-    plannedStartDate: null,
-    plannedTargetDate: null,
-    plannedDuration: 0,
-  });
-}
-
-
-resetMilestoneForm() {
-  this.milestoneForm.reset({
-    milestoneId: 0,
-    projectId: this.milestoneForm.get('projectId')?.value || 0,
-    milestoneName: '',
-    milestoneDetails: '',
-    budget: 0,
-    budgetStatus: '',
-    status: '',
-    plannedStartDate: null,
-    plannedTargetDate: null,
-    plannedDuration: 0,
-  });
-  this.submitted = false;
-  this.resetVisible = false;
-}
-
-closeMilestoneDialog() {
-  this.showMilestoneDialog = false;
-}
-
-  openProjectDialog() {
-    debugger
-    this.displayProjectDialog = true;
-    this.ResetVisible = true;
-    this.ActiveButtonVisible = false;
-    this.ResetProjectForm()
-    this.ResetDialog();
-    this.title = "Add Project"
-  }
-
-  closeProjectDialog() {
-    this.displayProjectDialog = false;
-  }
-editProject(project: any) {
-  this.router.navigate(['projectmilestone', project.projectId]);
-}
-
-
-   saveMilestone() {
-    debugger
+  saveProject() {
     this.submitted = true;
+    this.form.markAllAsTouched();
+    this.form.updateValueAndValidity();
+    if (this.form.invalid) return;
 
-    if (this.milestoneForm.invalid) {
-      return;
+    const projectIdValue = this.form.get('projectId')?.value;
+    if (!projectIdValue || projectIdValue === '') {
+      this.form.get('projectId')?.setValue(0);
+      this.form.get('IsActive')?.setValue(true);
     }
 
-    const formData = this.milestoneForm.value;
+    // Derive approvalType from checkboxes
+    const approvals: string[] = [];
+    if (this.form.get('isReraApproved')?.value) approvals.push('RERA');
+    if (this.form.get('isHmdaApproved')?.value) approvals.push('HMDA');
+    if (this.form.get('isDtcpApproved')?.value) approvals.push('DTCP');
+    this.form.get('approvalType')?.setValue(approvals.join(','));
 
-    this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formData)
-      .subscribe(
+    // Clear number fields if unchecked
+    if (!this.form.get('isReraApproved')?.value) this.form.get('reraNumber')?.setValue('');
+    if (!this.form.get('isHmdaApproved')?.value) this.form.get('hmdaNumber')?.setValue('');
+    if (!this.form.get('isDtcpApproved')?.value) this.form.get('dtcpNumber')?.setValue('');
+
+    const skipKeys = ['ProfileImage', 'isReraApproved', 'isHmdaApproved', 'isDtcpApproved'];
+    const formValues = this.form.value;
+    const formData = new FormData();
+    for (const key in formValues) {
+      if (formValues.hasOwnProperty(key) && !skipKeys.includes(key)) {
+        const val = formValues[key];
+        if (val !== null && val !== undefined && val !== '') {
+          formData.append(key, val);
+        }
+      }
+    }
+    if (this.selectedImageFile) {
+      formData.append('ProfileImageFile', this.selectedImageFile);
+    }
+
+    this.apiService.post<any>('Project/addUpdateProject', formData)
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (res) => {
-          Swal.fire('', res.responseMessage, 'success');
-          this.showMilestoneDialog = false;
-          // Refresh your milestone list here if needed
+          // Save amenities
+          const pid = this.form.get('projectId')?.value || res.data?.projectId;
+          if (pid && this.selectedAmenityIds.length > 0) {
+            this.apiService.post<any>(`Amenity/project/${pid}`, this.selectedAmenityIds).pipe(takeUntil(this.destroy$)).subscribe();
+          }
+          Swal.fire('', res.message, 'success');
+          this.loadItems();
+          this.displayDialog = false;
         },
         (err) => {
-          Swal.fire('', err.error.errorMessage, 'error');
-          this.showMilestoneDialog = false;
+          Swal.fire('', err.error.message, 'error');
+          this.displayDialog = false;
         }
       );
   }
 
-
-  getAllActiveProjects() {
-    debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllProjectOfBuilder)
-      .subscribe(
-        (res) => {
-          this.projectList = res
-        },
-        (err) => {
-          Swal.fire("", err.error.message, "error")
-        }
-      )
+  getAllActiveBuilders() {
+    this.apiService.get<any>('Builder/getAllBuilder')
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { this.builderList = res.data || res; },
+        (err) => { Swal.fire('', err.error.message, 'error'); }
+      );
   }
 
+  openMilestoneDialog(projectId: number) {
+    this.submitted = false;
+    this.resetVisible = false;
+    this.showMilestoneDialog = true;
+    this.milestoneForm.reset({
+      milestoneId: 0, projectId: projectId, milestoneName: '', milestoneDetails: '',
+      budget: 0, budgetStatus: '', status: '', plannedStartDate: null,
+      plannedTargetDate: null, plannedDuration: 0,
+    });
+  }
+
+  resetMilestoneForm() {
+    this.milestoneForm.reset({
+      milestoneId: 0, projectId: this.milestoneForm.get('projectId')?.value || 0,
+      milestoneName: '', milestoneDetails: '', budget: 0, budgetStatus: '',
+      status: '', plannedStartDate: null, plannedTargetDate: null, plannedDuration: 0,
+    });
+    this.submitted = false;
+    this.resetVisible = false;
+  }
+
+  closeMilestoneDialog() { this.showMilestoneDialog = false; }
+
+  openProjectDialog() {
+    this.openDialog();
+    this.ResetVisible = true;
+    this.ActiveButtonVisible = false;
+    this.ResetProjectForm();
+  }
+
+  closeProjectDialog() { this.closeDialog(); }
+
+  editProject(project: any) {
+    this.router.navigate(['projectmilestone', project.projectId]);
+  }
+
+  editProjectDialog(project: any) {
+    this.activeTab = 'basic';
+    this.selectedAmenityIds = [];
+    this.form = this.buildForm();
+    this.form.patchValue({
+      ...project,
+      startDate: project.startDate ? project.startDate.split('T')[0] : '',
+      completionDate: project.completionDate ? project.completionDate.split('T')[0] : '',
+      isReraApproved: !!project.reraNumber,
+      isHmdaApproved: !!project.hmdaNumber,
+      isDtcpApproved: !!project.dtcpNumber,
+    });
+    // Load project amenities
+    if (project.projectId) {
+      this.apiService.get<any[]>(`Amenity/project/${project.projectId}`).subscribe(res => {
+        if (res.success && res.data) this.selectedAmenityIds = res.data.map((a: any) => a.amenityId);
+      });
+    }
+    this.displayDialog = true;
+    this.ResetVisible = true;
+    this.ActiveButtonVisible = true;
+  }
+
+  saveMilestone() {
+    this.submitted = true;
+    if (this.milestoneForm.invalid) return;
+    this.apiService.post<any>('Milestone/addUpdateMilestone', this.milestoneForm.value)
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { Swal.fire('', res.message, 'success'); this.showMilestoneDialog = false; },
+        (err) => { Swal.fire('', err.error.message, 'error'); this.showMilestoneDialog = false; }
+      );
+  }
+
+  getAllActiveProjects() { this.loadItems(); }
 }
-
-
-
 
 
 export interface ProjectMilestoneRequest {

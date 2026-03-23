@@ -1,7 +1,6 @@
 
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { brickntrackService } from "src/app/service/brickntrack-service.service";
-import { ServiceUrl } from "../../service/service-url.service";
+import { ApiService } from "src/app/core/services/api.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Table } from "primeng/table";
 import {
@@ -21,7 +20,9 @@ import { LazyLoadEvent } from "primeng/api";
 import Swal from "sweetalert2";
 import { UserScreenAccesData } from "src/app/service/user-model.service";
 import { DataService } from "src/app/service/data.service";
-import { Pagination } from "src/app/Models/Pagination"; 
+import { Pagination } from "src/app/Models/Pagination";
+import { takeUntil } from "rxjs/operators";
+import { DestroyableComponent } from "src/app/shared/base/destroyable.component";
 
 
 @Component({
@@ -29,7 +30,7 @@ import { Pagination } from "src/app/Models/Pagination";
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss']
 })
-export class UserRegistrationComponent implements OnInit {
+export class UserRegistrationComponent extends DestroyableComponent implements OnInit {
  public userRegistration: UserRegistration = new UserRegistration();
   public user: UserRegistration = new UserRegistration();
   public model: ChangePassword = new ChangePassword();
@@ -73,13 +74,14 @@ export class UserRegistrationComponent implements OnInit {
   public searchText: string = '';
 
   constructor(
-    private brickntrackService: brickntrackService,
+    private api: ApiService,
     private fb: FormBuilder,
     private message: MessageService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
     private fb2: FormBuilder,
   ) {
+    super();
     // this.brickntrackService.isLoggedIn$ = true;
     const authUserJSON = sessionStorage.getItem("auth-user");
     if (authUserJSON) {
@@ -122,14 +124,15 @@ export class UserRegistrationComponent implements OnInit {
 
 
   getAllActiveRoles() {
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveRoles).subscribe(
+    this.api.get<any>('RoleManager/getallactiveroles').pipe(takeUntil(this.destroy$)).subscribe(
       (response) => {
+        const data = response.data || response;
         if (this.userType === "Internal") {
-          this.roles = response.filter((x: any) => {
+          this.roles = data.filter((x: any) => {
             return x.roleName !== "Dealer";
           });
         } else if (this.userType === "External") {
-          this.roles = response.filter((x: any) => {
+          this.roles = data.filter((x: any) => {
             return x.roleName === "Dealer";
           });
         }
@@ -445,14 +448,10 @@ export class UserRegistrationComponent implements OnInit {
   // }
 
   getAllUsersOnPagination() {
-
-    debugger
-  
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllUserDetail)
-      .subscribe(
+    this.api.get<any>('UserManager/getAllUserDetail')
+      .pipe(takeUntil(this.destroy$)).subscribe(
         response => {
-          this.userManager = response
-           
+          this.userManager = response.data || response;
         },
         error => {
           console.error('Error fetching user data:', error);

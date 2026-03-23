@@ -1,126 +1,128 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
-import { ServiceUrl } from 'src/app/service/service-url.service';
-import { UserScreenAccesData } from 'src/app/service/user-model.service';
-import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { ApiService } from 'src/app/core/services/api.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Builder } from 'src/app/core/models/builder.model';
+import { CrudBaseComponent } from 'src/app/shared/base/crud-base.component';
+
 @Component({
   selector: 'app-builder-master',
   templateUrl: './builder-master.component.html',
   styleUrls: ['./builder-master.component.scss']
 })
-export class BuilderMasterComponent {
-  builderForm!: FormGroup;
-  builderList: any;
-  submitted = false;
-  displayBuilderDialog: boolean = false;
-  ActiveButtonVisible: boolean = false
+export class BuilderMasterComponent extends CrudBaseComponent<Builder> implements OnInit {
+  ActiveButtonVisible = false;
   ResetVisible: any;
+  userRole = '';
+  myBuilder: any = null;
 
+  get builderList() { return this.items; }
+  set builderList(val) { this.items = val; }
+  get builderForm() { return this.form; }
+  set builderForm(val) { this.form = val; }
+  get displayBuilderDialog() { return this.displayDialog; }
+  set displayBuilderDialog(val) { this.displayDialog = val; }
+  get isAdmin() { return this.userRole === 'Admin'; }
 
+  protected apiService: ApiService;
+  protected fb: FormBuilder;
+  get listEndpoint() { return 'Builder/getAllActiveBuilder'; }
+  get saveEndpoint() { return 'Builder/addUpdateBuilder'; }
+  get entityName() { return 'Builder'; }
 
-  public userAccessData: any = new UserScreenAccesData();
-  title!: string;
-  constructor(
-    private brickntrackService: brickntrackService,
-    private fb: FormBuilder,
-
-
-  ) {
-
-this.builderForm = this.fb.group({
-  builderId: [''], // Assuming builderId is optional
-  name: ['', Validators.required],
-  OwnerName: ['', Validators.required],
-  contact2: ['', Validators.required],
-  contact1: ['', Validators.required],
-  tagLine: ['', Validators.required],
-  description: ['', Validators.required],
-  officeAddress: ['', Validators.required],
-  emailAddress: ['', [Validators.required, Validators.email]], // Add email validation too
-  gstNo: ['', Validators.required],
-  LangLog: ['', Validators.required],
-  isActive: ['', []] // Optional, as it's commented out in the HTML
-});
-
-    // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
-
-  }
-  // public noWhitespaceValidator(control: FormControl) {
-  //   const isWhitespace = (control.value || '').trim().length === 0;
-  //   const isValid = !isWhitespace;
-  //   return isValid ? null : { 'whitespace': true };
-  // }
-
-
-
-  ngOnInit(): void {
-    this.getAllActiveBuilders();
+  constructor(api: ApiService, fb: FormBuilder, private auth: AuthService) {
+    super();
+    this.apiService = api;
+    this.fb = fb;
   }
 
-
-  ResetDialog() {
-    this.submitted = false;
-
-    this.builderForm.reset();
+  buildForm(): FormGroup {
+    return this.fb.group({
+      builderId: [''],
+      name: ['', Validators.required],
+      OwnerName: ['', Validators.required],
+      contact2: ['', Validators.required],
+      contact1: ['', Validators.required],
+      tagLine: ['', Validators.required],
+      description: ['', Validators.required],
+      officeAddress: ['', Validators.required],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      gstNo: ['', Validators.required],
+      LangLog: ['', Validators.required],
+      isActive: ['', []]
+    });
   }
 
+  override ngOnInit(): void {
+    this.form = this.buildForm();
+    this.userRole = this.auth.getUserRole();
 
-  saveBuilder() {
-debugger
-    this.submitted = true;
-
-    if (this.builderForm.invalid)
-      return;
-
-    if (this.brickntrackService.commonValidation(this.builderForm.get('builderId')?.value)) {
-      this.builderForm.get('builderId')?.setValue(0);
-      this.builderForm.get('isActive')?.setValue(true);
+    if (this.isAdmin) {
+      this.loadItems();
+    } else {
+      // Builder: load only their own profile
+      this.loadItems();
     }
+  }
 
-
-    const formData = this.builderForm.value;
-
-    this.brickntrackService.post<any>(ServiceUrl.addUpdateBuilder, formData)
+  override loadItems(): void {
+    this.loading = true;
+    this.apiService.get<any[]>(this.listEndpoint)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res) => {
-          Swal.fire("", res.responseMessage, "success");
-
-          this.getAllActiveBuilders();
-          this.displayBuilderDialog = false;
+          const all = res.data || (res as any);
+          if (this.isAdmin) {
+            this.items = all;
+          } else {
+            // Builder sees only their own builder profile
+            const builderId = this.auth.getBuilderId();
+            this.items = all.filter((b: any) => b.builderId === builderId);
+            if (this.items.length > 0) {
+              this.myBuilder = this.items[0];
+            }
+          }
+          this.loading = false;
         },
-        (err) => {
-
-          Swal.fire("", err.error.errorMessage, "error");
-          this.displayBuilderDialog = false;
-        }
-      )
-
+        () => { this.loading = false; }
+      );
   }
-  acceptNumber(event: any, flag: boolean): void {
-    flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
+
+  saveBuilder() {
+    this.submitted = true;
+    if (this.form.invalid) return;
+
+    const builderIdValue = this.form.get('builderId')?.value;
+    if (!builderIdValue || builderIdValue === '') {
+      this.form.get('builderId')?.setValue(0);
+      this.form.get('isActive')?.setValue(true);
+    }
+
+    this.save();
   }
 
   openBuilderDialog() {
-    debugger
-    this.displayBuilderDialog = true;
+    this.openDialog();
     this.ResetVisible = true;
     this.ActiveButtonVisible = false;
-    this.ResetDialog();
-    this.title = "Add Builder"
   }
 
   closeBuilderDialog() {
-    this.displayBuilderDialog = false;
-
+    this.closeDialog();
   }
+
+  ResetDialog() {
+    this.resetForm();
+  }
+
   editBuilder(value: any) {
-    this.title = "Edit Builder ";
-    this.displayBuilderDialog = true
-    this.ActiveButtonVisible = true
-    this.ResetVisible = false
-    this.builderForm.patchValue({
+    this.title = 'Edit Builder ';
+    this.displayDialog = true;
+    this.isEditMode = true;
+    this.ActiveButtonVisible = true;
+    this.ResetVisible = false;
+    this.form.patchValue({
       builderId: value.builderId,
       name: value.name,
       OwnerName: value.ownerName,
@@ -132,25 +134,10 @@ debugger
       emailAddress: value.emailAddress,
       LangLog: value.langLog,
       gstNo: value.gstNo,
-      // IsActive: value.IsActive
-
-
-    })
-
-
+    });
   }
 
   getAllActiveBuilders() {
-    debugger
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllBuilder)
-      .subscribe(
-        (res) => {
-          this.builderList = res
-        },
-        (err) => {
-          Swal.fire("", err.error.message, "error")
-        }
-      )
+    this.loadItems();
   }
-
 }

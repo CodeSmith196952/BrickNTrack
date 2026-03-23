@@ -1,136 +1,42 @@
 <p-toast position="bottom-right"></p-toast>
-<section>
-  <div class="py-2">
-    <h2 class="title-one">
-      <i class="fa-solid fa-newspaper mx-2"></i> Project Master
-    </h2>
+<section class="project-master-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>Project Master</h1>
+      <p>Manage all your construction projects</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search projects..."
+        [(ngModel)]="searchTerm"
+      />
+      <button class="btn btn-primary btn-sm" (click)="openProjectDialog()">
+        <i class="fa-solid fa-plus me-1"></i>Add Project
+      </button>
+    </div>
   </div>
 
-  <div class="mb-3">
-    <mat-card>
-      <mat-card-content>
-        <p-table
-          #dtPallet
-          [value]="projectList"
-          selectionMode="multiple"
-          styleClass="p-datatable-gridlines p-datatable-striped"
-          responsiveLayout="scroll"
-          [rows]="10"
-          [paginator]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [globalFilterFields]="['palletCode', 'palletName']"
-        >
-          <ng-template pTemplate="caption">
-            <div class="d-flex justify-content-end align-items-center">
-              <div class="d-flex">
-                <span>
-                  <input
-                    type="text"
-                    class="form-control form-control-search"
-                    placeholder="Search"
-                    (input)="
-                      dtPallet.filterGlobal(
-                        $any($event.target).value,
-                        'contains'
-                      )
-                    "
-                  />
-                </span>
-                <a
-                  (click)="openProjectDialog()"
-                  class="btn btn-primary ml-1"
-                  title="Add Pallet"
-                >
-                  <i class="pi pi-plus"></i>
-                </a>
-              </div>
-            </div>
-          </ng-template>
+  <!-- Project Cards Grid -->
+  <div class="row g-3">
+    <div class="col-sm-4 d-flex" *ngFor="let project of filteredProjects">
+      <app-property-card
+        [property]="project"
+        [showEdit]="true"
+        [showMilestones]="true"
+        (onEdit)="editProjectDialog(project)"
+        (onMilestones)="openMilestoneDialog(project.projectId)">
+      </app-property-card>
+    </div>
+  </div>
 
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Sr No.</th>
-              <th pSortableColumn="projectName">Project Name</th>
-              <th pSortableColumn="builderName">Builder Name</th>
-              <th pSortableColumn="budget">Budget</th>
-              <th pSortableColumn="completionDate">Planned Completion</th>
-              <th pSortableColumn="actualCompletionDate">Actual Completion</th>
-              <th pSortableColumn="startDate">Start Date</th>
-              <th pSortableColumn="actualStartDate">Actual Start Date</th>
-              <th pSortableColumn="completionPercentage">Completion %</th>
-              <th pSortableColumn="status">Status</th>
-              <th pSortableColumn="reraNumber">RERA No</th>
-              <th pSortableColumn="projectAddress">Address</th>
-              <th pSortableColumn="latlong">Lat/Long</th>
-              <th pSortableColumn="projectDescription">Description</th>
-              <th>Profile Image</th>
-              <th>Action</th>
-            </tr>
-          </ng-template>
-
-          <ng-template pTemplate="body" let-project let-i="rowIndex">
-            <tr>
-              <td>{{ i + 1 }}</td>
-              <td>{{ project.projectName }}</td>
-              <td>{{ project.builderName }}</td>
-              <td>{{ project.budget }}</td>
-              <td>{{ project.completionDate | date }}</td>
-              <td>{{ project.actualCompletionDate | date }}</td>
-              <td>{{ project.startDate | date }}</td>
-              <td>{{ project.actualStartDate | date }}</td>
-              <td>{{ project.completionPercentage }}%</td>
-              <td>{{ project.status }}</td>
-              <td>{{ project.reraNumber }}</td>
-              <td>{{ project.projectAddress }}</td>
-              <td>{{ project.latlong }}</td>
-              <td>{{ project.projectDescription }}</td>
-              <td>
-                <img
-                  *ngIf="project.profileImage"
-                  [src]="project.profileImage"
-                  alt="Profile"
-                  width="50"
-                  height="50"
-                />
-              </td>
-              <td>
-                <i
-                  class="fa fa-eye"
-                  (click)="editProject(project)"
-                  style="cursor: pointer"
-                  title="Edit Project"
-                ></i>
-                <i
-                  class="fa fa-edit ml-1"
-                  (click)="openMilestoneDialog(project.projectId)"
-                  style="cursor: pointer"
-                  title="View Project"
-                ></i>
-              </td>
-            </tr>
-          </ng-template>
-
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="5">No Project  found.</td>
-              <td>
-                <i
-                  class="fa fa-edit"
-                  style="cursor: pointer"
-                  title="Edit Pallet"
-                ></i>
-              </td>
-            </tr>
-          </ng-template>
-
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="5">No Project  found.</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </mat-card-content>
-    </mat-card>
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="(filteredProjects)?.length === 0">
+    <i class="fa-solid fa-building"></i>
+    <p>No projects found.</p>
+    <button class="btn btn-primary btn-sm" (click)="openProjectDialog()">Add First Project</button>
   </div>
 </section>
 
@@ -138,273 +44,329 @@
   header="Project Details"
   [(visible)]="displayProjectDialog"
   [modal]="true"
-  [style]="{ width: '40vw' }"
+  [style]="{ width: '55vw', maxHeight: '90vh' }"
+  [contentStyle]="{ overflow: 'auto' }"
 >
+  <!-- Tab Navigation -->
+  <div class="dialog-tabs">
+    <button class="dialog-tab" [class.active]="activeTab === 'basic'" (click)="activeTab = 'basic'">
+      <i class="fa-solid fa-building"></i> Basic Details
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'location'" (click)="activeTab = 'location'">
+      <i class="fa-solid fa-location-dot"></i> Location
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'features'" (click)="activeTab = 'features'">
+      <i class="fa-solid fa-list-check"></i> Features
+    </button>
+    <button class="dialog-tab" [class.active]="activeTab === 'media'" (click)="activeTab = 'media'">
+      <i class="fa-solid fa-images"></i> Media
+    </button>
+  </div>
+
   <form [formGroup]="projectForm" autocomplete="off">
-    <div class="row">
-      <!-- Project Name -->
-      <div class="col-sm-6 mb-3">
-        <label>Project Name<sup>*</sup></label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="projectName"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['projectName'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['projectName'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['projectName'].errors['required']">
-            Project Name is required
-          </small>
+
+    <!-- TAB: Basic Details -->
+    <div *ngIf="activeTab === 'basic'">
+      <h6 class="section-title">Basic Information</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label>Project Name<sup>*</sup></label>
+          <input type="text" class="form-control" formControlName="projectName"
+                 [ngClass]="{'is-invalid': submitted && projectForm.controls['projectName'].errors}">
+          <div *ngIf="submitted && projectForm.controls['projectName'].errors" class="invalid-feedback">
+            <small>Project Name is required</small>
+          </div>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Property Type</label>
+          <select class="form-select" formControlName="propertyType">
+            <option value="">Select Type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Apartment,Villa">Apartment & Villa</option>
+            <option value="Plot">Plot</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Township">Township</option>
+          </select>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Status<sup>*</sup></label>
+          <select class="form-select" formControlName="status">
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Hold">Hold</option>
+          </select>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Budget (INR)<sup>*</sup></label>
+          <input type="number" class="form-control" formControlName="budget"
+                 [ngClass]="{'is-invalid': submitted && projectForm.controls['budget'].errors}">
+          <div *ngIf="submitted && projectForm.controls['budget'].errors" class="invalid-feedback">
+            <small>Budget is required</small>
+          </div>
+        </div>
+        <div class="col-sm-12 mb-3">
+          <label>Description<sup>*</sup></label>
+          <textarea class="form-control" formControlName="projectDescription" rows="3"
+                    [ngClass]="{'is-invalid': submitted && projectForm.controls['projectDescription'].errors}"></textarea>
+          <div *ngIf="submitted && projectForm.controls['projectDescription'].errors" class="invalid-feedback">
+            <small>Description is required</small>
+          </div>
         </div>
       </div>
 
-      <!-- Budget -->
-      <div class="col-sm-6 mb-3">
-        <label>Budget<sup>*</sup></label>
-        <input
-          type="number"
-          class="form-control"
-          formControlName="budget"
-          [ngClass]="{
-            'is-invalid': submitted && projectForm.controls['budget'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['budget'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['budget'].errors['required']">
-            Budget is required
-          </small>
+      <h6 class="section-title mt-2">Approvals</h6>
+      <div class="row">
+        <div class="col-sm-12 mb-2">
+          <div class="d-flex gap-3 flex-wrap">
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isReraApproved"><span>RERA Approved</span></label>
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isHmdaApproved"><span>HMDA Approved</span></label>
+            <label class="toggle-checkbox"><input type="checkbox" formControlName="isDtcpApproved"><span>DTCP Approved</span></label>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isReraApproved')?.value">
+          <label>RERA Number</label>
+          <input type="text" class="form-control" formControlName="reraNumber" placeholder="e.g., P52100003466">
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isHmdaApproved')?.value">
+          <label>HMDA Number</label>
+          <input type="text" class="form-control" formControlName="hmdaNumber" placeholder="HMDA approval number">
+        </div>
+        <div class="col-sm-4 mb-3" *ngIf="projectForm.get('isDtcpApproved')?.value">
+          <label>DTCP Number</label>
+          <input type="text" class="form-control" formControlName="dtcpNumber" placeholder="DTCP approval number">
         </div>
       </div>
 
-      <!-- Start Date -->
-      <div class="col-sm-6 mb-3">
-        <label>Start Date<sup>*</sup></label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="startDate"
-          [ngClass]="{
-            'is-invalid': submitted && projectForm.controls['startDate'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['startDate'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['startDate'].errors['required']">
-            Start Date is required
-          </small>
+      <h6 class="section-title mt-2">Timeline</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label>Start Date</label>
+          <input type="date" class="form-control" formControlName="startDate">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Completion Date</label>
+          <input type="date" class="form-control" formControlName="completionDate">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Completion %</label>
+          <input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Location -->
+    <div *ngIf="activeTab === 'location'">
+      <h6 class="section-title">Address</h6>
+      <div class="row">
+        <div class="col-sm-12 mb-3">
+          <label>Full Address<sup>*</sup></label>
+          <input type="text" class="form-control" formControlName="projectAddress"
+                 [ngClass]="{'is-invalid': submitted && projectForm.controls['projectAddress'].errors}">
+          <div *ngIf="submitted && projectForm.controls['projectAddress'].errors" class="invalid-feedback">
+            <small>Address is required</small>
+          </div>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>City</label>
+          <input type="text" class="form-control" formControlName="city">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>State</label>
+          <input type="text" class="form-control" formControlName="state">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Locality</label>
+          <input type="text" class="form-control" formControlName="locality">
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label>Pincode</label>
+          <input type="text" class="form-control" formControlName="pincode">
         </div>
       </div>
 
-      <!-- Completion Date -->
-      <div class="col-sm-6 mb-3">
-        <label>Completion Date<sup>*</sup></label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="completionDate"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['completionDate'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['completionDate'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['completionDate'].errors['required']">
-            Completion Date is required
-          </small>
+      <h6 class="section-title mt-2">Map Coordinates</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label>Latitude</label>
+          <input type="text" class="form-control" formControlName="latitude" placeholder="e.g., 17.4401">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Longitude</label>
+          <input type="text" class="form-control" formControlName="longitude" placeholder="e.g., 78.3489">
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Features -->
+    <div *ngIf="activeTab === 'features'">
+      <h6 class="section-title">Property Specifications</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label>Bedrooms</label>
+          <input type="number" class="form-control" formControlName="bedrooms" min="0">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Bathrooms</label>
+          <input type="number" class="form-control" formControlName="bathrooms" min="0">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Area (sq.ft)</label>
+          <input type="number" class="form-control" formControlName="areaSqFt">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Price per sq.ft</label>
+          <input type="number" class="form-control" formControlName="pricePerSqFt">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Carpet Area</label>
+          <input type="number" class="form-control" formControlName="carpetArea">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Super Built-Up Area</label>
+          <input type="number" class="form-control" formControlName="superBuiltUpArea">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Furnishing Status</label>
+          <select class="form-select" formControlName="furnishingStatus">
+            <option value="">Select</option>
+            <option value="Unfurnished">Unfurnished</option>
+            <option value="Semi-Furnished">Semi-Furnished</option>
+            <option value="Fully Furnished">Fully Furnished</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Facing Direction</label>
+          <select class="form-select" formControlName="facingDirection">
+            <option value="">Select</option>
+            <option *ngFor="let d of facingOptions" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Possession Status</label>
+          <select class="form-select" formControlName="possessionStatus">
+            <option value="">Select</option>
+            <option value="Ready to Move">Ready to Move</option>
+            <option value="Under Construction">Under Construction</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Floor Number</label>
+          <input type="number" class="form-control" formControlName="floorNumber">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Total Floors</label>
+          <input type="number" class="form-control" formControlName="totalFloors">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Parking Count</label>
+          <input type="number" class="form-control" formControlName="parkingCount">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Parking Type</label>
+          <select class="form-select" formControlName="parkingType">
+            <option value="">Select</option>
+            <option value="Covered">Covered</option>
+            <option value="Open">Open</option>
+            <option value="Basement">Basement</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Balcony Count</label>
+          <input type="number" class="form-control" formControlName="balconyCount">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Transaction Type</label>
+          <select class="form-select" formControlName="transactionType">
+            <option value="">Select</option>
+            <option value="New">New</option>
+            <option value="Resale">Resale</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Ownership Type</label>
+          <select class="form-select" formControlName="ownershipType">
+            <option value="">Select</option>
+            <option value="Freehold">Freehold</option>
+            <option value="Leasehold">Leasehold</option>
+            <option value="Co-operative">Co-operative</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Maintenance Charges</label>
+          <input type="number" class="form-control" formControlName="maintenanceCharges">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label>Property Age (years)</label>
+          <input type="number" class="form-control" formControlName="propertyAge">
+        </div>
+        <div class="col-sm-12 mb-3">
+          <label>Amenities</label>
+          <input type="text" class="form-control" formControlName="amenities" placeholder="Swimming Pool, Gym, Clubhouse, ...">
         </div>
       </div>
 
-      <!-- Status -->
-      <div class="col-sm-6 mb-3">
-        <label>Status<sup>*</sup></label>
-        <select
-          class="form-select"
-          formControlName="status"
-          [ngClass]="{
-            'is-invalid': submitted && projectForm.controls['status'].errors
-          }"
-        >
-          <option ngValue="New" [selected]="true">New</option>
-          <option ngValue="In Progress">In Progress</option>
-          <option ngValue="Completed">Completed</option>
-          <option ngValue="Hold">Hold</option>
-        </select>
-        <div
-          *ngIf="submitted && projectForm.controls['status'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['status'].errors['required']">
-            Status is required
-          </small>
+      <div class="row mt-2">
+        <div class="col-sm-3 mb-2">
+          <label class="toggle-checkbox"><input type="checkbox" formControlName="isGatedCommunity"><span>Gated Community</span></label>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <label class="toggle-checkbox"><input type="checkbox" formControlName="isFeatured"><span>Featured</span></label>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <label class="toggle-checkbox"><input type="checkbox" formControlName="hasPowerBackup"><span>Power Backup</span></label>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <label class="toggle-checkbox"><input type="checkbox" formControlName="hasWaterSupply"><span>Water Supply</span></label>
         </div>
       </div>
 
-      <!-- Completion Percentage -->
-      <div class="col-sm-6 mb-3">
-        <label>Completion %<sup>*</sup></label>
-        <input
-          type="number"
-          class="form-control"
-          formControlName="completionPercentage"
-          min="0"
-          max="100"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['completionPercentage'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['completionPercentage'].errors"
-          class="invalid-feedback"
-        >
-          <small
-            *ngIf="projectForm.controls['completionPercentage'].errors['required']"
-          >
-            Completion % is required
-          </small>
-          <small
-            *ngIf="projectForm.controls['completionPercentage'].errors['min']"
-          >
-            Minimum is 0
-          </small>
-          <small
-            *ngIf="projectForm.controls['completionPercentage'].errors['max']"
-          >
-            Maximum is 100
-          </small>
+      <!-- Amenity Picker -->
+      <h6 class="section-title mt-4">Amenities</h6>
+      <div class="amenity-picker-section" *ngFor="let cat of amenityCategories">
+        <h6 class="amenity-cat-label">{{ cat }}</h6>
+        <div class="amenity-chip-grid">
+          <div class="amenity-chip-item" *ngFor="let a of amenitiesByCategory[cat]"
+               [class.selected]="isAmenitySelected(a.amenityId)"
+               (click)="toggleAmenity(a.amenityId)">
+            <i [class]="a.icon"></i>
+            <span>{{ a.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Media -->
+    <div *ngIf="activeTab === 'media'">
+      <h6 class="section-title">Profile Image</h6>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+          <small class="text-muted">Main property image shown in listings</small>
         </div>
       </div>
 
-      <!-- RERA Number -->
-      <div class="col-sm-6 mb-3">
-        <label>RERA Number<sup>*</sup></label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="reraNumber"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['reraNumber'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['reraNumber'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['reraNumber'].errors['required']">
-            RERA Number is required
-          </small>
+      <h6 class="section-title mt-3">Links</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label>Brochure URL</label>
+          <input type="text" class="form-control" formControlName="brochureUrl" placeholder="Link to brochure PDF">
         </div>
-      </div>
-
-      <!-- Project Address -->
-      <div class="col-sm-6 mb-3">
-        <label>Project Address<sup>*</sup></label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="projectAddress"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['projectAddress'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['projectAddress'].errors"
-          class="invalid-feedback"
-        >
-          <small
-            *ngIf="projectForm.controls['projectAddress'].errors['required']"
-          >
-            Project Address is required
-          </small>
+        <div class="col-sm-6 mb-3">
+          <label>Video Tour URL</label>
+          <input type="text" class="form-control" formControlName="videoTourUrl" placeholder="YouTube or video link">
         </div>
-      </div>
-
-      <!-- Latitude, Longitude -->
-      <div class="col-sm-6 mb-3">
-        <label>Latitude, Longitude<sup>*</sup></label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="latlong"
-          placeholder="lat,long"
-          [ngClass]="{
-            'is-invalid': submitted && projectForm.controls['latlong'].errors
-          }"
-        />
-        <div
-          *ngIf="submitted && projectForm.controls['latlong'].errors"
-          class="invalid-feedback"
-        >
-          <small *ngIf="projectForm.controls['latlong'].errors['required']">
-            Latitude and Longitude are required
-          </small>
-        </div>
-      </div>
-
-      <!-- Project Description -->
-      <div class="col-sm-6 mb-3">
-        <label>Project Description<sup>*</sup></label>
-        <textarea
-          class="form-control"
-          formControlName="projectDescription"
-          [ngClass]="{
-            'is-invalid':
-              submitted && projectForm.controls['projectDescription'].errors
-          }"
-        ></textarea>
-        <div
-          *ngIf="submitted && projectForm.controls['projectDescription'].errors"
-          class="invalid-feedback"
-        >
-          <small
-            *ngIf="projectForm.controls['projectDescription'].errors['required']"
-          >
-            Project Description is required
-          </small>
-        </div>
-      </div>
-
-      <!-- Profile Image URL -->
-      <div class="col-sm-6 mb-3">
-        <label>Profile Image URL</label>
-        <input
-          type="file"
-          class="form-control"
-          (change)="onFileSelected($event)"
-          accept="image/*"
-        />
       </div>
     </div>
   </form>
 
-  <div class="model-footer text-end">
-    <button class="btn btn-primary m-2" (click)="saveProject()">Submit</button>
-    <button
-      class="btn btn-secondary m-2"
-      (click)="ResetDialog()"
-      *ngIf="ResetVisible"
-    >
-      Reset
-    </button>
-    <button class="btn btn-danger m-2" (click)="closeProjectDialog()">
-      Close
-    </button>
+  <div class="dialog-footer">
+    <button class="btn btn-outline-secondary" (click)="closeProjectDialog()">Close</button>
+    <div class="d-flex gap-2">
+      <button class="btn btn-secondary" (click)="ResetDialog()" *ngIf="ResetVisible">Reset</button>
+      <button class="btn btn-primary" (click)="saveProject()"><i class="fa-solid fa-check me-1"></i>Submit</button>
+    </div>
   </div>
 </p-dialog>
 
