@@ -1,143 +1,472 @@
-<body class="container mt-5 mb-3" *ngIf="projectDetails">
-  <!--POST HEADER-->
-  <div id="wrapper">
-    <div class="container"></div>
+<div class="detail-page" *ngIf="projectDetails">
 
-    <!-- Hero Section -->
+  <!-- ===== TWO COLUMN LAYOUT ===== -->
+  <div class="detail-layout">
 
+    <!-- LEFT COLUMN (Main Content) -->
+    <div class="detail-main">
 
-    <!-- Main Image -->
-    <section id="my-story">
-      <div class="video-container">
-        <img
-          id="looping-video"
-          [src]="getImageUrl(projectImages[0]?.path)"
-          alt="Main Project Image"
-          *ngIf="projectImages.length"
-        />
+      <!-- Image Gallery Card -->
+      <div class="detail-card gallery-card">
+        <div class="main-image">
+          <img *ngIf="projectImages.length" [src]="getImageUrl(projectImages[0]?.path)" alt="Project Image">
+          <img *ngIf="!projectImages.length && projectDetails.profileImage" [src]="projectDetails.profileImage" alt="Project Image">
+          <div *ngIf="!projectImages.length && !projectDetails.profileImage" class="image-placeholder">
+            <i class="fa-solid fa-building"></i>
+          </div>
+        </div>
+        <div class="thumbnail-row" *ngIf="projectImages.length > 1">
+          <img *ngFor="let img of projectImages; let i = index" [src]="getImageUrl(img.path)" (click)="openFullscreen(i)" alt="Image {{ i+1 }}">
+        </div>
+        <div class="d-flex gap-2 mt-2" *ngIf="projectDetails.videoTourUrl || projectDetails.brochureUrl">
+          <a *ngIf="projectDetails.videoTourUrl" [href]="projectDetails.videoTourUrl" target="_blank" class="btn btn-outline-danger btn-sm">
+            <i class="fa-solid fa-video me-1"></i>Video Tour
+          </a>
+          <a *ngIf="projectDetails.brochureUrl" [href]="projectDetails.brochureUrl" target="_blank" class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-file-pdf me-1"></i>Brochure
+          </a>
+        </div>
       </div>
 
-      <!-- Gallery Images -->
-    <!-- Gallery Images -->
-<div class="my-story-img" *ngIf="projectImages.length > 1">
-  <img
-    *ngFor="let img of projectImages; let i = index"
-    [id]="'my-story-img-' + (i + 1)"
-    [src]="getImageUrl(img.path)"
-    alt="Project Image {{ i + 1 }}"
-    (click)="openFullscreen(i)"
-    style="cursor: pointer; max-width: 150px; margin: 5px;"
-  />
+      <!-- Property Header Card -->
+      <div class="detail-card">
+        <div class="property-header">
+          <div class="property-header-left">
+            <h1 class="property-title">{{ projectDetails.projectName }}</h1>
+            <p class="property-address"><i class="fa-solid fa-location-dot"></i> {{ projectDetails.locality ? projectDetails.locality + ', ' : '' }}{{ projectDetails.city || projectDetails.projectAddress }}</p>
+            <p class="property-address-sub" *ngIf="projectDetails.city">{{ projectDetails.city }}<span *ngIf="projectDetails.state">, {{ projectDetails.state }}</span><span *ngIf="projectDetails.pincode"> - {{ projectDetails.pincode }}</span></p>
+          </div>
+          <div class="property-header-right">
+            <h2 class="property-price" *ngIf="projectDetails.unitTypes?.length">&#8377;{{ getMinPrice() | number:'1.0-0' }} <span *ngIf="getMinPrice() !== getMaxPrice()">- &#8377;{{ getMaxPrice() | number:'1.0-0' }}</span></h2>
+            <h2 class="property-price" *ngIf="!projectDetails.unitTypes?.length">&#8377;{{ projectDetails.budget | number }}</h2>
+            <span class="status-badge" [ngClass]="{'badge-green': projectDetails.possessionStatus === 'Ready to Move' || projectDetails.status === 'Completed', 'badge-orange': projectDetails.status === 'In Progress' || projectDetails.possessionStatus === 'Under Construction'}">
+              {{ projectDetails.possessionStatus || projectDetails.status }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Quick Specs -->
+        <div class="quick-specs" *ngIf="projectDetails.areaSqFt || projectDetails.bedrooms || projectDetails.bathrooms || projectDetails.floorNumber">
+          <div class="spec-box" *ngIf="projectDetails.areaSqFt"><strong>{{ projectDetails.areaSqFt }}</strong><small>Sq.ft</small></div>
+          <div class="spec-box" *ngIf="projectDetails.bedrooms"><strong>{{ projectDetails.bedrooms }}</strong><small>Bedrooms</small></div>
+          <div class="spec-box" *ngIf="projectDetails.bathrooms"><strong>{{ projectDetails.bathrooms }}</strong><small>Bathrooms</small></div>
+          <div class="spec-box" *ngIf="projectDetails.floorNumber"><strong>{{ projectDetails.floorNumber }}{{ projectDetails.totalFloors ? '/' + projectDetails.totalFloors : '' }}</strong><small>Floor</small></div>
+        </div>
+
+        <!-- Description -->
+        <div class="section-block" *ngIf="projectDetails.projectDescription">
+          <h4>Description</h4>
+          <p>{{ projectDetails.projectDescription }}</p>
+        </div>
+
+        <!-- Amenities -->
+        <div class="section-block" *ngIf="amenitiesList.length > 0">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Amenities</h4>
+            <button class="amenity-toggle-btn" *ngIf="amenitiesList.length > 9" (click)="showAllAmenities = !showAllAmenities">
+              {{ showAllAmenities ? 'Show Less' : 'View All (' + amenitiesList.length + ')' }}
+              <i [class]="showAllAmenities ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'" style="font-size:11px; margin-left:4px;"></i>
+            </button>
+          </div>
+          <div class="amenities-display">
+            <div class="amenity-display-item" *ngFor="let a of (showAllAmenities ? amenitiesList : amenitiesList.slice(0, 9))">
+              <div class="amenity-display-icon">
+                <i [class]="a.icon || 'fa-solid fa-check'"></i>
+              </div>
+              <span>{{ a.name || a }}</span>
+            </div>
+          </div>
+          <div class="amenity-more-hint" *ngIf="!showAllAmenities && amenitiesList.length > 9">
+            +{{ amenitiesList.length - 9 }} more amenities
+          </div>
+        </div>
+
+        <!-- Legal Documents -->
+        <div class="section-block" *ngIf="projectDetails.reraNumber || projectDetails.hmdaNumber || projectDetails.dtcpNumber">
+          <h4>Legal Documents</h4>
+          <div class="legal-badges">
+            <span class="legal-badge rera" *ngIf="projectDetails.reraNumber">RERA: {{ projectDetails.reraNumber }}</span>
+            <span class="legal-badge hmda" *ngIf="projectDetails.hmdaNumber">HMDA Approved</span>
+            <span class="legal-badge dtcp" *ngIf="projectDetails.dtcpNumber">DTCP Approved</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Configurations -->
+      <div class="detail-card" *ngIf="projectDetails.unitTypes?.length > 0 || canEditUnits">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0"><i class="fa-solid fa-table-cells-large me-2"></i>Available Configurations</h4>
+          <button *ngIf="canEditUnits" class="btn btn-outline-primary btn-sm" (click)="openAddUnit()">
+            <i class="fa-solid fa-plus me-1"></i>Add Unit Type
+          </button>
+        </div>
+        <p class="text-muted mb-3" *ngIf="projectDetails.unitTypes?.length" style="font-size:13px;">{{ projectDetails.unitTypes.length }} unit types · ₹{{ getMinPrice() | number:'1.0-0' }} - ₹{{ getMaxPrice() | number:'1.0-0' }}</p>
+
+        <!-- Unit Form -->
+        <div class="unit-form-panel" *ngIf="showUnitForm">
+          <h5>{{ editingUnit.id ? 'Edit' : 'Add' }} Unit Configuration</h5>
+          <div class="row g-2">
+            <div class="col-sm-3"><label>Unit Name</label><input class="form-control" [(ngModel)]="editingUnit.unitName" placeholder="e.g. 3 BHK Premium"></div>
+            <div class="col-sm-2"><label>Type</label><select class="form-select" [(ngModel)]="editingUnit.unitType"><option>Apartment</option><option>Villa</option><option>Penthouse</option><option>Plot</option></select></div>
+            <div class="col-sm-1"><label>BHK</label><input type="number" class="form-control" [(ngModel)]="editingUnit.bedrooms"></div>
+            <div class="col-sm-1"><label>Bath</label><input type="number" class="form-control" [(ngModel)]="editingUnit.bathrooms"></div>
+            <div class="col-sm-2"><label>Carpet</label><input type="number" class="form-control" [(ngModel)]="editingUnit.carpetArea"></div>
+            <div class="col-sm-2"><label>Super Area</label><input type="number" class="form-control" [(ngModel)]="editingUnit.superBuiltUpArea"></div>
+            <div class="col-sm-2"><label>Price (₹)</label><input type="number" class="form-control" [(ngModel)]="editingUnit.price"></div>
+            <div class="col-sm-2"><label>₹/sqft</label><input type="number" class="form-control" [(ngModel)]="editingUnit.pricePerSqFt"></div>
+            <div class="col-sm-2"><label>Facing</label><select class="form-select" [(ngModel)]="editingUnit.facingDirection"><option value="">Any</option><option>North</option><option>South</option><option>East</option><option>West</option><option>North-East</option><option>North-West</option><option>South-East</option><option>South-West</option></select></div>
+            <div class="col-sm-2"><label>Furnishing</label><select class="form-select" [(ngModel)]="editingUnit.furnishingStatus"><option value="">None</option><option>Unfurnished</option><option>Semi-Furnished</option><option>Fully Furnished</option></select></div>
+            <div class="col-sm-1"><label>Parking</label><input type="number" class="form-control" [(ngModel)]="editingUnit.parkingCount"></div>
+            <div class="col-sm-1"><label>Balcony</label><input type="number" class="form-control" [(ngModel)]="editingUnit.balconyCount"></div>
+            <div class="col-sm-1"><label>Total</label><input type="number" class="form-control" [(ngModel)]="editingUnit.totalUnits"></div>
+            <div class="col-sm-1"><label>Avail</label><input type="number" class="form-control" [(ngModel)]="editingUnit.availableUnits"></div>
+          </div>
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary btn-sm" (click)="saveUnit()">{{ editingUnit.id ? 'Update' : 'Add' }}</button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="showUnitForm = false">Cancel</button>
+          </div>
+        </div>
+
+        <div class="unit-grid">
+          <div class="unit-card" *ngFor="let unit of projectDetails.unitTypes" [class.selected]="selectedUnit?.id === unit.id" (click)="selectedUnit = unit">
+            <div class="unit-header">
+              <span class="unit-name">{{ unit.unitName }}</span>
+              <div class="d-flex gap-1 align-items-center">
+                <span class="unit-avail" *ngIf="unit.availableUnits > 0">{{ unit.availableUnits }} left</span>
+                <span class="unit-avail sold-out" *ngIf="unit.availableUnits === 0">Sold Out</span>
+                <button *ngIf="canEditUnits" class="btn btn-outline-secondary btn-sm" style="padding:2px 6px; font-size:11px;" (click)="editUnit(unit, $event)"><i class="fa-solid fa-pen"></i></button>
+                <button *ngIf="canEditUnits" class="btn btn-outline-danger btn-sm" style="padding:2px 6px; font-size:11px;" (click)="deleteUnit(unit, $event)"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="unit-price">₹{{ unit.price | number:'1.0-0' }}</div>
+            <div class="unit-specs">
+              <span><i class="fa-solid fa-bed me-1"></i>{{ unit.bedrooms }} BHK</span>
+              <span><i class="fa-solid fa-bath me-1"></i>{{ unit.bathrooms }} Bath</span>
+              <span><i class="fa-solid fa-ruler-combined me-1"></i>{{ unit.carpetArea }} sqft</span>
+              <span *ngIf="unit.facingDirection"><i class="fa-solid fa-compass me-1"></i>{{ unit.facingDirection }}</span>
+            </div>
+            <div class="unit-extras">
+              <small *ngIf="unit.superBuiltUpArea">Super: {{ unit.superBuiltUpArea }} sqft</small>
+              <small *ngIf="unit.parkingCount">Parking: {{ unit.parkingCount }}</small>
+              <small *ngIf="unit.balconyCount">Balcony: {{ unit.balconyCount }}</small>
+              <small *ngIf="unit.furnishingStatus">{{ unit.furnishingStatus }}</small>
+              <small *ngIf="unit.pricePerSqFt">₹{{ unit.pricePerSqFt | number:'1.0-0' }}/sqft</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Details Card -->
+      <div class="detail-card" *ngIf="hasPropertyDetails">
+        <h4>Property Details</h4>
+        <div class="row">
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.pricePerSqFt"><small class="text-muted">Price per sq.ft</small><p class="mb-0"><strong>₹{{ projectDetails.pricePerSqFt | number }}</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.carpetArea"><small class="text-muted">Carpet Area</small><p class="mb-0"><strong>{{ projectDetails.carpetArea }} sq.ft</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.superBuiltUpArea"><small class="text-muted">Super Built-up</small><p class="mb-0"><strong>{{ projectDetails.superBuiltUpArea }} sq.ft</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.furnishingStatus"><small class="text-muted">Furnishing</small><p class="mb-0"><strong>{{ projectDetails.furnishingStatus }}</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.facingDirection"><small class="text-muted">Facing</small><p class="mb-0"><strong>{{ projectDetails.facingDirection }}</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.parkingCount"><small class="text-muted">Parking</small><p class="mb-0"><strong>{{ projectDetails.parkingCount }} {{ projectDetails.parkingType || '' }}</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.transactionType"><small class="text-muted">Transaction</small><p class="mb-0"><strong>{{ projectDetails.transactionType }}</strong></p></div>
+          <div class="col-sm-3 mb-3" *ngIf="projectDetails.propertyAge"><small class="text-muted">Age</small><p class="mb-0"><strong>{{ projectDetails.propertyAge }} years</strong></p></div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap mt-2">
+          <span class="facility-badge green" *ngIf="projectDetails.isGatedCommunity"><i class="fa-solid fa-shield-halved me-1"></i>Gated Community</span>
+          <span class="facility-badge green" *ngIf="projectDetails.hasPowerBackup"><i class="fa-solid fa-bolt me-1"></i>Power Backup</span>
+          <span class="facility-badge green" *ngIf="projectDetails.hasWaterSupply"><i class="fa-solid fa-droplet me-1"></i>24x7 Water</span>
+        </div>
+      </div>
+
+      <!-- Construction Progress -->
+      <div class="detail-card" *ngIf="stages.length > 0 || projectDetails.completionPercentage">
+        <h4><i class="fa-solid fa-hard-hat me-2"></i>Construction Progress</h4>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="fw-500">Overall Progress</span>
+          <strong class="text-success">{{ overallCompletion }}%</strong>
+        </div>
+        <div class="progress mb-2" style="height: 10px; border-radius: 5px;">
+          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" [style.width.%]="overallCompletion"></div>
+        </div>
+        <small class="text-muted">Current Phase: {{ projectDetails.status }}</small>
+
+        <div class="timeline mt-4">
+          <div *ngFor="let stage of stages" class="timeline-item mb-3">
+            <div class="d-flex align-items-start">
+              <div class="timeline-marker me-3" [ngClass]="{'bg-success': stage.status === 'Completed', 'bg-warning': stage.status === 'In Progress', 'bg-danger': stage.status === 'Delayed', 'bg-secondary': stage.status === 'Pending'}" style="width:12px; height:12px; border-radius:50%; margin-top:6px; flex-shrink:0;"></div>
+              <div class="flex-grow-1 p-3 border rounded" [ngClass]="{'border-success': stage.status === 'Completed', 'border-warning': stage.status === 'In Progress'}">
+                <div class="d-flex justify-content-between align-items-center">
+                  <strong>{{ stage.stageName }}</strong>
+                  <span class="badge" [ngClass]="{'bg-success': stage.status === 'Completed', 'bg-warning text-dark': stage.status === 'In Progress', 'bg-danger': stage.status === 'Delayed', 'bg-secondary': stage.status === 'Pending'}">{{ stage.status }}</span>
+                </div>
+                <div class="progress mt-2" style="height:6px;"><div class="progress-bar" [style.width.%]="stage.completionPercentage" [ngClass]="{'bg-success': stage.status === 'Completed', 'bg-warning': stage.status === 'In Progress', 'bg-secondary': stage.status === 'Pending'}"></div></div>
+                <small class="text-muted">{{ stage.completionPercentage }}% complete</small>
+                <div class="d-flex gap-2 mt-2 flex-wrap" *ngIf="stage.stagePhotos?.length > 0">
+                  <img *ngFor="let photo of stage.stagePhotos" [src]="photo.photoPath" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-warning mt-3" *ngIf="hasDelayedStages">
+          <i class="fa-solid fa-triangle-exclamation me-2"></i>Some stages are delayed. Contact the builder for updates.
+        </div>
+      </div>
+
+      <!-- EMI Calculator -->
+      <div class="detail-card">
+        <app-emi-calculator [propertyPrice]="projectDetails.unitTypes?.length ? getMinPrice() : projectDetails.budget"></app-emi-calculator>
+      </div>
+
+      <!-- Similar Properties -->
+      <div class="detail-card" *ngIf="similarProperties.length > 0">
+        <h4>Similar Properties</h4>
+        <div class="row">
+          <div class="col-sm-4" *ngFor="let p of similarProperties">
+            <div class="similar-card">
+              <div class="similar-img">
+                <div *ngIf="!p.profileImage" class="image-placeholder small"><i class="fa-solid fa-building"></i></div>
+                <img *ngIf="p.profileImage" [src]="p.profileImage">
+              </div>
+              <h6>{{ p.projectName }}</h6>
+              <small class="text-muted">{{ p.projectAddress }}</small>
+              <p class="mb-1"><strong>₹{{ p.budget | number }}</strong></p>
+              <a [routerLink]="['/property/detail', p.projectId]" class="btn btn-outline-primary btn-sm w-100">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="detail-card" *ngIf="reviews.length > 0">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0">Reviews ({{ reviews.length }})</h4>
+          <span *ngIf="averageRating > 0" class="badge bg-warning text-dark">{{ averageRating }}/5 &#9733;</span>
+        </div>
+        <div *ngFor="let review of reviews" class="mb-3 p-3 border rounded">
+          <div class="d-flex justify-content-between"><strong>{{ review.buyerUserName }}</strong><span>{{ review.overallRating }}/5 &#9733;</span></div>
+          <p *ngIf="review.reviewText" class="mt-2 mb-1">{{ review.reviewText }}</p>
+          <div class="mt-2 p-2 bg-light rounded" *ngIf="review.builderResponse"><small><strong>Builder:</strong> {{ review.builderResponse }}</small></div>
+          <small class="text-muted">{{ review.createdDate | date:'mediumDate' }}</small>
+        </div>
+      </div>
+
+      <div class="detail-card" *ngIf="isLoggedIn">
+        <a [routerLink]="['/reviews/create', projectId]" class="btn btn-outline-primary">Write a Review</a>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="detail-sidebar">
+
+      <!-- Action Buttons -->
+      <div class="sidebar-card">
+        <div class="sidebar-actions-top">
+          <button class="sidebar-icon-btn" (click)="toggleSave()">
+            <i [class]="isSaved ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i> {{ isSaved ? 'Saved' : 'Save' }}
+          </button>
+          <button class="sidebar-icon-btn" (click)="shareProperty()">
+            <i class="fa-solid fa-share-nodes"></i> Share
+          </button>
+        </div>
+        <button class="sidebar-primary-btn" (click)="contactBuilder()">
+          <i class="fa-solid fa-paper-plane me-2"></i>Send Inquiry
+        </button>
+        <button class="sidebar-secondary-btn" (click)="bookAppointment()">
+          <i class="fa-solid fa-calendar-check me-2"></i>Book Appointment
+        </button>
+        <button class="sidebar-secondary-btn" (click)="addToCompare()">
+          <i class="fa-solid fa-scale-balanced me-2"></i>Compare
+        </button>
+        <button class="sidebar-edit-btn" *ngIf="canEditUnits" (click)="openEditPropertyDialog()">
+          <i class="fa-solid fa-pen-to-square me-2"></i>Edit Property
+        </button>
+      </div>
+
+      <!-- Builder Info -->
+      <div class="sidebar-card" *ngIf="projectDetails.builderMaster || projectDetails.builderName">
+        <h5 class="sidebar-title">Builder Information</h5>
+        <div class="builder-info">
+          <div class="builder-avatar">{{ (projectDetails.builderMaster?.name || projectDetails.builderName)?.charAt(0) }}</div>
+          <div>
+            <a [routerLink]="isLoggedIn ? ['/builder/profile', projectDetails.builderId] : ['/builder-profile', projectDetails.builderId]" class="builder-name">
+              {{ projectDetails.builderMaster?.name || projectDetails.builderName }}
+              <i *ngIf="projectDetails.isBuilderVerified" class="fa-solid fa-circle-check verified-icon"></i>
+            </a>
+            <small class="text-muted d-block" *ngIf="projectDetails.builderMaster?.tagLine">{{ projectDetails.builderMaster.tagLine }}</small>
+          </div>
+        </div>
+        <div class="builder-contact" *ngIf="isLoggedIn">
+          <a *ngIf="projectDetails.builderMaster?.contact1" class="contact-link"><i class="fa-solid fa-phone"></i> {{ projectDetails.builderMaster.contact1 }}</a>
+          <a *ngIf="projectDetails.builderMaster?.emailAddress" class="contact-link"><i class="fa-solid fa-envelope"></i> {{ projectDetails.builderMaster.emailAddress }}</a>
+        </div>
+        <div *ngIf="!isLoggedIn" class="mt-2">
+          <a (click)="showLoginPrompt()" class="text-primary" style="cursor:pointer; font-size:13px;"><i class="fa-solid fa-lock me-1"></i>Login to view contact</a>
+        </div>
+      </div>
+
+      <!-- Location Map -->
+      <div class="sidebar-card" *ngIf="projectDetails.latitude">
+        <h5 class="sidebar-title">Location</h5>
+        <app-map-view [properties]="[projectDetails]" height="200px" [zoom]="14"></app-map-view>
+      </div>
+
+      <!-- View Count -->
+      <div class="sidebar-card" *ngIf="projectDetails.viewCount">
+        <div class="d-flex align-items-center gap-2 text-muted" style="font-size:13px;">
+          <i class="fa-solid fa-eye"></i> {{ projectDetails.viewCount }} views
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-<!-- Fullscreen Lightbox -->
-<!-- Fullscreen Lightbox -->
-<div
-  class="lightbox"
-  *ngIf="isViewerOpen"
-  (click)="closeImageViewer()"
+<!-- ===== Book Appointment Dialog ===== -->
+<p-dialog
+  header="Schedule a Site Visit"
+  [(visible)]="showAppointmentDialog"
+  [modal]="true"
+  [style]="{ width: '420px' }"
+  [baseZIndex]="10000"
 >
-  <div class="lightbox-content" (click)="$event.stopPropagation()">
-
-    <!-- If it's a 360 viewer, show 360 viewer container -->
-    <div *ngIf="is360Viewer">
-      <div id="viewer360" style="width: 600px; height: 400px;"></div>
+  <div class="appt-dialog">
+    <div class="appt-property-info">
+      <i class="fa-solid fa-building"></i>
+      <div>
+        <strong>{{ projectDetails?.projectName }}</strong>
+        <small class="d-block text-muted">{{ projectDetails?.projectAddress }}</small>
+      </div>
     </div>
 
-    <!-- Otherwise show normal image -->
-      <img
-      *ngIf="!is360Viewer"
-      [src]="projectImages[currentImageIndex]?.path"
-      alt="Full Image"
-      class="full-image"
-    />
-    <button class="close-btn" (click)="closeImageViewer()">✕</button>
+    <div class="mb-3">
+      <label class="appt-label">Select Date<sup>*</sup></label>
+      <input type="date" class="form-control" [(ngModel)]="appointmentDate" [min]="today">
+    </div>
+
+    <div class="mb-3">
+      <label class="appt-label">Preferred Time Slot<sup>*</sup></label>
+      <div class="time-slot-grid">
+        <button *ngFor="let slot of timeSlots" class="time-slot-btn"
+                [class.selected]="appointmentTimeSlot === slot"
+                (click)="appointmentTimeSlot = slot">
+          {{ slot }}
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="appt-label">Notes (optional)</label>
+      <textarea class="form-control" [(ngModel)]="appointmentNotes" rows="2" placeholder="Any specific requirements..."></textarea>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-end">
+      <button class="btn btn-outline-secondary" (click)="showAppointmentDialog = false">Cancel</button>
+      <button class="btn btn-primary" (click)="submitAppointment()">
+        <i class="fa-solid fa-calendar-check me-1"></i>Schedule Visit
+      </button>
+    </div>
   </div>
-</div>
+</p-dialog>
 
-
-    </section>
-
-    <!-- About Section -->
-    <div id="container">
-      <section id="about">
-        <h1 class="host-h">Experience Hosted by {{ projectDetails.builderMaster?.name }}</h1>
-        <p class="host-p">Status: {{ projectDetails.status }}</p>
-        <hr class="solid about-divider" />
-
-        <!-- Project Description -->
-        <div class="customPadding">
-          <div class="description">
-            <h2 class="about-desc-header">About the Project</h2>
-            <p class="about-desc-text">
-              {{ projectDetails.projectDescription }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Budget and Completion -->
-        <div class="customPadding">
-          <div class="description">
-            <h2 class="about-desc-header">Project Details</h2>
-            <p class="about-desc-text">Budget: ₹{{ projectDetails.budget }}</p>
-            <p class="about-desc-text">Completion: {{ projectDetails.completionPercentage }}%</p>
-            <p class="about-desc-text">Estimated Completion: {{ projectDetails.completionDate | date }}</p>
-          </div>
-        </div>
-
-        <!-- Builder Info -->
-        <div class="customPadding" *ngIf="projectDetails.builderMaster">
-          <div class="description">
-            <h2 class="about-desc-header">Builder Information</h2>
-            <p class="about-desc-text">Name: {{ projectDetails.builderMaster.name }}</p>
-            <p class="about-desc-text">Email: {{ projectDetails.builderMaster.emailAddress }}</p>
-            <p class="about-desc-text">Contact: {{ projectDetails.builderMaster.contact1 }}</p>
-            <p class="about-desc-text">Address: {{ projectDetails.builderMaster.officeAddress }}</p>
-            <p class="about-desc-text">Tagline: {{ projectDetails.builderMaster.tagLine }}</p>
-          </div>
-        </div>
-
-        <hr class="solid about-divider" />
-      </section>
-
-      <!-- Inquiry Form Section -->
-      <div class="form">
-        <form id="form" method="post" action="">
-          <h2 class="host-h">Inquire About this Property</h2>
-
-          <label for="email"></label>
-          <input
-            class="form-control"
-            id="email"
-            type="email"
-            placeholder="your.email@example.com"
-            required
-          />
-          <label for="Phone"></label>
-          <input
-            class="form-control mb-5"
-            id="Phone"
-            type="tel"
-            placeholder="(123) 456-7890"
-            required
-          />
-
-          <button class="sign-up-button" type="submit">Send Message</button>
-        </form>
+<!-- ===== Edit Property Dialog ===== -->
+<p-dialog
+  header="Edit Property"
+  [(visible)]="showEditDialog"
+  [modal]="true"
+  [style]="{ width: '55vw', maxHeight: '90vh' }"
+  [contentStyle]="{ overflow: 'auto' }"
+  [baseZIndex]="10000"
+>
+  <div class="dialog-tabs">
+    <button class="dialog-tab" [class.active]="editTab === 'basic'" (click)="editTab = 'basic'"><i class="fa-solid fa-building"></i> Basic Details</button>
+    <button class="dialog-tab" [class.active]="editTab === 'location'" (click)="editTab = 'location'"><i class="fa-solid fa-location-dot"></i> Location</button>
+    <button class="dialog-tab" [class.active]="editTab === 'features'" (click)="editTab = 'features'"><i class="fa-solid fa-list-check"></i> Features</button>
+    <button class="dialog-tab" [class.active]="editTab === 'media'" (click)="editTab = 'media'"><i class="fa-solid fa-images"></i> Media</button>
+  </div>
+  <form [formGroup]="editForm" autocomplete="off">
+    <div *ngIf="editTab === 'basic'">
+      <h6 class="edit-section-title">Basic Information</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3"><label>Project Name<sup>*</sup></label><input type="text" class="form-control" formControlName="projectName"></div>
+        <div class="col-sm-6 mb-3"><label>Property Type</label><select class="form-select" formControlName="propertyType"><option value="">Select</option><option value="Apartment">Apartment</option><option value="Villa">Villa</option><option value="Plot">Plot</option><option value="Commercial">Commercial</option><option value="Township">Township</option></select></div>
+        <div class="col-sm-6 mb-3"><label>Status</label><select class="form-select" formControlName="status"><option value="New">New</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option><option value="Hold">Hold</option></select></div>
+        <div class="col-sm-6 mb-3"><label>Budget (INR)</label><input type="number" class="form-control" formControlName="budget"></div>
+        <div class="col-sm-12 mb-3"><label>Description</label><textarea class="form-control" formControlName="projectDescription" rows="3"></textarea></div>
+      </div>
+      <h6 class="edit-section-title mt-2">Approvals</h6>
+      <div class="row">
+        <div class="col-sm-12 mb-2"><div class="d-flex gap-3 flex-wrap"><label class="edit-toggle"><input type="checkbox" formControlName="isReraApproved"><span>RERA</span></label><label class="edit-toggle"><input type="checkbox" formControlName="isHmdaApproved"><span>HMDA</span></label><label class="edit-toggle"><input type="checkbox" formControlName="isDtcpApproved"><span>DTCP</span></label></div></div>
+        <div class="col-sm-4 mb-3" *ngIf="editForm.get('isReraApproved')?.value"><label>RERA No.</label><input type="text" class="form-control" formControlName="reraNumber"></div>
+        <div class="col-sm-4 mb-3" *ngIf="editForm.get('isHmdaApproved')?.value"><label>HMDA No.</label><input type="text" class="form-control" formControlName="hmdaNumber"></div>
+        <div class="col-sm-4 mb-3" *ngIf="editForm.get('isDtcpApproved')?.value"><label>DTCP No.</label><input type="text" class="form-control" formControlName="dtcpNumber"></div>
+      </div>
+      <h6 class="edit-section-title mt-2">Timeline</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3"><label>Start Date</label><input type="date" class="form-control" formControlName="startDate"></div>
+        <div class="col-sm-4 mb-3"><label>Completion Date</label><input type="date" class="form-control" formControlName="completionDate"></div>
+        <div class="col-sm-4 mb-3"><label>Completion %</label><input type="number" class="form-control" formControlName="completionPercentage" min="0" max="100"></div>
+      </div>
+    </div>
+    <div *ngIf="editTab === 'location'">
+      <h6 class="edit-section-title">Address</h6>
+      <div class="row">
+        <div class="col-sm-12 mb-3"><label>Full Address</label><input type="text" class="form-control" formControlName="projectAddress"></div>
+        <div class="col-sm-6 mb-3"><label>City</label><input type="text" class="form-control" formControlName="city"></div>
+        <div class="col-sm-6 mb-3"><label>State</label><input type="text" class="form-control" formControlName="state"></div>
+        <div class="col-sm-6 mb-3"><label>Locality</label><input type="text" class="form-control" formControlName="locality"></div>
+        <div class="col-sm-6 mb-3"><label>Pincode</label><input type="text" class="form-control" formControlName="pincode"></div>
+        <div class="col-sm-6 mb-3"><label>Latitude</label><input type="text" class="form-control" formControlName="latitude"></div>
+        <div class="col-sm-6 mb-3"><label>Longitude</label><input type="text" class="form-control" formControlName="longitude"></div>
+      </div>
+    </div>
+    <div *ngIf="editTab === 'features'">
+      <h6 class="edit-section-title">Specifications</h6>
+      <div class="row">
+        <div class="col-sm-4 mb-3"><label>Bedrooms</label><input type="number" class="form-control" formControlName="bedrooms"></div>
+        <div class="col-sm-4 mb-3"><label>Bathrooms</label><input type="number" class="form-control" formControlName="bathrooms"></div>
+        <div class="col-sm-4 mb-3"><label>Area (sq.ft)</label><input type="number" class="form-control" formControlName="areaSqFt"></div>
+        <div class="col-sm-4 mb-3"><label>Price/sq.ft</label><input type="number" class="form-control" formControlName="pricePerSqFt"></div>
+        <div class="col-sm-4 mb-3"><label>Carpet Area</label><input type="number" class="form-control" formControlName="carpetArea"></div>
+        <div class="col-sm-4 mb-3"><label>Super Built-Up</label><input type="number" class="form-control" formControlName="superBuiltUpArea"></div>
+        <div class="col-sm-4 mb-3"><label>Furnishing</label><select class="form-select" formControlName="furnishingStatus"><option value="">Select</option><option value="Unfurnished">Unfurnished</option><option value="Semi-Furnished">Semi-Furnished</option><option value="Fully Furnished">Fully Furnished</option></select></div>
+        <div class="col-sm-4 mb-3"><label>Facing</label><select class="form-select" formControlName="facingDirection"><option value="">Select</option><option *ngFor="let d of facingOptions" [value]="d">{{ d }}</option></select></div>
+        <div class="col-sm-4 mb-3"><label>Possession</label><select class="form-select" formControlName="possessionStatus"><option value="">Select</option><option value="Ready to Move">Ready to Move</option><option value="Under Construction">Under Construction</option></select></div>
+        <div class="col-sm-4 mb-3"><label>Floor No.</label><input type="number" class="form-control" formControlName="floorNumber"></div>
+        <div class="col-sm-4 mb-3"><label>Total Floors</label><input type="number" class="form-control" formControlName="totalFloors"></div>
+        <div class="col-sm-4 mb-3"><label>Parking</label><input type="number" class="form-control" formControlName="parkingCount"></div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-3"><label class="edit-toggle"><input type="checkbox" formControlName="isGatedCommunity"><span>Gated Community</span></label></div>
+        <div class="col-sm-3"><label class="edit-toggle"><input type="checkbox" formControlName="isFeatured"><span>Featured</span></label></div>
+        <div class="col-sm-3"><label class="edit-toggle"><input type="checkbox" formControlName="hasPowerBackup"><span>Power Backup</span></label></div>
+        <div class="col-sm-3"><label class="edit-toggle"><input type="checkbox" formControlName="hasWaterSupply"><span>Water Supply</span></label></div>
       </div>
 
-      <!-- What You'll Do Section -->
-      <section>
-        <h1 class="host-h">What you'll do</h1>
-        <p class="description-text">
-          Discover your future home with a detailed walk-through of every room,
-          fixture, and amenity. Explore this property through real images and
-          updates as construction progresses.
-        </p>
-      </section>
+      <!-- Amenity Picker -->
+      <h6 class="edit-section-title mt-4">Amenities</h6>
+      <div class="edit-amenity-picker" *ngFor="let cat of amenityCategories">
+        <h6 class="edit-amenity-cat">{{ cat }}</h6>
+        <div class="edit-amenity-grid">
+          <div class="edit-amenity-chip" *ngFor="let a of amenitiesByCategory[cat]"
+               [class.selected]="isAmenitySelected(a.amenityId)"
+               (click)="toggleAmenity(a.amenityId)">
+            <i [class]="a.icon" class="edit-amenity-icon"></i>
+            <span>{{ a.name }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Footer Placeholder -->
+    <div *ngIf="editTab === 'media'">
+      <h6 class="edit-section-title">Profile Image</h6>
+      <div class="mb-3"><input type="file" class="form-control" (change)="onEditImageSelected($event)" accept="image/*"></div>
+      <h6 class="edit-section-title mt-3">Links</h6>
+      <div class="row">
+        <div class="col-sm-6 mb-3"><label>Brochure URL</label><input type="text" class="form-control" formControlName="brochureUrl"></div>
+        <div class="col-sm-6 mb-3"><label>Video Tour URL</label><input type="text" class="form-control" formControlName="videoTourUrl"></div>
+      </div>
+    </div>
+  </form>
+  <div class="edit-dialog-footer">
+    <button class="btn btn-outline-secondary" (click)="showEditDialog = false">Cancel</button>
+    <button class="btn btn-primary" (click)="savePropertyEdit()"><i class="fa-solid fa-check me-1"></i>Save Changes</button>
   </div>
-</body>
+</p-dialog>

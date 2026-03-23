@@ -1,7 +1,10 @@
 using BrickNTrack.Repository.Context;
 using BrickNTrackConstruction.Core.Extension;
+using BrickNTrackConstruction.Hubs;
+using BrickNTrackConstruction.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -34,6 +37,10 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Seed default admin user on startup
+await DbSeeder.SeedAdminUserAsync(app.Services);
+await DbSeeder.SeedAmenitiesAsync(app.Services);
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
@@ -43,12 +50,32 @@ var app = builder.Build();
 
 // app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Serve uploaded project images as static files
+var imageLocalDir = _configuration["AppSettings:ImageLocalDirectory"];
+if (!string.IsNullOrEmpty(imageLocalDir) && Directory.Exists(imageLocalDir))
+{
+    var provider = new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider();
+    provider.Mappings[".avif"] = "image/avif";
+    provider.Mappings[".webp"] = "image/webp";
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(imageLocalDir),
+        RequestPath = "/ProjectImage",
+        ContentTypeProvider = provider,
+        ServeUnknownFileTypes = true,
+        DefaultContentType = "application/octet-stream"
+    });
+}
+
 app.MapControllers();
+app.MapHub<ChatHub>("/hubs/chat");
 app.Run();
 
 void ConfigurationServices(IServiceCollection services)
@@ -62,12 +89,15 @@ void ConfigurationServices(IServiceCollection services)
     services.AddCors(option =>
     {
         option.AddDefaultPolicy(
-
             builder =>
             {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
+                builder.WithOrigins(
+                        "http://localhost:4200",
+                        "http://localhost:5001"
+                    )
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             });
     });
 
@@ -78,6 +108,7 @@ void ConfigurationServices(IServiceCollection services)
 
     ServiceCollectionDIExtension.ConfigureServicesDependency(builder.Services);
     services.AddControllers();
+    services.AddSignalR();
     ConfigureDbContext(services);
 }
 

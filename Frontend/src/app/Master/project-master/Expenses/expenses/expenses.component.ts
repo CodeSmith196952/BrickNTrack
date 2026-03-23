@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
-import { ServiceUrl } from 'src/app/service/service-url.service';
-import { UserScreenAccesData } from 'src/app/service/user-model.service';
+import { takeUntil } from 'rxjs/operators';
+import { ApiService } from 'src/app/core/services/api.service';
+import { Expense } from 'src/app/core/models/expense.model';
+import { CrudBaseComponent } from 'src/app/shared/base/crud-base.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,151 +12,93 @@ import Swal from 'sweetalert2';
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss']
 })
-export class ExpensesComponent {
-  projectForm!: FormGroup;
-  milestoneList: any;
-  submitted = false;
-  displayProjectDialog: boolean = false;
-  ActiveButtonVisible: boolean = false
+export class ExpensesComponent extends CrudBaseComponent<Expense> implements OnInit {
+  ActiveButtonVisible = false;
   ResetVisible: any;
-selectedImageFile: File | null = null;
+  showMilestoneDialog = false;
+  resetVisible = false;
+  milestoneList: any;
 
+  // Template aliases
+  get expensesList() { return this.items; }
+  set expensesList(val) { this.items = val; }
+  get milestoneForm() { return this.form; }
+  set milestoneForm(val) { this.form = val; }
+  get displayProjectDialog() { return this.displayDialog; }
+  set displayProjectDialog(val) { this.displayDialog = val; }
 
-showMilestoneDialog: boolean = false;
-milestoneForm!: FormGroup;
+  protected apiService: ApiService;
+  protected fb: FormBuilder;
+  get listEndpoint() { return 'Expenses/getAllExpensesByMilestoneId'; }
+  get saveEndpoint() { return 'Expenses/addUpdateExpenses'; }
+  get entityName() { return 'Expenses'; }
 
-resetVisible = false;
+  constructor(api: ApiService, private route: ActivatedRoute, fb: FormBuilder) {
+    super();
+    this.apiService = api;
+    this.fb = fb;
+  }
 
-
-
-  public userAccessData: any = new UserScreenAccesData();
-  title!: string;
-  builderList: any;
-  projectList: any;
-  expensesList: any;
-  constructor(
-    private brickntrackService: brickntrackService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-
-
-  ) {
-
-    this.milestoneForm = this.fb.group({
+  buildForm(): FormGroup {
+    return this.fb.group({
       expenseId: [''],
-
-      vendorSupplier: ['',],
-      category: ['',],
-      amount: ['',],
-      details: ['',],
-
+      vendorSupplier: [''],
+      category: [''],
+      amount: [''],
+      details: [''],
       projectMilestoneId: [''],
-
-    
-    
-
-
-
     });
-    // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
-
-  }
-  // public noWhitespaceValidator(control: FormControl) {
-  //   const isWhitespace = (control.value || '').trim().length === 0;
-  //   const isValid = !isWhitespace;
-  //   return isValid ? null : { 'whitespace': true };
-  // }
-
-
-
-  ngOnInit(): void {
-
-       const milestoneId = this.route.snapshot.paramMap.get('id');
-  if (milestoneId) {
-    this.getAllActiveExpenses(milestoneId);
   }
 
-   
-
-    // this.getAllActiveExpenses();
-  
+  override ngOnInit(): void {
+    this.form = this.buildForm();
+    const milestoneId = this.route.snapshot.paramMap.get('id');
+    if (milestoneId) {
+      this.getAllActiveExpenses(milestoneId);
+    }
     this.getAllActiveMilestone();
-
-
   }
-
 
   ResetDialog() {
     this.submitted = false;
-
-    this.projectForm.reset();
+    this.form.reset();
   }
-
-
-
-
-
-  acceptNumber(event: any, flag: boolean): void {
-    flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
-  }
-
-   
-
-
-
-
-
 
   openProjectDialog() {
-    debugger
-    this.displayProjectDialog = true;
+    this.displayDialog = true;
     this.ResetVisible = true;
-    this.milestoneForm.reset()
+    this.form.reset();
     this.ActiveButtonVisible = false;
     this.ResetDialog();
-    this.title = "Add Expenses"
+    this.title = 'Add Expenses';
   }
 
-  closeProjectDialog() {
-    this.displayProjectDialog = false;
+  closeProjectDialog() { this.displayDialog = false; }
 
-  }
   editexpenses(value: any) {
-    this.title = "Edit Expenses ";
-    this.displayProjectDialog = true
-    this.ActiveButtonVisible = true
-    this.ResetVisible = false
-    this.milestoneForm.patchValue({
-      expenseId: value.expenseId,
-      projectMilestoneId: value.projectMilestoneId,
-      amount: value.amount,
-      category: value.category,
-      vendorSupplier: value.vendorSupplier,
-      details: value.details,
-    
-    
-    })
-
-
+    this.title = 'Edit Expenses ';
+    this.displayDialog = true;
+    this.ActiveButtonVisible = true;
+    this.ResetVisible = false;
+    this.form.patchValue({
+      expenseId: value.expenseId, projectMilestoneId: value.projectMilestoneId,
+      amount: value.amount, category: value.category,
+      vendorSupplier: value.vendorSupplier, details: value.details,
+    });
   }
 
-
-   saveProjectExpense() {
-    debugger
+  saveProjectExpense() {
     this.submitted = true;
+    if (this.form.invalid) return;
 
-    if (this.milestoneForm.invalid) {
-      return;
-    }
-
-    const formData = this.milestoneForm.value;
-
-    this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formData)
-      .subscribe(
+    // Bug fix: was previously calling 'Milestone/addUpdateMilestone'
+    this.apiService.post<any>('Expenses/addUpdateExpenses', this.form.value)
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (res) => {
-          Swal.fire('', res.responseMessage, 'success');
+          Swal.fire('', res.message, 'success');
           this.showMilestoneDialog = false;
-          // this.getAllActiveExpenses()
+          const milestoneId = this.route.snapshot.paramMap.get('id');
+          if (milestoneId) this.getAllActiveExpenses(milestoneId);
         },
         (err) => {
           Swal.fire('', err.error.errorMessage, 'error');
@@ -165,39 +107,19 @@ resetVisible = false;
       );
   }
 
-
-  getAllActiveExpenses(milestoneId : string) {
-    debugger
-      const payload = { milestoneId  };
-    this.brickntrackService.get<any>(null, ServiceUrl.getAllExpensesByMilestoneId,payload)
-      .subscribe(
-        (res) => {
-          this.expensesList = res
-        },
-        (err) => {
-          Swal.fire("", err.error.message, "error")
-        }
-      )
+  getAllActiveExpenses(milestoneId: string) {
+    this.apiService.get<any>('Expenses/getAllExpensesByMilestoneId', { milestoneId })
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { this.items = res.data || res; },
+        (err) => { Swal.fire('', err.error.message, 'error'); }
+      );
   }
 
-
-   getAllActiveMilestone() {
-       debugger
-       this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveMilestones)
-         .subscribe(
-           (res) => {
-             this.milestoneList = res
-           },
-           (err) => {
-             Swal.fire("", err.error.message, "error")
-           }
-         )
-     }
-  
-
+  getAllActiveMilestone() {
+    this.apiService.get<any>('Milestone/getAllActiveMilestones')
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { this.milestoneList = res.data || res; },
+        (err) => { Swal.fire('', err.error.message, 'error'); }
+      );
+  }
 }
-
-
-
-
-

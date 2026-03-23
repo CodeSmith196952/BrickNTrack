@@ -1,8 +1,8 @@
-﻿using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+﻿using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Interface;
 using Microsoft.Extensions.Configuration;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
+using static BrickNTrack.Domain.CommonModel.ApplicationConstant;
 
 namespace BrickNTrack.Business.BusinessLogic
 {

@@ -18,13 +18,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BrickNTrack.Business\BrickNTrack.Business.csproj" />
-    <ProjectReference Include="..\BrickNTrack.Doman\BrickNTrack.Doman.csproj" />
+    <ProjectReference Include="..\BrickNTrack.Domain\BrickNTrack.Domain.csproj" />
     <ProjectReference Include="..\BrickNTrack.Repository\BrickNTrack.Repository.csproj" />
   </ItemGroup>
 

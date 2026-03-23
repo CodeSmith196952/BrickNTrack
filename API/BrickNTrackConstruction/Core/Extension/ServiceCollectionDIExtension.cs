@@ -1,8 +1,7 @@
-﻿using BrickNTrack.Business.BusinessLogic;
+using BrickNTrack.Business.BusinessLogic;
+using BrickNTrack.Business.Services;
 using BrickNTrack.Repository.Interface;
 using BrickNTrack.Repository.Repositories;
-using BrickNTrackConstruction.Core.Helper;
-
 
 namespace BrickNTrackConstruction.Core.Extension
 {
@@ -10,13 +9,13 @@ namespace BrickNTrackConstruction.Core.Extension
     {
         public static void ConfigureServicesDependency(IServiceCollection services)
         {
-            services.AddScoped<JwtService>();
             RepositoryDependency(services);
             ServiceDependency(services);
         }
 
         private static void RepositoryDependency(IServiceCollection services)
         {
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserManager, UserManagerRepositories>();
             services.AddScoped<IBuilder, BuilderRepositories>();
             services.AddScoped<IProject, ProjectRepositories>();
@@ -27,6 +26,13 @@ namespace BrickNTrackConstruction.Core.Extension
         private static void ServiceDependency(IServiceCollection services)
         {
             services.AddScoped<IProjectManager, ProjectManager>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IBuilderService, BuilderService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IMilestoneService, MilestoneService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
+            services.AddScoped<IBudgetCalculationService, BudgetCalculationService>();
         }
     }
 }

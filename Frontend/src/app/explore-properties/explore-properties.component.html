@@ -1,112 +1,365 @@
-
-<header>
+<!-- Public navbar - only when NOT logged in -->
+<header *ngIf="!isLoggedIn">
   <nav class="navbar">
     <div class="class">
       <div class="navbar-left d-flex align-items-center">
          <a href="/landingPage">
-
             <img src="../../assets/images/logoimg.png" id="logo" alt="Main logo" />
             <span class="italic-par4">BrickNTrack</span>
         </a>
       </div>
     </div>
-
-    <!-- Hamburger Icon for Mobile -->
     <div class="menu-toggle" (click)="toggleMenu()">
       <i class="fas fa-bars"></i>
     </div>
-
     <div class="d-flex">
       <ul class="nav-menu desktop-menu mr-1">
         <li class="text-dark">
-          <a class="text-dark" href="/landingPage"
-            ><i class="fa-solid text-dark fa-arrow-left"></i> Home</a
-          >
+          <a class="text-dark" href="/landingPage"><i class="fa-solid text-dark fa-arrow-left"></i> Home</a>
         </li>
       </ul>
-
-      <!-- Login always visible -->
       <div class="login-btn">
         <a href="/login">Login</a>
       </div>
     </div>
-    <!-- Desktop Menu -->
-
-    <!-- Mobile Popup Menu -->
     <div class="mobile-menu" *ngIf="isMenuOpen">
       <ul>
         <li class="customP">
-          <a href="/exploreProperties"
-            ><i class="fa-solid fa-arrow-right"></i> Explore Properties</a
-          >
+          <a href="/exploreProperties"><i class="fa-solid fa-arrow-right"></i> Explore Properties</a>
         </li>
       </ul>
     </div>
   </nav>
-
-
 </header>
-<div class="container-fluid mt-5">
- <div class="class">
-    <h2>Explore Properties</h2>
-  </div>
-  <div class="class">
-    <p>Discover New Properties</p>
-  </div>
-    <section>
-    <div class="col-sm-4" *ngFor="let project of projectList">
-  <mat-card>
-    <mat-card-content>
-      <div>
-        <!-- Use first media image if available, otherwise fallback image -->
-        <img
-          class="img-fluid"
-          [src]="getProjectImagePath(project)"
-          alt="Project Image"
-        />
-      </div>
 
-      <div>
-        <p><strong>{{ project.projectName }}</strong></p>
-      </div>
+<div class="explore-page" [class.no-offset]="isLoggedIn">
 
-      <div>
-        <p>{{ project.projectAddress }}</p>
-      </div>
-
-      <div class="d-flex">
-        <p>Budget: ₹{{ project.budget }}</p>
-        &nbsp;&nbsp;&nbsp;
-        <p>Completion: {{ project.completionPercentage }}%</p>
-      </div>
-
-      <div class="d-flex justify-content-between">
-        <div>
-          <p class="customBandage">Builder: {{ project.builderMaster?.name }}</p>
-        </div>
-        <div>
-          <p class="customBandage">Status: {{ project.status }}</p>
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <div class="hero-content">
+      <h1 class="hero-title">Find Your Perfect Property</h1>
+      <p class="hero-subtitle">Transparent. Trusted. Track Construction Progress in Real-time.</p>
+      <div class="hero-search-wrapper">
+        <div class="hero-search-bar">
+          <div class="hero-search-field main-field">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search properties, locations..."
+                   [(ngModel)]="searchText" (keyup.enter)="onSearch()"
+                   (input)="onSearchInput()" (blur)="closeSuggestions()" (focus)="onSearchInput()">
+          </div>
+          <!-- Autocomplete Suggestions -->
+          <div class="suggestions-dropdown" *ngIf="showSuggestions">
+            <div *ngFor="let s of suggestions" class="suggestion-item" (mousedown)="selectSuggestion(s)">
+              <div class="suggestion-icon">
+                <i [class]="s.type === 'property' ? 'fa-solid fa-building' : s.type === 'builder' ? 'fa-solid fa-hard-hat' : 'fa-solid fa-location-dot'"></i>
+              </div>
+              <div class="suggestion-text">
+                <span class="suggestion-title">{{ s.text }}</span>
+                <small class="suggestion-sub">{{ s.subText }}</small>
+              </div>
+              <span class="suggestion-type">{{ s.type }}</span>
+            </div>
+          </div>
+          <div class="hero-search-divider"></div>
+          <div class="hero-search-field city-field">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" placeholder="City" [(ngModel)]="city" (keyup.enter)="onSearch()">
+          </div>
+          <button class="hero-search-btn" (click)="onSearch()">Search</button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="d-flex">
-        <p><i class="fa-solid fa-indian-rupee-sign"></i> &nbsp;<strong>₹{{ project.budget }}</strong></p>
-        &nbsp;
-        <p class="customBandage">Est. Completion: {{ project.completionDate | date }}</p>
+  <!-- Quick Filter Chips -->
+  <div class="filter-chips-section">
+    <div class="filter-chips-row">
+      <!-- Property Type Chips -->
+      <div class="chip-group">
+        <button class="filter-chip" [class.active]="propertyType === ''" (click)="setPropertyType('')">All Types</button>
+        <button class="filter-chip" [class.active]="propertyType === 'Apartment'" (click)="setPropertyType('Apartment')">
+          <i class="fa-solid fa-building me-1"></i>Apartment
+        </button>
+        <button class="filter-chip" [class.active]="propertyType === 'Villa'" (click)="setPropertyType('Villa')">
+          <i class="fa-solid fa-house me-1"></i>Villa
+        </button>
+        <button class="filter-chip" [class.active]="propertyType === 'Plot'" (click)="setPropertyType('Plot')">
+          <i class="fa-solid fa-vector-square me-1"></i>Plot
+        </button>
+        <button class="filter-chip" [class.active]="propertyType === 'Commercial'" (click)="setPropertyType('Commercial')">
+          <i class="fa-solid fa-store me-1"></i>Commercial
+        </button>
       </div>
 
-      <div class="mt-4 d-flex justify-content-center">
-        <a [routerLink]="['/propertyInformation', project.projectId]" class="btn btn-primary ml-1" tooltipPosition="top">
-          View Details
-        </a>
+      <div class="chip-divider"></div>
+
+      <!-- Transaction Type Chips -->
+      <div class="chip-group">
+        <button class="filter-chip" [class.active]="transactionType === ''" (click)="setTransactionType('')">Any</button>
+        <button class="filter-chip" [class.active]="transactionType === 'New'" (click)="setTransactionType('New')">New</button>
+        <button class="filter-chip" [class.active]="transactionType === 'Resale'" (click)="setTransactionType('Resale')">Resale</button>
       </div>
 
-      <!-- Show additional project data (images, etc.) -->
-     
+      <div class="chip-divider"></div>
 
-    </mat-card-content>
-  </mat-card>
-</div>
+      <!-- Possession Status Chips -->
+      <div class="chip-group">
+        <button class="filter-chip" [class.active]="possessionStatus === ''" (click)="setPossessionStatus('')">Any Status</button>
+        <button class="filter-chip" [class.active]="possessionStatus === 'Ready to Move'" (click)="setPossessionStatus('Ready to Move')">Ready to Move</button>
+        <button class="filter-chip" [class.active]="possessionStatus === 'Under Construction'" (click)="setPossessionStatus('Under Construction')">Under Construction</button>
+      </div>
 
-    </section>
+      <div class="chip-divider"></div>
+
+      <!-- More Filters Toggle -->
+      <button class="filter-chip more-filters-chip" [class.active]="showFilters" (click)="toggleFilters()">
+        <i class="fa-solid fa-sliders me-1"></i>More Filters
+        <i class="fa-solid ms-1" [ngClass]="showFilters ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size: 10px;"></i>
+      </button>
+
+      <!-- Clear All -->
+      <button class="clear-filters-btn" *ngIf="hasActiveFilters()" (click)="clearAllFilters()">
+        <i class="fa-solid fa-times me-1"></i>Clear All
+      </button>
+    </div>
+  </div>
+
+  <!-- Expanded Filters Panel -->
+  <div class="advanced-filters-panel" *ngIf="showFilters">
+    <div class="filters-grid">
+      <!-- Price Range -->
+      <div class="filter-block">
+        <label class="filter-label">Price Range</label>
+        <div class="range-inputs">
+          <input type="number" class="filter-input" placeholder="Min Price" [(ngModel)]="minPrice">
+          <span class="range-separator">to</span>
+          <input type="number" class="filter-input" placeholder="Max Price" [(ngModel)]="maxPrice">
+        </div>
+      </div>
+
+      <!-- Area Range -->
+      <div class="filter-block">
+        <label class="filter-label">Area (sq.ft)</label>
+        <div class="range-inputs">
+          <input type="number" class="filter-input" placeholder="Min Area" [(ngModel)]="minArea">
+          <span class="range-separator">to</span>
+          <input type="number" class="filter-input" placeholder="Max Area" [(ngModel)]="maxArea">
+        </div>
+      </div>
+
+      <!-- Bedrooms -->
+      <div class="filter-block">
+        <label class="filter-label">Bedrooms</label>
+        <div class="bedroom-options">
+          <button class="bedroom-btn" [class.active]="bedroomFilter === null" (click)="setBedroomFilter(null)">Any</button>
+          <button class="bedroom-btn" [class.active]="bedroomFilter === 1" (click)="setBedroomFilter(1)">1</button>
+          <button class="bedroom-btn" [class.active]="bedroomFilter === 2" (click)="setBedroomFilter(2)">2</button>
+          <button class="bedroom-btn" [class.active]="bedroomFilter === 3" (click)="setBedroomFilter(3)">3</button>
+          <button class="bedroom-btn" [class.active]="bedroomFilter === 4" (click)="setBedroomFilter(4)">4</button>
+          <button class="bedroom-btn" [class.active]="bedroomFilter === 5" (click)="setBedroomFilter(5)">5+</button>
+        </div>
+      </div>
+
+      <!-- Furnishing -->
+      <div class="filter-block">
+        <label class="filter-label">Furnishing</label>
+        <div class="bedroom-options">
+          <button class="bedroom-btn" [class.active]="furnishingFilter === ''" (click)="setFurnishing('')">Any</button>
+          <button class="bedroom-btn" [class.active]="furnishingFilter === 'Unfurnished'" (click)="setFurnishing('Unfurnished')">Unfurnished</button>
+          <button class="bedroom-btn" [class.active]="furnishingFilter === 'Semi-Furnished'" (click)="setFurnishing('Semi-Furnished')">Semi</button>
+          <button class="bedroom-btn" [class.active]="furnishingFilter === 'Fully Furnished'" (click)="setFurnishing('Fully Furnished')">Fully</button>
+        </div>
+      </div>
+
+      <!-- Facing -->
+      <div class="filter-block">
+        <label class="filter-label">Facing</label>
+        <div class="bedroom-options facing-options">
+          <button class="bedroom-btn" [class.active]="facingFilter === ''" (click)="setFacing('')">Any</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'North'" (click)="setFacing('North')">N</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'South'" (click)="setFacing('South')">S</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'East'" (click)="setFacing('East')">E</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'West'" (click)="setFacing('West')">W</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'North-East'" (click)="setFacing('North-East')">NE</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'North-West'" (click)="setFacing('North-West')">NW</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'South-East'" (click)="setFacing('South-East')">SE</button>
+          <button class="bedroom-btn" [class.active]="facingFilter === 'South-West'" (click)="setFacing('South-West')">SW</button>
+        </div>
+      </div>
+
+      <!-- Approvals -->
+      <div class="filter-block">
+        <label class="filter-label">Approvals</label>
+        <div class="toggle-options">
+          <label class="toggle-label">
+            <input type="checkbox" [(ngModel)]="reraApproved">
+            <span class="toggle-text">RERA Approved</span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" [(ngModel)]="hmdaApproved">
+            <span class="toggle-text">HMDA Approved</span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" [(ngModel)]="dtcpApproved">
+            <span class="toggle-text">DTCP Approved</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- More Options -->
+      <div class="filter-block">
+        <label class="filter-label">More Options</label>
+        <div class="toggle-options">
+          <label class="toggle-label">
+            <input type="checkbox" [(ngModel)]="isGatedCommunity">
+            <span class="toggle-text">Gated Community</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="apply-btn" (click)="onSearch()">
+        <i class="fa-solid fa-check me-1"></i>Apply Filters
+      </button>
+      <button class="reset-btn" (click)="clearAllFilters()">
+        <i class="fa-solid fa-rotate-left me-1"></i>Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- Results Header -->
+  <div class="results-header">
+    <div class="results-count">
+      <strong>{{ totalCount }}</strong> Properties Found
+    </div>
+    <div class="results-right-actions">
+      <button class="map-toggle-btn" (click)="showMap = !showMap">
+        <i [class]="showMap ? 'fa-solid fa-list' : 'fa-solid fa-map'"></i>
+        {{ showMap ? 'List View' : 'Map View' }}
+      </button>
+      <div class="sort-dropdown">
+        <label class="sort-label">Sort by:</label>
+        <select class="sort-select" [(ngModel)]="sortBy" (change)="onSearch()">
+          <option value="">Newest</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="newest">Newest First</option>
+          <option value="completion">Completion %</option>
+          <option value="area">Area (sq.ft)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map View -->
+  <div *ngIf="showMap" class="map-section">
+    <app-map-view [properties]="projectList" height="calc(100vh - 300px)" (propertyClick)="onMapPropertyClick($event)"></app-map-view>
+  </div>
+
+  <!-- Property Grid -->
+  <section class="property-grid-section" *ngIf="!showMap">
+    <div class="property-grid">
+      <div class="property-card" *ngFor="let project of projectList">
+        <!-- Card Image -->
+        <div class="card-image">
+          <img *ngIf="project.profileImage" [src]="getProjectImagePath(project)" [alt]="project.projectName">
+          <div *ngIf="!project.profileImage" class="card-image-placeholder">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <!-- Status Badge -->
+          <span class="status-badge" [ngClass]="{
+            'badge-green': project.possessionStatus === 'Ready to Move' || project.status === 'Completed',
+            'badge-orange': project.possessionStatus === 'Under Construction' || project.status === 'In Progress',
+            'badge-blue': project.status === 'New' || project.status === 'Planning'
+          }">
+            {{ project.possessionStatus || project.status || 'Available' }}
+          </span>
+          <!-- Heart / Save -->
+          <button class="heart-btn" [class.saved]="isSaved(project.projectId)" (click)="toggleSave(project, $event)">
+            <i [class]="isSaved(project.projectId) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          </button>
+          <!-- Featured -->
+          <span class="featured-badge" *ngIf="project.isFeatured">
+            <i class="fa-solid fa-star"></i> Featured
+          </span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">{{ project.projectName }}</h3>
+            <span class="card-price">&#8377;{{ getDisplayPrice(project) }}</span>
+          </div>
+
+          <p class="card-location">
+            <i class="fa-solid fa-location-dot"></i>
+            {{ project.locality ? project.locality + ', ' : '' }}{{ project.city || project.projectAddress }}
+          </p>
+
+          <div class="card-specs">
+            <span *ngIf="project.areaSqFt"><i class="fa-solid fa-ruler-combined"></i> {{ project.areaSqFt }} sq.ft</span>
+            <span *ngIf="project.bedrooms"><i class="fa-solid fa-bed"></i> {{ project.bedrooms }} BHK</span>
+            <span *ngIf="project.bathrooms"><i class="fa-solid fa-bath"></i> {{ project.bathrooms }} Baths</span>
+          </div>
+
+          <!-- Construction Progress -->
+          <div class="card-progress" *ngIf="project.completionPercentage && project.completionPercentage < 100">
+            <div class="progress-header">
+              <span class="progress-label">Construction Progress</span>
+              <span class="progress-pct">{{ project.completionPercentage }}%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" [style.width.%]="project.completionPercentage"
+                   [ngClass]="{'fill-green': project.completionPercentage >= 75, 'fill-orange': project.completionPercentage >= 40 && project.completionPercentage < 75, 'fill-red': project.completionPercentage < 40}">
+              </div>
+            </div>
+            <span class="progress-phase" *ngIf="project.status">Phase: {{ project.status }}</span>
+          </div>
+
+          <!-- Approval Badges -->
+          <div class="approval-badges">
+            <span class="approval-badge" *ngIf="project.reraNumber">RERA</span>
+            <span class="approval-badge" *ngIf="project.hmdaNumber || project.approvalType === 'HMDA'">HMDA</span>
+            <span class="approval-badge" *ngIf="project.dtcpNumber || project.approvalType === 'DTCP'">DTCP</span>
+          </div>
+
+          <!-- Card Actions -->
+          <div class="card-actions">
+            <a [routerLink]="isLoggedIn ? ['/property/detail', project.projectId] : ['/propertyInformation', project.projectId]"
+               class="btn-view-details">View Details</a>
+            <button class="btn-inquire" (click)="onInquire(project)">Inquire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4" *ngIf="totalPages > 1">
+      <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="projectList.length === 0 && !loading" class="empty-state">
+      <i class="fa-solid fa-magnifying-glass empty-icon"></i>
+      <h4>No properties found</h4>
+      <p>Try adjusting your search filters or broadening your search</p>
+      <button class="btn btn-outline-primary" (click)="clearAllFilters()">Clear All Filters</button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center p-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2 text-muted">Loading properties...</p>
+    </div>
+  </section>
+
+  <!-- Floating Compare Button -->
+  <div class="compare-float" *ngIf="compareCount > 0" (click)="goToCompare()">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <span>Compare ({{ compareCount }})</span>
+  </div>
+
 </div>

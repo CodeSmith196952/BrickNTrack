@@ -1,162 +1,96 @@
-<mat-sidenav-container class="sidenav-container">
+<div class="app-layout">
   <!-- Sidebar -->
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <div class="p-16">
-      <div class="mb-16">
-        <a href="javascript:void(0)" class="d-flex align-items-center">
-          <img src="assets/images/favicon.png" alt="" />
-          <span class="ms-16 fw-medium fs-26">Construction</span>
-        </a>
-      </div>
-
-      <div class="pt-8">
-        <ul>
-          <li class="list-group mb-8" *ngFor="let sidenav of sidebarMenu">
-            <!-- Parent without children -->
-            <ng-container *ngIf="!sidenav.children">
-              <a
-                matRipple
-               
-                [routerLink]="sidenav.link"
-                class="sidebar-menu fs-16 w-100 d-flex align-items-center"
-                routerLinkActive="routerActive"
-              >
-                <i-feather
-                  [name]="sidenav.icon"
-                  class="feather-base me-16"
-                ></i-feather>
-                <span class="ps-4">{{ sidenav.menu }}</span>
-              </a>
-            </ng-container>
-
-            <!-- Parent with children (dropdown/expansion) -->
-            <ng-container *ngIf="sidenav.children">
-              <div    routerLinkActive="routerActive"
-                (click)="sidenav.expanded = !sidenav.expanded"
-                class="sidebar-menu fs-16 w-100 d-flex align-items-center cursor-pointer"
-              >
-                <i-feather
-                  [name]="sidenav.icon"
-                  class="feather-base me-16"
-                ></i-feather>
-                <span class="ps-4 flex-grow-1">{{ sidenav.menu }}</span>
-                <i-feather
-                  [name]="sidenav.expanded ? 'chevron-down' : 'chevron-right'"
-                  class="me-2"
-                ></i-feather>
-              </div>
-
-              <!-- Submenus -->
-              <ul *ngIf="sidenav.expanded" class="ms-4 mt-2">
-                <li *ngFor="let child of sidenav.children" class="mb-2">
-                  <a
-                    matRipple
-                    [matRippleColor]="'#f7f8f443'"
-                    [routerLink]="child.link"
-                    class="sidebar-menu fs-14 w-100 d-flex align-items-center"
-                    routerLinkActive="routerActive"
-                  >
-                    <i-feather
-                      [name]="child.icon"
-                      class="feather-base me-12"
-                    ></i-feather>
-                    <span class="ps-2">{{ child.menu }}</span>
-                  </a>
-                </li>
-              </ul>
-            </ng-container>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <!-- Header -->
-    <mat-toolbar class="header ps-24 pe-24">
-      <button
-        type="button"
-        class="ms-4"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
-        <i-feather
-          name="menu"
-          class="text-light-muted feather-base mt-n3"
-        ></i-feather>
+  <aside class="sidebar" [class.collapsed]="sidebarCollapsed" [class.mobile-open]="mobileMenuOpen">
+    <div class="sidebar-header">
+      <a routerLink="/property/explore" class="logo-link">
+        <div class="logo-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <span class="logo-text" *ngIf="!sidebarCollapsed">BrickNTrack</span>
+      </a>
+      <button class="collapse-btn d-none d-md-flex" (click)="sidebarCollapsed = !sidebarCollapsed">
+        <i class="fa-solid" [ngClass]="sidebarCollapsed ? 'fa-angles-right' : 'fa-angles-left'"></i>
       </button>
-
-      <div class="ms-auto">
-        <button
-          mat-button
-          class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted"
-          [matMenuTriggerFor]="menu"
-        >
-          <img src="../../../assets/images/userlogin.jpg" class="rounded-circle img-fluid" alt="" />
-          <span class="fw-light ms-8 text-secondary">Hi,</span>
-          <span class="fw-bold ms-8">{{this.userDisplayName}}</span>
-          <i-feather name="chevron-down" class="feather-base mt-n2"></i-feather>
-        </button>
-        <mat-menu #menu="matMenu" class="profile-dropdown">
-          <div class="p-16 mb-4">
-            <a href="/editProfile">
-              <button mat-menu-item class="fs-16">Edit Profile</button></a
-            >
-            <a href="/contactUs">
-              <button mat-menu-item class="fs-16">Contact Us</button></a
-            >
-            <a href="/aboutUs">
-              <button mat-menu-item class="fs-16">About</button></a
-            >
-            <!-- <button mat-menu-item class="fs-16">Contact Us</button> -->
-            <!-- <button mat-menu-item class="fs-16">Change Password</button>
-            <button mat-menu-item class="fs-16">My Settings</button> -->
-          </div>
-
-          <hr />
-
-          <div class="p-16">
-            <a (click)="Logout()"
-              ><button mat-button class="btn btn-info w-100">Logout</button></a
-            >
-          </div>
-        </mat-menu>
-      </div>
-    </mat-toolbar>
-
-    <!-- Content -->
-    <div class="body-wrapper">
-      <div class="page-wrapper">
-        <router-outlet></router-outlet>
-      </div>
     </div>
 
-    <p class="text-center pb-24 fs-16">
-      © 2022 All rights reserved by
-      <a href="" target="_blank" class="text-indigo">construction</a>
-    </p>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    <nav class="sidebar-nav">
+      <ul>
+        <li *ngFor="let item of sidebarMenu" class="nav-item">
+          <ng-container *ngIf="!item.children">
+            <a [routerLink]="item.link" routerLinkActive="active" class="nav-link" [title]="item.menu">
+              <i-feather [name]="item.icon" class="nav-icon"></i-feather>
+              <span class="nav-label" *ngIf="!sidebarCollapsed">{{ item.menu }}</span>
+              <span class="notif-badge" *ngIf="item.menu === 'Notifications' && unreadNotificationCount > 0">{{ unreadNotificationCount }}</span>
+              <span class="notif-badge" *ngIf="item.menu === 'Messages' && unreadMessageCount > 0">{{ unreadMessageCount }}</span>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="item.children">
+            <div class="nav-link" [class.active]="item.expanded" (click)="item.expanded = !item.expanded" [title]="item.menu">
+              <i-feather [name]="item.icon" class="nav-icon"></i-feather>
+              <span class="nav-label" *ngIf="!sidebarCollapsed">{{ item.menu }}</span>
+              <i class="fa-solid fa-chevron-down expand-arrow" *ngIf="!sidebarCollapsed"
+                 [style.transform]="item.expanded ? 'rotate(180deg)' : 'rotate(0)'"></i>
+            </div>
+            <ul class="sub-menu" *ngIf="item.expanded && !sidebarCollapsed">
+              <li *ngFor="let child of item.children">
+                <a [routerLink]="child.link" routerLinkActive="active" class="nav-link sub-link">
+                  <i-feather [name]="child.icon" class="nav-icon sub-icon"></i-feather>
+                  <span class="nav-label">{{ child.menu }}</span>
+                </a>
+              </li>
+            </ul>
+          </ng-container>
+        </li>
+      </ul>
+    </nav>
 
-<!-- Search Box -->
-<div *ngIf="search" class="search-section d-flex align-items-center">
-  <mat-form-field class="w-100" color="primary" appearance="legacy">
-    <mat-label class="fs-16">Search Here</mat-label>
-    <input matInput />
-  </mat-form-field>
-  <button mat-icon-button (click)="search = !search">
-    <i-feather
-      name="x-circle"
-      class="mt-n3 text-light-muted feather-base text-dark"
-    ></i-feather>
-  </button>
+    <div class="sidebar-footer" *ngIf="!sidebarCollapsed">
+      <div class="user-card" (click)="Logout()">
+        <div class="user-avatar">{{ userDisplayName?.charAt(0)?.toUpperCase() || 'U' }}</div>
+        <div class="user-info">
+          <span class="user-name">{{ userDisplayName }}</span>
+          <span class="user-role">{{ userRole }}</span>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+      </div>
+    </div>
+  </aside>
+
+  <div class="mobile-overlay" *ngIf="mobileMenuOpen" (click)="mobileMenuOpen = false"></div>
+
+  <div class="main-area" [class.sidebar-collapsed]="sidebarCollapsed">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle d-md-none" (click)="mobileMenuOpen = !mobileMenuOpen">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+      <div class="topbar-right">
+        <a routerLink="/notifications" class="topbar-icon-btn" title="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="icon-badge" *ngIf="unreadNotificationCount > 0">{{ unreadNotificationCount }}</span>
+        </a>
+        <a routerLink="/messaging" class="topbar-icon-btn" title="Messages">
+          <i class="fa-solid fa-envelope"></i>
+          <span class="icon-badge" *ngIf="unreadMessageCount > 0">{{ unreadMessageCount }}</span>
+        </a>
+        <div class="user-dropdown" [class.open]="userMenuOpen" (click)="userMenuOpen = !userMenuOpen">
+          <div class="user-trigger">
+            <div class="topbar-avatar">{{ userDisplayName?.charAt(0)?.toUpperCase() || 'U' }}</div>
+            <span class="d-none d-md-inline user-trigger-name">{{ userDisplayName }}</span>
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+          </div>
+          <div class="dropdown-menu-custom" *ngIf="userMenuOpen">
+            <a routerLink="/editProfile" class="dropdown-item-custom"><i class="fa-solid fa-user-pen me-2"></i>Edit Profile</a>
+            <a routerLink="/contactUs" class="dropdown-item-custom"><i class="fa-solid fa-headset me-2"></i>Contact Us</a>
+            <a routerLink="/aboutUs" class="dropdown-item-custom"><i class="fa-solid fa-circle-info me-2"></i>About</a>
+            <hr class="dropdown-divider">
+            <a (click)="Logout()" class="dropdown-item-custom logout-item"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

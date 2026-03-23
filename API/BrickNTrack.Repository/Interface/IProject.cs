@@ -1,10 +1,12 @@
-﻿using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+﻿using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
+using BrickNTrack.Repository.Entity;
 
 namespace BrickNTrack.Repository.Interface
 {
     public interface IProject
     {
+        IQueryable<ProjectMaster> QueryProjects();
         Task<List<ProjectMasterResponse>> GetAllProjectAsync();
         Task<List<ProjectMasterResponse>> GetAllActiveProjectAsync();
         Task<ProjectMasterResponse> GetProjectbyIdAsync(int projectId);

@@ -1,9 +1,9 @@
-﻿using BrickNTrack.Doman.Model;
-using BrickNTrack.Repository.Interface;
+using BrickNTrack.Business.Services;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
 
 namespace BrickNTrackConstruction.Controllers
 {
@@ -12,47 +12,61 @@ namespace BrickNTrackConstruction.Controllers
     [Authorize]
     public class BuilderController : ControllerBase
     {
-        private readonly IBuilder _builder;
+        private readonly IBuilderService _builderService;
 
-        public BuilderController(IBuilder builder)
+        public BuilderController(IBuilderService builderService)
         {
-            _builder = builder;
+            _builderService = builderService;
         }
 
-        [Route("addUpdateBuilder")]
-        [HttpPost]
-        public async Task<IActionResult> AddUpdateBuilderAsync([FromBody] BuilderMasterRequest request)
+        [HttpPost("addUpdateBuilder")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult>> AddUpdateBuilder([FromBody] BuilderMasterRequest request)
         {
-            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var result = await _builder.AddUpdateBuilderAsync(request, userName);
-            if (result.StatusCode == ResultCode.SuccessfullyCreated || result.StatusCode == ResultCode.SuccessfullyUpdated)
-                return Ok(result);
-            else
-                return NotFound(result);
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _builderService.AddUpdateBuilderAsync(request, userName);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllBuilder")]
-        [HttpGet]
-        public async Task<List<BuilderMasterResponse>> GetAllBuilderAsync()
+        [HttpGet("getAllBuilder")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ServiceResult<List<BuilderMasterResponse>>>> GetAllBuilder()
         {
-            var result = await _builder.GetAllBuilderAsync();
-            return result;
+            var result = await _builderService.GetAllBuilderAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllActiveBuilder")]
-        [HttpGet]
-        public async Task<List<BuilderMasterResponse>> GetAllActiveBuilderAsync()
+        [HttpGet("getAllActiveBuilder")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ServiceResult<List<BuilderMasterResponse>>>> GetAllActiveBuilder()
         {
-            var result = await _builder.GetAllActiveBuilderAsync();
-            return result;
+            var result = await _builderService.GetAllActiveBuilderAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getBuilderById")]
-        [HttpGet]
-        public async Task<BuilderMasterResponse> GetBuilderByIdAsync([FromQuery] int builderId)
+        [HttpGet("getBuilderById")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ServiceResult<BuilderMasterResponse>>> GetBuilderById([FromQuery] int builderId)
         {
-            var result = await _builder.GetBuilderByIdAsync(builderId);
-            return result;
+            var result = await _builderService.GetBuilderByIdAsync(builderId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut("verifyBuilder")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ServiceResult>> VerifyBuilder([FromQuery] int builderId, [FromQuery] bool verified = true)
+        {
+            var result = await _builderService.SetBuilderVerifiedAsync(builderId, verified);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpDelete("deleteBuilder")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ServiceResult>> DeleteBuilder([FromQuery] int builderId)
+        {
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _builderService.SoftDeleteBuilderAsync(builderId, userName);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

@@ -1,0 +1,160 @@
+<section id="register" class="hero section">
+  <div class="container mt-4" data-aos="fade-up">
+    <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-lg-6">
+        <div class="d-flex justify-content-center align-items-center logoImg mb-3">
+          <img src="../../assets/images/logoimg.png" class="img-fluid" alt="BrickNTrack" style="max-height: 80px;" />
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h4 class="text-center mb-4">Create Your Account</h4>
+
+            <!-- Role Selection Tabs -->
+            <div class="d-flex justify-content-center mb-4">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn" [class.btn-primary]="selectedRole === 'Buyer'" [class.btn-outline-primary]="selectedRole !== 'Buyer'"
+                  (click)="form.get('role')?.setValue('Buyer'); onRoleChange()">
+                  <i class="pi pi-user me-1"></i> Home Buyer
+                </button>
+                <button type="button" class="btn" [class.btn-primary]="selectedRole === 'Builder'" [class.btn-outline-primary]="selectedRole !== 'Builder'"
+                  (click)="form.get('role')?.setValue('Builder'); onRoleChange()">
+                  <i class="pi pi-building me-1"></i> Construction Company
+                </button>
+              </div>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="register()">
+              <!-- Personal Info -->
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label class="form-label">First Name *</label>
+                  <input pInputText formControlName="firstName" class="form-control" placeholder="First Name"
+                    [ngClass]="{'is-invalid': submitted && f['firstName'].errors}" />
+                  <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                    <small *ngIf="f['firstName'].errors['required']">Required</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Last Name *</label>
+                  <input pInputText formControlName="lastName" class="form-control" placeholder="Last Name"
+                    [ngClass]="{'is-invalid': submitted && f['lastName'].errors}" />
+                  <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                    <small *ngIf="f['lastName'].errors['required']">Required</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email Address *</label>
+                <input pInputText formControlName="email" class="form-control" placeholder="email@example.com" type="email"
+                  [ngClass]="{'is-invalid': submitted && f['email'].errors}" />
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                  <small *ngIf="f['email'].errors['required']">Required</small>
+                  <small *ngIf="f['email'].errors['email']">Invalid email</small>
+                </div>
+              </div>
+
+              <!-- Hidden: username mirrors email -->
+              <input type="hidden" formControlName="userName" />
+
+              <div class="mb-3">
+                <label class="form-label">Mobile Number *</label>
+                <input pInputText formControlName="mobileNumber" class="form-control" placeholder="10-digit mobile" maxlength="10"
+                  [ngClass]="{'is-invalid': submitted && f['mobileNumber'].errors}" />
+                <div *ngIf="submitted && f['mobileNumber'].errors" class="invalid-feedback">
+                  <small *ngIf="f['mobileNumber'].errors['required']">Required</small>
+                  <small *ngIf="f['mobileNumber'].errors['pattern']">Numbers only</small>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label class="form-label">Password *</label>
+                  <input type="password" pInputText formControlName="password" class="form-control" placeholder="Password"
+                    [ngClass]="{'is-invalid': submitted && f['password'].errors}" />
+                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                    <small *ngIf="f['password'].errors['required']">Required</small>
+                    <small *ngIf="f['password'].errors['pattern']">Must include uppercase, lowercase, number & special char</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Confirm Password *</label>
+                  <input type="password" pInputText formControlName="confirmPassword" class="form-control" placeholder="Confirm"
+                    [ngClass]="{'is-invalid': submitted && f['confirmPassword'].errors}" />
+                  <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                    <small *ngIf="f['confirmPassword'].errors['mustMatch']">Passwords don't match</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Builder-specific fields -->
+              <div *ngIf="selectedRole === 'Builder'" class="builder-fields">
+                <hr />
+                <h6 class="mb-3"><i class="pi pi-building me-1"></i> Company Details</h6>
+
+                <div class="mb-3">
+                  <label class="form-label">Company Name *</label>
+                  <input pInputText formControlName="companyName" class="form-control" placeholder="Company Name"
+                    [ngClass]="{'is-invalid': submitted && f['companyName'].errors}" />
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label class="form-label">GST Number *</label>
+                    <input pInputText formControlName="gstNo" class="form-control" placeholder="GST Number"
+                      [ngClass]="{'is-invalid': submitted && f['gstNo'].errors}" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Owner Name *</label>
+                    <input pInputText formControlName="ownerName" class="form-control" placeholder="Owner Name"
+                      [ngClass]="{'is-invalid': submitted && f['ownerName'].errors}" />
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Office Address *</label>
+                  <input pInputText formControlName="officeAddress" class="form-control" placeholder="Office Address"
+                    [ngClass]="{'is-invalid': submitted && f['officeAddress'].errors}" />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Contact Number *</label>
+                  <input pInputText formControlName="contact1" class="form-control" placeholder="Contact Number"
+                    [ngClass]="{'is-invalid': submitted && f['contact1'].errors}" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-check">
+                  <input type="checkbox" formControlName="acceptTerms" class="form-check-input" id="acceptTerms" />
+                  <label class="form-check-label" for="acceptTerms">I accept the Terms & Conditions *</label>
+                </div>
+                <div *ngIf="submitted && f['acceptTerms'].errors" class="text-danger">
+                  <small>You must accept the terms</small>
+                </div>
+              </div>
+
+              <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                  {{ selectedRole === 'Builder' ? 'Register as Construction Company' : 'Register as Buyer' }}
+                </button>
+              </div>
+
+              <div class="text-center mt-3">
+                <p>Already have an account? <a (click)="goToLogin()" class="text-primary" style="cursor:pointer;">Sign In</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <p class="copyright text-black text-center mt-4">
+            Powered by <a class="colo" href="#">BRICK N TRACK Pvt. Ltd.</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
