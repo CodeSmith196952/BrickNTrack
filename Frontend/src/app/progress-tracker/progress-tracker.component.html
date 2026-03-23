@@ -1,19 +1,234 @@
- 
- <section>
-  <div class="class">
-    <h2>Construction Progress Tracker</h2>
+<section class="progress-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>Construction Progress Tracker</h1>
+      <p>Track real-time construction progress with detailed updates and photos</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <div class="project-selector" *ngIf="projects.length > 1">
+        <select [(ngModel)]="selectedProjectId" (change)="onProjectChange()">
+          <option *ngFor="let p of projects" [value]="p.projectId">{{ p.projectName }}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm" (click)="openAddDialog()">
+        <i class="fa-solid fa-plus me-1"></i>Add Update
+      </button>
+    </div>
   </div>
-  <div class="class">
-    <p>Track real-time construction progress with detailed updates and photos</p>
-  </div>
-  <div class="class">
-      <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Add Update
-                  </a>
-  </div>
- <mat-card class="">
-        <mat-card-content>
 
-        </mat-card-content>
-  </mat-card>
- </section>
+  <!-- KPI Row -->
+  <div class="kpi-row" *ngIf="stages.length > 0">
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-layer-group"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Stages</span>
+        <span class="kpi-value">{{ stages.length }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Blocked</span>
+        <span class="kpi-value">{{ blockedCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon amber"><i class="fa-solid fa-spinner"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">In Progress</span>
+        <span class="kpi-value">{{ inProgressCount + pendingCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Completed</span>
+        <span class="kpi-value">{{ completedCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" [ngClass]="overallCompletion >= 75 ? 'green' : overallCompletion >= 50 ? 'amber' : 'blue'">
+        <i class="fa-solid fa-gauge-high"></i>
+      </div>
+      <div class="kpi-data">
+        <span class="kpi-label">Overall Progress</span>
+        <span class="kpi-value">{{ overallCompletion }}%</span>
+        <div class="util-bar">
+          <div class="util-fill"
+               [style.width.%]="overallCompletion"
+               [ngClass]="{'fill-green': overallCompletion >= 75, 'fill-amber': overallCompletion >= 50 && overallCompletion < 75, 'fill-blue': overallCompletion < 50}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swim Lanes -->
+  <div class="swim-lanes" *ngIf="stages.length > 0">
+
+    <!-- Blocked / Delayed -->
+    <div class="swim-lane lane-blocked">
+      <div class="lane-header">
+        <div class="lane-title">
+          <span class="lane-dot red"></span>
+          <h4>Blocked / Delayed</h4>
+          <span class="lane-count">{{ blockedCount }}</span>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="lane-card blocked" *ngFor="let stage of blockedStages">
+          <div class="lane-card-top">
+            <div class="d-flex align-items-center gap-2">
+              <span class="stage-order">{{ stage.stageOrder }}</span>
+              <strong>{{ stage.stageName }}</strong>
+            </div>
+            <div class="status-actions">
+              <button class="move-btn amber" title="Move to In Progress" (click)="changeStatus(stage, 'In Progress')">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="stage-bar"><div class="stage-fill fill-red" [style.width.%]="stage.completionPercentage"></div></div>
+          <span class="pct-label">{{ stage.completionPercentage }}% complete</span>
+          <div class="stage-dates" *ngIf="stage.plannedStartDate">
+            <small class="text-muted">{{ stage.plannedStartDate | date:'mediumDate' }} - {{ stage.plannedEndDate | date:'mediumDate' }}</small>
+          </div>
+          <p class="stage-notes" *ngIf="stage.notes">{{ stage.notes }}</p>
+          <div class="stage-photos" *ngIf="stage.stagePhotos?.length">
+            <img *ngFor="let photo of stage.stagePhotos" [src]="photo.photoPath" class="stage-photo">
+          </div>
+        </div>
+        <div class="lane-empty" *ngIf="blockedStages.length === 0">
+          <i class="fa-solid fa-check-circle text-success"></i>
+          <small>No blockers</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- In Progress / Pending -->
+    <div class="swim-lane lane-progress">
+      <div class="lane-header">
+        <div class="lane-title">
+          <span class="lane-dot amber"></span>
+          <h4>In Progress</h4>
+          <span class="lane-count">{{ inProgressStages.length }}</span>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="lane-card progress" *ngFor="let stage of inProgressStages">
+          <div class="lane-card-top">
+            <div class="d-flex align-items-center gap-2">
+              <span class="stage-order">{{ stage.stageOrder }}</span>
+              <strong>{{ stage.stageName }}</strong>
+            </div>
+            <div class="status-actions">
+              <button class="move-btn red" title="Mark as Blocked" (click)="changeStatus(stage, 'Blocked')">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </button>
+              <button class="move-btn green" title="Mark as Complete" (click)="changeStatus(stage, 'Completed')">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </div>
+          <div class="stage-bar"><div class="stage-fill" [style.width.%]="stage.completionPercentage" [ngClass]="{'fill-amber': stage.completionPercentage < 75, 'fill-green': stage.completionPercentage >= 75}"></div></div>
+          <span class="pct-label">{{ stage.completionPercentage }}% complete</span>
+          <span class="badge bg-light text-dark" style="font-size:10px;" *ngIf="stage.status === 'Pending'">Pending Start</span>
+          <div class="stage-dates" *ngIf="stage.plannedStartDate">
+            <small class="text-muted">{{ stage.plannedStartDate | date:'mediumDate' }} - {{ stage.plannedEndDate | date:'mediumDate' }}</small>
+          </div>
+          <p class="stage-notes" *ngIf="stage.notes">{{ stage.notes }}</p>
+          <div class="stage-photos" *ngIf="stage.stagePhotos?.length">
+            <img *ngFor="let photo of stage.stagePhotos" [src]="photo.photoPath" class="stage-photo">
+          </div>
+        </div>
+        <div class="lane-empty" *ngIf="inProgressStages.length === 0">
+          <small>No active stages</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed -->
+    <div class="swim-lane lane-completed">
+      <div class="lane-header">
+        <div class="lane-title">
+          <span class="lane-dot green"></span>
+          <h4>Completed</h4>
+          <span class="lane-count">{{ completedCount }}</span>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="lane-card completed" *ngFor="let stage of completedStages">
+          <div class="lane-card-top">
+            <div class="d-flex align-items-center gap-2">
+              <span class="stage-order">{{ stage.stageOrder }}</span>
+              <strong>{{ stage.stageName }}</strong>
+            </div>
+            <div class="status-actions">
+              <button class="move-btn amber" title="Reopen" (click)="changeStatus(stage, 'In Progress')">
+                <i class="fa-solid fa-rotate-left"></i>
+              </button>
+            </div>
+          </div>
+          <div class="stage-bar"><div class="stage-fill fill-green" style="width:100%"></div></div>
+          <span class="pct-label">100% complete</span>
+          <div class="stage-dates" *ngIf="stage.actualEndDate || stage.plannedEndDate">
+            <small class="text-muted">Finished {{ (stage.actualEndDate || stage.plannedEndDate) | date:'mediumDate' }}</small>
+          </div>
+          <div class="stage-photos" *ngIf="stage.stagePhotos?.length">
+            <img *ngFor="let photo of stage.stagePhotos" [src]="photo.photoPath" class="stage-photo">
+          </div>
+        </div>
+        <div class="lane-empty" *ngIf="completedStages.length === 0">
+          <small>No completed stages yet</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="stages.length === 0 && !loading">
+    <i class="fa-solid fa-hard-hat"></i>
+    <p>No construction stages tracked yet.</p>
+    <button class="btn btn-primary btn-sm" (click)="openAddDialog()">Add First Stage</button>
+  </div>
+</section>
+
+<!-- Add Stage Dialog -->
+<p-dialog header="Add Construction Stage" [(visible)]="showAddDialog" [modal]="true" [style]="{width: '500px'}">
+  <div class="form-group mb-3">
+    <label>Stage Name</label>
+    <input type="text" class="form-control" [(ngModel)]="newStage.stageName" placeholder="e.g., Foundation">
+  </div>
+  <div class="form-group mb-3">
+    <label>Stage Order</label>
+    <input type="number" class="form-control" [(ngModel)]="newStage.stageOrder">
+  </div>
+  <div class="form-group mb-3">
+    <label>Completion %</label>
+    <input type="number" class="form-control" [(ngModel)]="newStage.completionPercentage" min="0" max="100">
+  </div>
+  <div class="row mb-3">
+    <div class="col-6">
+      <label>Planned Start</label>
+      <input type="date" class="form-control" [(ngModel)]="newStage.plannedStartDate">
+    </div>
+    <div class="col-6">
+      <label>Planned End</label>
+      <input type="date" class="form-control" [(ngModel)]="newStage.plannedEndDate">
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label>Status</label>
+    <select class="form-select" [(ngModel)]="newStage.status">
+      <option *ngFor="let s of stageStatuses" [value]="s.value">{{ s.label }}</option>
+    </select>
+  </div>
+  <div class="form-group mb-3">
+    <label>Notes</label>
+    <textarea class="form-control" [(ngModel)]="newStage.notes" rows="3"></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary" (click)="showAddDialog = false">Cancel</button>
+    <button class="btn btn-primary" (click)="saveStage()" [disabled]="!newStage.stageName">Save</button>
+  </ng-template>
+</p-dialog>

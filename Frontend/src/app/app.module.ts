@@ -1,7 +1,25 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { FeatherModule } from "angular-feather";
-import { allIcons } from "angular-feather/icons";
+import {
+  Home, Menu, User, Users, Grid, Layout, Folder, Disc,
+  PlusCircle, DollarSign, TrendingUp, MessageSquare, Bell,
+  Star, Calendar, Shield, BarChart2, Search, ChevronDown,
+  ChevronRight, Settings, Lock, XCircle, Heart, Briefcase,
+  UserPlus, Edit, Trash2, Eye, Check, X, AlertTriangle,
+  Info, ArrowLeft, ArrowRight, Download, Upload, Filter,
+  Clock, MapPin
+} from "angular-feather/icons";
+
+const icons = {
+  Home, Menu, User, Users, Grid, Layout, Folder, Disc,
+  PlusCircle, DollarSign, TrendingUp, MessageSquare, Bell,
+  Star, Calendar, Shield, BarChart2, Search, ChevronDown,
+  ChevronRight, Settings, Lock, XCircle, Heart, Briefcase,
+  UserPlus, Edit, Trash2, Eye, Check, X, AlertTriangle,
+  Info, ArrowLeft, ArrowRight, Download, Upload, Filter,
+  Clock, MapPin
+};
 import { FormBuilder, FormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -14,7 +32,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { CommonModule, DatePipe } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 
-//prime ng
+// Core & Shared
+import { CoreModule } from "./core/core.module";
+import { SharedModule } from "./shared/shared.module";
+
+// PrimeNG
 import { MessageService } from "primeng/api";
 import { DialogModule } from "primeng/dialog";
 import { TableModule } from "primeng/table";
@@ -33,12 +55,11 @@ import { TabViewModule } from "primeng/tabview";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputNumberModule } from "primeng/inputnumber";
 
-//newmodule
-
-
 // Modules
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { ComponentsModule } from "./components/components.module";
+
+// Components
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { AddPropertyComponent } from "./add-property/add-property.component";
@@ -48,8 +69,6 @@ import { ProgressTrackerComponent } from "./progress-tracker/progress-tracker.co
 import { ExplorePropertiesComponent } from "./explore-properties/explore-properties.component";
 import { ContactUsComponent } from "./contact-us/contact-us.component";
 import { PropertyInformationComponent } from "./property-information/property-information.component";
-import { authInterceptorProviders } from "./service/auth-interceptor.service";
-import { AuthguardServiceService } from "./service/authguard-service.service";
 import { UserRegistrationComponent } from "./Admin-Role/user-registration/user-registration.component";
 import { BuilderMasterComponent } from "./Master/builder-master/builder-master.component";
 import { ProjectMasterComponent } from "./Master/project-master/project-master.component";
@@ -57,6 +76,11 @@ import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { ProjectmilestoneComponent } from './Master/project-master/Project-milestone/projectmilestone/projectmilestone.component';
 import { ExpensesComponent } from './Master/project-master/Expenses/expenses/expenses.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { RegisterComponent } from './register/register.component';
+import { BuilderProfileComponent } from './builder-profile/builder-profile.component';
+import { SavedPropertiesComponent } from './saved-properties/saved-properties.component';
+import { RecentlyViewedComponent } from './recently-viewed/recently-viewed.component';
+import { PropertyCompareComponent } from './property-compare/property-compare.component';
 
 @NgModule({
   declarations: [
@@ -78,45 +102,50 @@ import { AboutUsComponent } from './about-us/about-us.component';
     ProjectmilestoneComponent,
     ExpensesComponent,
     AboutUsComponent,
+    RegisterComponent,
+    BuilderProfileComponent,
+    SavedPropertiesComponent,
+    RecentlyViewedComponent,
+    PropertyCompareComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FeatherModule.pick(allIcons),
+    FeatherModule.pick(icons),
     DemoFlexyModule,
-    DashboardModule,
+    HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
 
+    // Core & Shared
+    CoreModule,
+    SharedModule,
+
+    // Feature Modules
+    DashboardModule,
+    ComponentsModule,
+
+    // PrimeNG
     DialogModule,
     TableModule,
     CheckboxModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-
-    ComponentsModule,
-    MultiSelectModule,
-
     ToastModule,
     DropdownModule,
     AutoCompleteModule,
-    CommonModule,
     AccordionModule,
     TimelineModule,
     PasswordModule,
     MenubarModule,
     InputTextModule,
-
     InputNumberModule,
     SplitButtonModule,
     BadgeModule,
-
     TabViewModule,
+    MultiSelectModule,
   ],
   providers: [
-    authInterceptorProviders,
-
-    AuthguardServiceService,
     FormBuilder,
     MessageService,
     DatePipe,

@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Saved Properties</h2>
+      <p class="text-muted mb-0">Properties you've bookmarked for later</p>
+    </div>
+    <span class="badge bg-primary fs-6" *ngIf="savedProperties.length">{{ savedProperties.length }} saved</span>
+  </div>
+
+  <div class="row" *ngIf="!loading && savedProperties.length > 0">
+    <div class="col-sm-4 mb-4" *ngFor="let project of savedProperties">
+      <mat-card class="h-100">
+        <mat-card-content>
+          <div style="height: 180px; border-radius: 8px; overflow: hidden;">
+            <img *ngIf="project.profileImage" class="img-fluid" [src]="project.profileImage" alt="{{ project.projectName }}"
+                 style="width: 100%; height: 100%; object-fit: cover;">
+            <div *ngIf="!project.profileImage" style="width:100%; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display:flex; align-items:center; justify-content:center;">
+              <i class="fa-solid fa-building" style="font-size: 40px; color: rgba(255,255,255,0.5);"></i>
+            </div>
+          </div>
+
+          <h5 class="mt-2 mb-1">{{ project.projectName }}</h5>
+          <p class="text-muted mb-1">{{ project.projectAddress }}</p>
+
+          <div class="d-flex gap-2 mb-2" *ngIf="project.propertyType || project.bedrooms">
+            <small class="badge bg-light text-dark" *ngIf="project.propertyType">{{ project.propertyType }}</small>
+            <small *ngIf="project.bedrooms">{{ project.bedrooms }} BHK</small>
+            <small *ngIf="project.city">{{ project.city }}</small>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <strong><i class="fa-solid fa-indian-rupee-sign"></i> {{ project.budget | number }}</strong>
+            <span class="badge bg-success">{{ project.status }}</span>
+          </div>
+
+          <div class="mt-2" *ngIf="project.completionPercentage">
+            <div class="progress" style="height: 6px;">
+              <div class="progress-bar bg-primary" [style.width.%]="project.completionPercentage"></div>
+            </div>
+            <small class="text-muted">{{ project.completionPercentage }}% complete</small>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-between">
+            <a [routerLink]="['/property/detail', project.projectId]" class="btn btn-outline-primary btn-sm">View Details</a>
+            <button class="btn btn-outline-danger btn-sm" (click)="unsave(project.projectId)">
+              <i class="fa-solid fa-heart-crack"></i> Remove
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center p-5">
+    <p>Loading saved properties...</p>
+  </div>
+
+  <div *ngIf="!loading && savedProperties.length === 0" class="text-center p-5">
+    <i class="fa-regular fa-heart" style="font-size: 48px; color: #ccc;"></i>
+    <h4 class="mt-3">No saved properties yet</h4>
+    <p class="text-muted">Browse properties and click the heart icon to save them here.</p>
+    <a routerLink="/property/explore" class="btn btn-primary mt-2">Explore Properties</a>
+  </div>
+</div>

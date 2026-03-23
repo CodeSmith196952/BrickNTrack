@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BrickNTrack.Doman.Model;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Entity;
 
 namespace BrickNTrackConstruction.Core.Helper
@@ -17,7 +17,8 @@ namespace BrickNTrackConstruction.Core.Helper
 
             CreateMap<ProjectMasterRequest, ProjectMaster>();
             CreateMap<ProjectMaster, ProjectMasterResponse>()
-                .ForMember(dest => dest.BuilderName, opt => opt.MapFrom(src => src.BuilderMaster.Name));
+                .ForMember(dest => dest.BuilderName, opt => opt.MapFrom(src => src.BuilderMaster.Name))
+                .ForMember(dest => dest.IsBuilderVerified, opt => opt.MapFrom(src => src.BuilderMaster != null && src.BuilderMaster.IsVerified));
 
             CreateMap<ProjectDataPathRequest, ProjectDataPath>();
             CreateMap<ProjectDataPath, ProjectDataPathResponse>()
@@ -30,6 +31,9 @@ namespace BrickNTrackConstruction.Core.Helper
             CreateMap<ProjectExpensesRequest, ProjectExpenses>();
             CreateMap<ProjectExpenses, ProjectExpensesResponse>()
                 .ForMember(dest => dest.MilestoneName, opt => opt.MapFrom(src => src.ProjectMilestone.MilestoneName));
+
+            CreateMap<ProjectUnitTypeRequest, ProjectUnitType>();
+            CreateMap<ProjectUnitType, ProjectUnitTypeResponse>();
 
 
             //CreateMap<UserManager, UserManagerRequest>();

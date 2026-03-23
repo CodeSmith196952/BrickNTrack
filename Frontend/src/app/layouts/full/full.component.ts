@@ -1,320 +1,87 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { faDashboard } from '@fortawesome/free-solid-svg-icons';
-import { DataService } from "../../service/data.service";
-import { NavItem } from "src/app/service/user-model.service";
-import { NgbNavbar } from "@ng-bootstrap/ng-bootstrap";
-
-interface sidebarMenu {
-  link: string;
-  icon: string;
-  menu: string;
-  children?: sidebarMenu[];
-   expanded?: boolean;
-}
+import { AuthService } from '../../core/services/auth.service';
+import { MenuService, MenuItem } from '../../core/services/menu.service';
+import { NotificationState } from '../../core/state/notification.state';
+import { MessagingState } from '../../core/state/messaging.state';
 
 @Component({
   selector: 'app-full',
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss']
 })
-export class FullComponent {
+export class FullComponent implements OnInit, OnDestroy {
+  search = false;
+  userDisplayName = '';
+  userRole = '';
+  sidebarMenu: MenuItem[] = [];
+  currentDate: Date = new Date();
+  unreadNotificationCount = 0;
+  unreadMessageCount = 0;
+  sidebarCollapsed = false;
+  mobileMenuOpen = false;
+  userMenuOpen = false;
 
-  search: boolean = false;
+  private destroy$ = new Subject<void>();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+    .pipe(map(result => result.matches), shareReplay());
 
-  constructor(private breakpointObserver: BreakpointObserver,    private router: Router, private dataApi: DataService,) { }
-  public userDisplayName = "";
-  routerActive: string = "activelink";
-   currentDate: Date = new Date();
-  @Input() ToggleSlide = false;
-  visibleSidebar1: boolean = true;
-  screenWidth = 0;
-  public navbarData: any[] = [];
-  fadashboard = faDashboard;
-  public userRole = "";
-  
- 
-  navItems!: Array<NavItem>;
-  NgbNavbar = NgbNavbar;
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private authService: AuthService,
+    private menuService: MenuService,
+    private notificationState: NotificationState,
+    private messagingState: MessagingState
+  ) {}
 
-  items: any;
-  signOut: any;
-
-  Usser: any;
-
-
-  sidebarMenu: sidebarMenu[] = [
-    
-    {
-      link: "/costMonitoringDashboard",
-      icon: "layout",
-      menu: "Dashboard",
-    },
-    {
-      icon: "user",
-      menu: "Admin Role",
-          expanded: false,
-      children: [
-        {
-          link: "/userRegister",
-          icon: "user",
-          menu: "User Register"
-        },
-     
-      ],
-      link: ''
-    },
-    {
-      link: "/documents",
-      icon: "folder",
-      menu: "Document",
-    },
-        {
-      icon: "",
-      menu: "Master",
-          expanded: false,
-      children: [
-        {
-          link: "/buildermaster",
-          icon: "user",
-          menu: "Builder Master"
-        },
-        {
-          link: "/projectmaster",
-          icon: "user",
-          menu: "Project Master"
-        },
-        // {
-        //   link: "/projectmilestone",
-        //   icon: "user",
-        //   menu: "Project Milestone"
-        // },
-        // {
-        //   link: "/expenses",
-        //   icon: "user",
-        //   menu: "Expenses"
-        // },
-     
-      ],
-      link: ''
-    },
-    {
-      link: "/property",
-      icon: "disc",
-      menu: "Property Listing",
-    },
-    // {
-    //   link: "/progressTracker",
-    //   icon: "info",
-    //   menu: "Progress Tracker",
-    // },
-
-
-    // {
-    //   link: "/grid-list",
-    //   icon: "file-text",
-    //   menu: "Grid List",
-    // },
-    // {
-    //   link: "/menu",
-    //   icon: "menu",
-    //   menu: "Menus",
-    // },
-    // {
-    //   link: "/table",
-    //   icon: "grid",
-    //   menu: "Tables",
-    // },
-    // {
-    //   link: "/expansion",
-    //   icon: "divide-circle",
-    //   menu: "Expansion Panel",
-    // },
-    // {
-    //   link: "/chips",
-    //   icon: "award",
-    //   menu: "Chips",
-    // },
-    // {
-    //   link: "/tabs",
-    //   icon: "list",
-    //   menu: "Tabs",
-    // },
-    // {
-    //   link: "/progress",
-    //   icon: "bar-chart-2",
-    //   menu: "Progress Bar",
-    // },
-    // {
-    //   link: "/toolbar",
-    //   icon: "voicemail",
-    //   menu: "Toolbar",
-    // },
-    // {
-    //   link: "/progress-snipper",
-    //   icon: "loader",
-    //   menu: "Progress Snipper",
-    // },
-    // {
-    //   link: "/tooltip",
-    //   icon: "bell",
-    //   menu: "Tooltip",
-    // },
-    // {
-    //   link: "/snackbar",
-    //   icon: "slack",
-    //   menu: "Snackbar",
-    // },
-    // {
-    //   link: "/slider",
-    //   icon: "sliders",
-    //   menu: "Slider",
-    // },
-    // {
-    //   link: "/slide-toggle",
-    //   icon: "layers",
-    //   menu: "Slide Toggle",
-    // },
-  ]
-
-  Logout() {
-    window.sessionStorage.clear();
-   
-    this.router.navigate(['./login']);
-    // window.location.reload();
-  }
   ngOnInit(): void {
+    this.userRole = this.authService.getUserRole();
+    this.userDisplayName = this.authService.getUserDisplayName();
+    this.sidebarMenu = this.menuService.getMenuForRole(this.userRole);
 
+    // Subscribe to real-time notification count
+    this.notificationState.unreadCount$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(count => this.unreadNotificationCount = count);
 
-    this.userRole = this.dataApi?.getUserRole();
-    this.userDisplayName = this.dataApi?.getUserDisplayName();
+    // Subscribe to real-time unread message count
+    this.messagingState.totalUnread$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(count => this.unreadMessageCount = count);
 
-
-    this.screenWidth = window.innerWidth;
-
-    this.items = this.navItems.map((x) => ({
-      label: x.displayName,
-      icon: x.menuIcon,
-      items:
-        x.children && x.children.length > 0
-          ? x.children.map((child) => ({
-              label: child.displayName,
-              icon: child.menuIcon,
-              routerLink: child.routingURL,
-            }))
-          : [],
-      routerLink: x.routingURL,
-    }));
-    // this.items.push({
-    //   label: "Vehicle Transaction",
-    //   icon: "pi pi-fw pi-car",
-    //   routerLink: "/vehicleMoment",
-    // });
-    //    this.items.upshift({
-    //     label: "Dashboard",
-    //     icon: "pi pi-fw pi-home",
-    //     routerLink: "/dashboard",
-    // },)
-
-    // this.items = [
-    //   {
-    //     label: "Dashboard",
-    //     icon: "pi pi-fw pi-home",
-    //     routerLink: "/dashboard",
-    //   },
-    //   {
-    //     label: "Admin",
-    //     icon: "pi pi-fw pi-user",
-    //     items: [
-    //       {
-    //         label: "Role Management",
-    //         icon: "pi pi-fw pi-file",
-    //         routerLink: "/role",
-    //       },
-    //       {
-    //         label: "User Registration",
-    //         icon: "pi pi-fw pi-user",
-    //         routerLink: "/user-registration",
-    //       },
-    //       {
-    //         label: "User Role Mapping",
-    //         icon: "pi pi-fw pi-user",
-    //         routerLink: "/userRoleMapping",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     label: "Master",
-    //     icon: "pi pi-fw pi-user",
-    //     items: [
-    //       {
-    //         label: "Dealer Master",
-    //         icon: "pi pi-fw pi-file",
-    //         routerLink: "/dealerMaster",
-    //       },
-    //       {
-    //         label: "Location Master",
-    //         icon: "pi pi-fw pi-map",
-    //         routerLink: "/locationMaster",
-    //       },
-    //       {
-    //         label: "Device Mapping",
-    //         icon: "pi pi-fw pi-mobile",
-    //         routerLink: "/DeviceMapping",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     label: "Vehicle Transaction",
-    //     icon: "pi pi-fw pi-car",
-    //     routerLink: "/vehicleMoment",
-    //   },
-    // ];
-
-    this.signOut = [
-      {
-        label: "User Options",
-        icon: "pi pi-fw pi-user",
-        items: [
-          {
-            label: "Profile",
-            icon: "pi pi-fw pi-user-edit",
-            routerLink: "/Profile",
-          },
-          {
-            label: "Logout",
-            icon: "pi pi-fw pi-lock",
-            command: () => this.logout(),
-          },
-        ],
-      },
-    ];
+    // Load initial data
+    this.notificationState.loadNotifications();
+    this.messagingState.loadConversations();
   }
 
-  logout() {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  Logout(): void {
     Swal.fire({
-      title: "Logout",
-      text: "Are you sure you want to logout?",
-      icon: "warning",
+      title: 'Logout',
+      text: 'Are you sure you want to logout?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, logout!",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(["/login"]);
+        this.authService.logout();
       }
     });
   }
 
+  logout(): void {
+    this.Logout();
+  }
 }

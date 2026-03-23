@@ -1,5 +1,5 @@
-﻿using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+﻿using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 
 namespace BrickNTrack.Business.BusinessLogic
 {

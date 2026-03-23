@@ -1,10 +1,9 @@
-﻿using BrickNTrack.Doman.Model;
-using BrickNTrack.Repository.Entity;
-using BrickNTrack.Repository.Interface;
+using BrickNTrack.Business.Services;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
 
 namespace BrickNTrackConstruction.Controllers
 {
@@ -13,55 +12,61 @@ namespace BrickNTrackConstruction.Controllers
     [Authorize]
     public class ExpensesController : ControllerBase
     {
-        private readonly IExpenses _expenses;
-        
-        public ExpensesController(IExpenses expenses)
+        private readonly IExpenseService _expenseService;
+
+        public ExpensesController(IExpenseService expenseService)
         {
-            _expenses = expenses;
+            _expenseService = expenseService;
         }
 
-        [Route("addUpdateExpenses")]
-        [HttpPost]
-        public async Task<IActionResult> AddUpdateExpensesAsync([FromBody] ProjectExpensesRequest request)
+        [HttpPost("addUpdateExpenses")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult>> AddUpdateExpenses([FromBody] ProjectExpensesRequest request)
         {
-            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var result = await _expenses.AddUpdateExpensesAsync(request, userName);
-            if (result.StatusCode == ResultCode.SuccessfullyCreated || result.StatusCode == ResultCode.SuccessfullyUpdated)
-                return Ok(result);
-            else
-                return NotFound(result);
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _expenseService.AddUpdateExpenseAsync(request, userName);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllExpenses")]
-        [HttpGet]
-        public async Task<List<ProjectExpensesResponse>> GetAllExpensesAsync()
+        [HttpGet("getAllExpenses")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ServiceResult<List<ProjectExpensesResponse>>>> GetAllExpenses()
         {
-            var result = await _expenses.GetAllExpensesAsync();
-            return result;
+            var result = await _expenseService.GetAllExpensesAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllActiveExpenses")]
-        [HttpGet]
-        public async Task<List<ProjectExpensesResponse>> GetAllActiveExpensesAsync()
+        [HttpGet("getAllActiveExpenses")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<List<ProjectExpensesResponse>>>> GetAllActiveExpenses()
         {
-            var result = await _expenses.GetAllActiveExpensesAsync();
-            return result;
+            var result = await _expenseService.GetAllActiveExpensesAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllExpensesById")]
-        [HttpGet]
-        public async Task<ProjectExpensesResponse> GetAllExpensesByIdAsync([FromQuery] int expenseId)
+        [HttpGet("getAllExpensesById")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<ProjectExpensesResponse>>> GetAllExpensesById([FromQuery] int expenseId)
         {
-            var result = await _expenses.GetAllExpensesByIdAsync(expenseId);
-            return result;
+            var result = await _expenseService.GetExpenseByIdAsync(expenseId);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [Route("getAllExpensesByMilestoneId")]
-        [HttpGet]
-        public async Task<List<ProjectExpensesResponse>> GetAllExpensesByMilestoneIdAsync([FromQuery] int milestoneId)
+        [HttpGet("getAllExpensesByMilestoneId")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult<List<ProjectExpensesResponse>>>> GetAllExpensesByMilestoneId([FromQuery] int milestoneId)
         {
-            var result = await _expenses.GetAllExpensesByMilestoneIdAsync(milestoneId);
-            return result;
+            var result = await _expenseService.GetExpensesByMilestoneIdAsync(milestoneId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpDelete("deleteExpense")]
+        [Authorize(Roles = Roles.AdminOrBuilder)]
+        public async Task<ActionResult<ServiceResult>> DeleteExpense([FromQuery] int expenseId)
+        {
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value!;
+            var result = await _expenseService.SoftDeleteExpenseAsync(expenseId, userName);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

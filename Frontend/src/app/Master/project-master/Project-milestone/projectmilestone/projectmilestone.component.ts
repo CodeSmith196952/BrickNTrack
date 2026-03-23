@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
-import { ServiceUrl } from 'src/app/service/service-url.service';
-import { UserScreenAccesData } from 'src/app/service/user-model.service';
+import { takeUntil } from 'rxjs/operators';
+import { ApiService } from 'src/app/core/services/api.service';
+import { CrudBaseComponent } from 'src/app/shared/base/crud-base.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,259 +11,155 @@ import Swal from 'sweetalert2';
   templateUrl: './projectmilestone.component.html',
   styleUrls: ['./projectmilestone.component.scss']
 })
-export class ProjectmilestoneComponent {
-  projectForm!: FormGroup;
-  milestoneList: any;
-  submitted = false;
-  displayProjectDialog: boolean = false;
-  ActiveButtonVisible: boolean = false
+export class ProjectmilestoneComponent extends CrudBaseComponent<any> implements OnInit {
+  ActiveButtonVisible = false;
   ResetVisible: any;
-selectedImageFile: File | null = null;
-expandedProjectId: number | null = null;
-
-showMilestoneDialog: boolean = false;
-milestoneForm!: FormGroup;
-
-resetVisible = false;
-
-
-
-  public userAccessData: any = new UserScreenAccesData();
-  title!: string;
-  builderList: any;
+  expandedProjectId: number | null = null;
+  showMilestoneDialog = false;
+  resetVisible = false;
   projectList: any;
-  constructor(private route: ActivatedRoute,
+
+  // Template aliases
+  get milestoneList() { return this.items; }
+  set milestoneList(val) { this.items = val; }
+  get milestoneForm() { return this.form; }
+  set milestoneForm(val) { this.form = val; }
+  get displayProjectDialog() { return this.displayDialog; }
+  set displayProjectDialog(val) { this.displayDialog = val; }
+
+  protected apiService: ApiService;
+  protected fb: FormBuilder;
+  get listEndpoint() { return 'Milestone/getMilestonesByProjectId'; }
+  get saveEndpoint() { return 'Milestone/addUpdateMilestone'; }
+  get entityName() { return 'Milestone'; }
+
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
-    private brickntrackService: brickntrackService,
-    private fb: FormBuilder,
-
-
+    api: ApiService,
+    fb: FormBuilder
   ) {
+    super();
+    this.apiService = api;
+    this.fb = fb;
+  }
 
-    this.milestoneForm = this.fb.group({
+  buildForm(): FormGroup {
+    return this.fb.group({
       projectId: [''],
-
-      milestoneName: ['',],
-      milestoneId: ['',],
-      budget: ['',],
-
+      milestoneName: [''],
+      milestoneId: [''],
+      budget: [''],
       plannedTargetDate: [''],
-
       plannedStartDate: [''],
       plannedDuration: [''],
       milestoneDetails: [''],
       budgetStatus: [''],
       status: [''],
-    
-
-
-
     });
-    // this.userAccessData = this.PalletList.getUserScreenAccessMenu('palletmaster')
-
-  }
-  // public noWhitespaceValidator(control: FormControl) {
-  //   const isWhitespace = (control.value || '').trim().length === 0;
-  //   const isValid = !isWhitespace;
-  //   return isValid ? null : { 'whitespace': true };
-  // }
-
-
-
-  ngOnInit(): void {
-debugger
-     const projectId = this.route.snapshot.paramMap.get('id');
-  if (projectId) {
-    this.getAllActiveMilestone(projectId);
   }
 
-
-    // this.getAllActiveMilestone();
-  
-    // this.getAllActiveProjects();
-
-
+  override ngOnInit(): void {
+    this.form = this.buildForm();
+    const projectId = this.route.snapshot.paramMap.get('id');
+    if (projectId) {
+      this.getAllActiveMilestone(projectId);
+    }
   }
-
 
   ResetDialog() {
     this.submitted = false;
-
-    this.projectForm.reset();
+    this.form.reset();
   }
 
-
-
-
-saveMilestone() {
-  debugger;
-  this.submitted = true;
-
-  if (this.milestoneForm.invalid) return;
-
-  // Custom validation
-  if (this.brickntrackService.commonValidation(this.milestoneForm.get('projectId')?.value)) {
-    this.milestoneForm.get('projectId')?.setValue(0);
-    this.milestoneForm.get('IsActive')?.setValue(true);
-  }
-
-  const formValues = this.milestoneForm.value;
-
-
-  // Submit form data
-  this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formValues).subscribe(
-    (res) => {
-      Swal.fire('', res.responseMessage, 'success');
-      // this.getAllActiveMilestone();
-      this.displayProjectDialog = false;
-    },
-    (err) => {
-      Swal.fire('', err.error.errorMessage, 'error');
-      this.displayProjectDialog = false;
-    }
-  );
-}
-  acceptNumber(event: any, flag: boolean): void {
-    flag ? this.brickntrackService.keyacceptnumberAndDot(event) : this.brickntrackService.keyPressNumbers(event)
-  }
-
-   
-
-
-
-resetMilestoneForm() {
-  this.milestoneForm.reset({
-    milestoneId: 0,
-    projectId: this.milestoneForm.get('projectId')?.value || 0,
-    milestoneName: '',
-    milestoneDetails: '',
-    budget: 0,
-    budgetStatus: '',
-    status: '',
-    plannedStartDate: null,
-    plannedTargetDate: null,
-    plannedDuration: 0,
-  });
-  this.submitted = false;
-  this.resetVisible = false;
-}
-
-closeMilestoneDialog() {
-  this.showMilestoneDialog = false;
-}
-
-  openProjectDialog() {
-    debugger
-    this.displayProjectDialog = true;
-    this.ResetVisible = true;
-    this.milestoneForm.reset()
-    this.ActiveButtonVisible = false;
-    this.ResetDialog();
-    this.title = "Add Project"
-  }
-
-  closeProjectDialog() {
-    this.displayProjectDialog = false;
-
-  }
-  editProject(value: any) {
-    debugger
-    this.title = "Edit Milestone ";
-    this.displayProjectDialog = true
-    this.ActiveButtonVisible = true
-    this.ResetVisible = false
-    const plannedStartDate = value.plannedStartDate?.split('T')[0];
-  const plannedTargetDate = value.plannedTargetDate?.split('T')[0];
-    this.milestoneForm.patchValue({
-      milestoneId: value.milestoneId,
-      projectId: value.projectId,
-      milestoneName: value.milestoneName,
-      milestoneDetails: value.milestoneDetails,
-      plannedDuration: value.plannedDuration,
-      budget: value.budget,
-      plannedStartDate: plannedStartDate,
-      plannedTargetDate: plannedTargetDate,
-      budgetStatus: value.budgetStatus,
- 
-      status: value.status,
-    
-    })
-
-
-  }
-
-
-   saveProjectExpense() {
-    debugger
+  saveMilestone() {
     this.submitted = true;
+    if (this.form.invalid) return;
 
-    if (this.milestoneForm.invalid) {
-      return;
+    const projectIdVal = this.form.get('projectId')?.value;
+    if (!projectIdVal || projectIdVal === '') {
+      this.form.get('projectId')?.setValue(0);
+      this.form.get('IsActive')?.setValue(true);
     }
 
-    const formData = this.milestoneForm.value;
-
-    this.brickntrackService.post<any>(ServiceUrl.addUpdateMilestone, formData)
-      .subscribe(
-        (res) => {
-          Swal.fire('', res.responseMessage, 'success');
-          this.showMilestoneDialog = false;
-          // Refresh your milestone list here if needed
-        },
-        (err) => {
-          Swal.fire('', err.error.errorMessage, 'error');
-          this.showMilestoneDialog = false;
-        }
+    this.apiService.post<any>('Milestone/addUpdateMilestone', this.form.value)
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { Swal.fire('', res.message, 'success'); this.displayDialog = false; },
+        (err) => { Swal.fire('', err.error.errorMessage, 'error'); this.displayDialog = false; }
       );
   }
 
-
-getAllActiveMilestone(projectId: string) {
-  debugger;
-  const payload = { projectId };
-  this.brickntrackService.get<any>(null,ServiceUrl.getMilestonesByProjectId,payload)
-    .subscribe(
-      (res) => {
-        this.milestoneList = res;
-      },
-      (err) => {
-        Swal.fire("", err.error.message, "error");
-      }
-    );
-}
-
-
-
-  viewExpense(milestone: any) {
-    debugger
-      this.router.navigate(['expenses', milestone.milestoneId]);
-
-}
-
-    getAllActiveProjects() {
-      debugger
-      this.brickntrackService.get<any>(null, ServiceUrl.getAllProjectOfBuilder)
-        .subscribe(
-          (res) => {
-            this.projectList = res
-          },
-          (err) => {
-            Swal.fire("", err.error.message, "error")
-          }
-        )
-    }
-  toggleCard(projectId: number | null) {
-    if (this.expandedProjectId === projectId) {
-      this.expandedProjectId = null; // collapse
-    } else {
-      this.expandedProjectId = projectId; // expand
-    }
+  resetMilestoneForm() {
+    this.form.reset({
+      milestoneId: 0, projectId: this.form.get('projectId')?.value || 0,
+      milestoneName: '', milestoneDetails: '', budget: 0, budgetStatus: '',
+      status: '', plannedStartDate: null, plannedTargetDate: null, plannedDuration: 0,
+    });
+    this.submitted = false;
+    this.resetVisible = false;
   }
 
+  closeMilestoneDialog() { this.showMilestoneDialog = false; }
 
+  openProjectDialog() {
+    this.displayDialog = true;
+    this.ResetVisible = true;
+    this.form.reset();
+    this.ActiveButtonVisible = false;
+    this.ResetDialog();
+    this.title = 'Add Project';
+  }
+
+  closeProjectDialog() { this.displayDialog = false; }
+
+  editProject(value: any) {
+    this.title = 'Edit Milestone ';
+    this.displayDialog = true;
+    this.ActiveButtonVisible = true;
+    this.ResetVisible = false;
+    const plannedStartDate = value.plannedStartDate?.split('T')[0];
+    const plannedTargetDate = value.plannedTargetDate?.split('T')[0];
+    this.form.patchValue({
+      milestoneId: value.milestoneId, projectId: value.projectId,
+      milestoneName: value.milestoneName, milestoneDetails: value.milestoneDetails,
+      plannedDuration: value.plannedDuration, budget: value.budget,
+      plannedStartDate, plannedTargetDate, budgetStatus: value.budgetStatus,
+      status: value.status,
+    });
+  }
+
+  saveProjectExpense() {
+    this.submitted = true;
+    if (this.form.invalid) return;
+
+    this.apiService.post<any>('Milestone/addUpdateMilestone', this.form.value)
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { Swal.fire('', res.message, 'success'); this.showMilestoneDialog = false; },
+        (err) => { Swal.fire('', err.error.errorMessage, 'error'); this.showMilestoneDialog = false; }
+      );
+  }
+
+  getAllActiveMilestone(projectId: string) {
+    this.apiService.get<any>('Milestone/getMilestonesByProjectId', { projectId })
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { this.items = res.data || res; },
+        (err) => { Swal.fire('', err.error.message, 'error'); }
+      );
+  }
+
+  viewExpense(milestone: any) {
+    this.router.navigate(['expenses', milestone.milestoneId]);
+  }
+
+  getAllActiveProjects() {
+    this.apiService.get<any>('Project/getAllProjectOfBuilder')
+      .pipe(takeUntil(this.destroy$)).subscribe(
+        (res) => { this.projectList = res.data || res; },
+        (err) => { Swal.fire('', err.error.message, 'error'); }
+      );
+  }
+
+  toggleCard(projectId: number | null) {
+    this.expandedProjectId = this.expandedProjectId === projectId ? null : projectId;
+  }
 }
-
-
-
-
-

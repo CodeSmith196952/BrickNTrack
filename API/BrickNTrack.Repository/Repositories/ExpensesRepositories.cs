@@ -1,24 +1,22 @@
 ﻿using AutoMapper;
-using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Context;
 using BrickNTrack.Repository.Entity;
 using BrickNTrack.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
+using static BrickNTrack.Domain.CommonModel.ApplicationConstant;
 
 namespace BrickNTrack.Repository.Repositories
 {
-    public class ExpensesRepositories : IExpenses
+    public class ExpensesRepositories : BaseRepository<ProjectExpenses>, IExpenses
     {
-        private readonly BrickNTrackContext _context;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
         public ExpensesRepositories(BrickNTrackContext context,
-            IConfiguration configuration, IMapper mapper)
+            IConfiguration configuration, IMapper mapper) : base(context)
         {
-            _context = context;
             _config = configuration;
             _mapper = mapper;
         }
@@ -39,6 +37,7 @@ namespace BrickNTrack.Repository.Repositories
                 {
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    request.IsActive = true;
                     var expenses = _mapper.Map<ProjectExpenses>(request);
                     _context.ProjectExpenses.Add(expenses);
                     await _context.SaveChangesAsync();
@@ -102,7 +101,7 @@ namespace BrickNTrack.Repository.Repositories
             ResultModel retValue = new ResultModel();
             try
             {
-                var milestone = await _context.ProjectMilestones.Include(x => x.ProjectExpenses.Where(x => x.IsActive == true)).FirstOrDefaultAsync(x => x.MilestoneId == milestoneId);
+                var milestone = await _context.ProjectMilestones.Include(x => x.ProjectExpenses).FirstOrDefaultAsync(x => x.MilestoneId == milestoneId);
                 var budgetAmount = milestone.ProjectExpenses.Sum(x => x.Amount);
                 if (budgetAmount > 0)
                 {
@@ -133,7 +132,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var expenses = await _context.ProjectExpenses.ToListAsync();
+                var expenses = await _context.ProjectExpenses.IgnoreQueryFilters().ToListAsync();
                 return _mapper.Map<List<ProjectExpensesResponse>>(expenses);
             }
             catch (Exception ex)
@@ -146,7 +145,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var expenses = await _context.ProjectExpenses.Where(x => x.IsActive == true).ToListAsync();
+                var expenses = await _context.ProjectExpenses.ToListAsync();
                 return _mapper.Map<List<ProjectExpensesResponse>>(expenses);
             }
             catch (Exception ex)

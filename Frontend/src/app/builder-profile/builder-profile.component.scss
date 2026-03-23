@@ -1,0 +1,15 @@
+.builder-header {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%);
+  border: 1px solid #e0e5f0;
+}
+
+.builder-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

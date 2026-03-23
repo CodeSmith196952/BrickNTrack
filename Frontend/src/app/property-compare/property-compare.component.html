@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Compare Properties</h2>
+      <p class="text-muted mb-0">Side-by-side comparison of selected properties</p>
+    </div>
+    <button class="btn btn-outline-danger btn-sm" (click)="clearAll()" *ngIf="properties.length">Clear All</button>
+  </div>
+
+  <div *ngIf="loading" class="text-center p-5"><p>Loading...</p></div>
+
+  <div *ngIf="!loading && properties.length > 0" class="table-responsive">
+    <table class="table table-bordered comparison-table">
+      <thead>
+        <tr>
+          <th style="width: 180px;">Property</th>
+          <th *ngFor="let p of properties" class="text-center" style="min-width: 200px;">
+            <div style="height: 100px; border-radius: 8px; overflow: hidden; margin-bottom: 8px;">
+              <div *ngIf="!p.profileImage" style="width:100%; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display:flex; align-items:center; justify-content:center;">
+                <i class="fa-solid fa-building" style="font-size: 28px; color: rgba(255,255,255,0.5);"></i>
+              </div>
+              <img *ngIf="p.profileImage" [src]="p.profileImage" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <strong>{{ p.projectName }}</strong><br>
+            <small class="text-muted">{{ p.builderName }}</small><br>
+            <small>{{ p.projectAddress }}</small>
+            <div class="mt-1">
+              <button class="btn btn-outline-danger btn-sm" (click)="removeProperty(p.projectId)">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+              <a [routerLink]="['/property/detail', p.projectId]" class="btn btn-outline-primary btn-sm ms-1">View</a>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let field of comparisonFields">
+          <td><strong>{{ field.label }}</strong></td>
+          <td *ngFor="let p of properties" class="text-center">
+            {{ formatValue(p[field.key], field.format) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && properties.length === 0" class="text-center p-5">
+    <i class="fa-solid fa-scale-balanced" style="font-size: 48px; color: #ccc;"></i>
+    <h4 class="mt-3">No properties to compare</h4>
+    <p class="text-muted">Add properties to compare from the property detail page.</p>
+    <a routerLink="/property/explore" class="btn btn-primary mt-2">Explore Properties</a>
+  </div>
+</div>

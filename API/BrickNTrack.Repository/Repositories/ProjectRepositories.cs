@@ -1,33 +1,36 @@
 ﻿using AutoMapper;
-using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Context;
 using BrickNTrack.Repository.Entity;
 using BrickNTrack.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
+using static BrickNTrack.Domain.CommonModel.ApplicationConstant;
 
 namespace BrickNTrack.Repository.Repositories
 {
-    public class ProjectRepositories : IProject
+    public class ProjectRepositories : BaseRepository<ProjectMaster>, IProject
     {
-        private readonly BrickNTrackContext _context;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
         public ProjectRepositories(BrickNTrackContext context,
-            IConfiguration configuration, IMapper mapper)
+            IConfiguration configuration, IMapper mapper) : base(context)
         {
-            _context = context;
             _config = configuration;
             _mapper = mapper;
+        }
+
+        public IQueryable<ProjectMaster> QueryProjects()
+        {
+            return _context.ProjectMasters.Include(x => x.BuilderMaster);
         }
 
         public async Task<List<ProjectMasterResponse>> GetAllProjectAsync()
         {
             try
             {
-                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).ToListAsync();
+                var projects = await _context.ProjectMasters.IgnoreQueryFilters().Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).ToListAsync();
                 var projectDetails = projects.Select(project =>
                 {
                     var response = _mapper.Map<ProjectMasterResponse>(project);
@@ -53,7 +56,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.IsActive == true).ToListAsync();
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).ToListAsync();
                 var projectDetails = projects.Select(project =>
                 {
                     var response = _mapper.Map<ProjectMasterResponse>(project);
@@ -79,7 +82,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.BuilderId == builderId).ToListAsync();
+                var projects = await _context.ProjectMasters.IgnoreQueryFilters().Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.BuilderId == builderId).ToListAsync();
                 var projectDetails = projects.Select(project =>
                 {
                     var response = _mapper.Map<ProjectMasterResponse>(project);
@@ -105,7 +108,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.IsActive == true && x.BuilderId == builderId).ToListAsync();
+                var projects = await _context.ProjectMasters.Include(x => x.BuilderMaster).Include(x => x.ProjectMilestones).ThenInclude(x => x.ProjectExpenses).Where(x => x.BuilderId == builderId).ToListAsync();
                 var projectDetails = projects.Select(project =>
                 {
                     var response = _mapper.Map<ProjectMasterResponse>(project);
@@ -162,18 +165,22 @@ namespace BrickNTrack.Repository.Repositories
                     return retValue;
                 }
 
-                var reraNummber = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ReraNumber == request.ReraNumber && x.ProjectId != request.ProjectId);
-                if (reraNummber != null)
+                if (!string.IsNullOrWhiteSpace(request.ReraNumber))
                 {
-                    retValue.StatusCode = ResultCode.RecordNotFound;
-                    retValue.ErrorMessage = "RERA number already registered";
-                    return retValue;
+                    var reraNummber = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ReraNumber == request.ReraNumber && x.ProjectId != request.ProjectId);
+                    if (reraNummber != null)
+                    {
+                        retValue.StatusCode = ResultCode.RecordNotFound;
+                        retValue.ErrorMessage = "RERA number already registered";
+                        return retValue;
+                    }
                 }
 
                 if (request.ProjectId == 0)
                 {
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    request.IsActive = true;
                     var project = _mapper.Map<ProjectMaster>(request);
                     _context.ProjectMasters.Add(project);
                     await _context.SaveChangesAsync();
@@ -182,7 +189,7 @@ namespace BrickNTrack.Repository.Repositories
                 }
                 else
                 {
-                   var project = await _context.ProjectMasters.FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
+                   var project = await _context.ProjectMasters.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.ProjectId == request.ProjectId);
                     if (project != null)
                     {
                         if (!string.IsNullOrWhiteSpace(request.ProjectName) && project.ProjectName != request.ProjectName)
@@ -201,8 +208,6 @@ namespace BrickNTrack.Repository.Repositories
                         //    project.ActualCompletionDate = request.ActualCompletionDate;
                         if (project.ProjectAddress != request.ProjectAddress)
                             project.ProjectAddress = request.ProjectAddress;
-                        if (project.Latlong != request.Latlong)
-                            project.Latlong = request.Latlong;
                         if (project.ProfileImage != request.ProfileImage)
                             project.ProfileImage = request.ProfileImage;
                         if (project.ReraNumber != request.ReraNumber)
@@ -213,6 +218,42 @@ namespace BrickNTrack.Repository.Repositories
                             project.Status = request.Status;
                         if (project.BuilderId != request.BuilderId)
                             project.BuilderId = request.BuilderId;
+                        project.PropertyType = request.PropertyType;
+                        project.Bedrooms = request.Bedrooms;
+                        project.Bathrooms = request.Bathrooms;
+                        project.AreaSqFt = request.AreaSqFt;
+                        project.PricePerSqFt = request.PricePerSqFt;
+                        project.PossessionStatus = request.PossessionStatus;
+                        project.ApprovalType = request.ApprovalType;
+                        project.HMDANumber = request.HMDANumber;
+                        project.DTCPNumber = request.DTCPNumber;
+                        project.City = request.City;
+                        project.State = request.State;
+                        project.Pincode = request.Pincode;
+                        project.Amenities = request.Amenities;
+                        project.IsFeatured = request.IsFeatured;
+                        project.CarpetArea = request.CarpetArea;
+                        project.SuperBuiltUpArea = request.SuperBuiltUpArea;
+                        project.FurnishingStatus = request.FurnishingStatus;
+                        project.FacingDirection = request.FacingDirection;
+                        project.FloorNumber = request.FloorNumber;
+                        project.TotalFloors = request.TotalFloors;
+                        project.ParkingCount = request.ParkingCount;
+                        project.ParkingType = request.ParkingType;
+                        project.BalconyCount = request.BalconyCount;
+                        project.TransactionType = request.TransactionType;
+                        project.OwnershipType = request.OwnershipType;
+                        project.MaintenanceCharges = request.MaintenanceCharges;
+                        project.FloorPlanImage = request.FloorPlanImage;
+                        project.VideoTourUrl = request.VideoTourUrl;
+                        project.BrochureUrl = request.BrochureUrl;
+                        project.PropertyAge = request.PropertyAge;
+                        project.HasPowerBackup = request.HasPowerBackup;
+                        project.HasWaterSupply = request.HasWaterSupply;
+                        project.IsGatedCommunity = request.IsGatedCommunity;
+                        project.Latitude = request.Latitude;
+                        project.Longitude = request.Longitude;
+                        project.Locality = request.Locality;
                         project.IsActive = request.IsActive;
                         project.ModifiedBy = username;
                         project.ModifiedDate = CommonHelper.GetISTTime(DateTime.Now);
@@ -253,6 +294,7 @@ namespace BrickNTrack.Repository.Repositories
                 {
                     request.CreatedBy = userName;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    request.IsActive = true;
                     var project = _mapper.Map<ProjectDataPath>(request);
                     _context.ProjectDataPaths.Add(project);
                     await _context.SaveChangesAsync();
@@ -303,7 +345,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).ToListAsync();
+                var projectData = await _context.ProjectDataPaths.IgnoreQueryFilters().Include(x => x.ProjectMaster).ToListAsync();
                 return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
             }
             catch (Exception ex)
@@ -316,7 +358,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).Where(x => x.IsActive == true).ToListAsync();
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).ToListAsync();
                 return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
             }
             catch (Exception ex)
@@ -342,7 +384,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).Where(x => x.IsActive == true && x.ProjectId == projectId).ToListAsync();
+                var projectData = await _context.ProjectDataPaths.Include(x => x.ProjectMaster).Where(x => x.ProjectId == projectId).ToListAsync();
                 return _mapper.Map<List<ProjectDataPathResponse>>(projectData);
             }
             catch (Exception ex)

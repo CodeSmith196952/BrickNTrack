@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+using AutoMapper;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Context;
 using BrickNTrack.Repository.Entity;
 using BrickNTrack.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
+using static BrickNTrack.Domain.CommonModel.ApplicationConstant;
 using BC = BCrypt.Net.BCrypt;
 
 namespace BrickNTrack.Repository.Repositories
@@ -21,12 +16,14 @@ namespace BrickNTrack.Repository.Repositories
         private readonly BrickNTrackContext _context;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
         public UserManagerRepositories(BrickNTrackContext context,
-            IConfiguration configuration, IMapper mapper)
+            IConfiguration configuration, IMapper mapper, ITokenService tokenService)
         {
             _context = context;
             _config = configuration;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         public async Task<UserTokenDto> LoginAsync(LoginRequestDTO request)
@@ -37,8 +34,8 @@ namespace BrickNTrack.Repository.Repositories
             if (user == null || !BC.Verify(request.Password, user.PasswordHash))
                 throw new UnauthorizedAccessException("Invalid credentials");
 
-            var token = GenerateToken(user);
-            var refreshToken = GenerateRefreshToken();
+            var token = _tokenService.GenerateJwtToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken();
 
             var userToken = new UserToken
             {
@@ -54,6 +51,7 @@ namespace BrickNTrack.Repository.Repositories
             response.LastName = user.LastName;
             response.Email = user.Email;
             response.MobileNumber = user.MobileNumber;
+            response.Role = user.Role;
             response.JwtToken = token;
             response.RefreshToken = refreshToken;
 
@@ -71,8 +69,8 @@ namespace BrickNTrack.Repository.Repositories
             if (tokenEntry == null)
                 throw new UnauthorizedAccessException("Invalid refresh token");
 
-            var newToken = GenerateToken(tokenEntry.User);
-            var newRefresh = GenerateRefreshToken();
+            var newToken = _tokenService.GenerateJwtToken(tokenEntry.User);
+            var newRefresh = _tokenService.GenerateRefreshToken();
 
             tokenEntry.JwtToken = newToken;
             tokenEntry.RefreshToken = newRefresh;
@@ -85,38 +83,6 @@ namespace BrickNTrack.Repository.Repositories
                 RefreshToken = newRefresh
             };
             return refreshTokenResponse;
-        }
-
-        public string GenerateToken(UserManager user)
-        {
-            var claims = new[]
-            {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim("UserId", user.Id.ToString()),
-            new Claim("BuilderId", user.BuilderId.ToString()),
-            //new Claim(ClaimTypes.Role, user.RoleName)
-        };
-            Console.WriteLine(DateTime.Now.AddMinutes(int.Parse(_config["JwtSettings:DurationInMinutes"]!)));
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _config["JwtSettings:Issuer"],
-                audience: _config["JwtSettings:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(int.Parse(_config["JwtSettings:DurationInMinutes"]!)),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public string GenerateRefreshToken()
-        {
-            var randomBytes = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomBytes);
-            return Convert.ToBase64String(randomBytes);
         }
 
         public async Task<ResultModel> RegistereUserAsync(UserManagerRequest request)
@@ -175,7 +141,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.IsActive == true).ToListAsync();
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).ToListAsync();
                 return _mapper.Map<List<UserManagerResponse>>(users);
             }
             catch (Exception ex)
@@ -188,7 +154,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var users = await _context.UserManager.Include(x => x.BuilderMaster).ToListAsync();
+                var users = await _context.UserManager.IgnoreQueryFilters().Include(x => x.BuilderMaster).ToListAsync();
                 return _mapper.Map<List<UserManagerResponse>>(users);
             }
             catch (Exception ex)
@@ -214,7 +180,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.IsActive == true && x.BuilderId == builderId).ToListAsync();
+                var users = await _context.UserManager.Include(x => x.BuilderMaster).Where(x => x.BuilderId == builderId).ToListAsync();
                 return _mapper.Map<List<UserManagerResponse>>(users);
             }
             catch (Exception ex)

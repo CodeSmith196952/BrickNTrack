@@ -1,24 +1,22 @@
 ﻿using AutoMapper;
-using BrickNTrack.Doman.CommonModel;
-using BrickNTrack.Doman.Model;
+using BrickNTrack.Domain.CommonModel;
+using BrickNTrack.Domain.Model;
 using BrickNTrack.Repository.Context;
 using BrickNTrack.Repository.Entity;
 using BrickNTrack.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using static BrickNTrack.Doman.CommonModel.ApplicationConstant;
+using static BrickNTrack.Domain.CommonModel.ApplicationConstant;
 
 namespace BrickNTrack.Repository.Repositories
 {
-    public class ProjectMilestoneRepositories : IProjectMilestone
+    public class ProjectMilestoneRepositories : BaseRepository<ProjectMilestone>, IProjectMilestone
     {
-        private readonly BrickNTrackContext _context;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
         public ProjectMilestoneRepositories(BrickNTrackContext context,
-            IConfiguration configuration, IMapper mapper)
+            IConfiguration configuration, IMapper mapper) : base(context)
         {
-            _context = context;
             _config = configuration;
             _mapper = mapper;
         }
@@ -39,6 +37,7 @@ namespace BrickNTrack.Repository.Repositories
                 {
                     request.CreatedBy = username;
                     request.CreatedDate = CommonHelper.GetISTTime(DateTime.Now);
+                    request.IsActive = true;
                     request.BudgetStatus = BudgetStatusConstant.InBudget;
                     request.Status = MilestoneStatus.New;
                     if (request.PlannedStartDate.HasValue && request.PlannedTargetDate.HasValue)
@@ -125,7 +124,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var milestones = await _context.ProjectMilestones.Include(x => x.ProjectMaster).ToListAsync();
+                var milestones = await _context.ProjectMilestones.IgnoreQueryFilters().Include(x => x.ProjectMaster).ToListAsync();
                 return _mapper.Map<List<ProjectMilestoneResponse>>(milestones);
             }
             catch (Exception ex)
@@ -138,7 +137,7 @@ namespace BrickNTrack.Repository.Repositories
         {
             try
             {
-                var milestones = await _context.ProjectMilestones.Include(x => x.ProjectMaster).Where(x => x.IsActive == true).ToListAsync();
+                var milestones = await _context.ProjectMilestones.Include(x => x.ProjectMaster).ToListAsync();
                 return _mapper.Map<List<ProjectMilestoneResponse>>(milestones);
             }
             catch (Exception ex)

@@ -1,314 +1,221 @@
-<section>
-  <div class="class">
-    <h2>Document Management</h2>
+<!-- Builder Dashboard -->
+<section *ngIf="builderDashboard">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="dash-title mb-0">Welcome back, {{ userName }}</h2>
+      <p class="text-muted" style="font-size:14px;">Here's what's happening with your projects</p>
+    </div>
   </div>
-  <div class="class">
-    <p>Manage your property documents</p>
+
+  <!-- KPI Cards -->
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-content">
+        <span class="stat-label">Total Projects</span>
+        <h3 class="stat-value">{{ builderDashboard.totalProjects }}</h3>
+        <span class="stat-sub">{{ builderDashboard.activeProjects }} active</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-content">
+        <span class="stat-label">Active Milestones</span>
+        <h3 class="stat-value">{{ builderDashboard.activeMilestones }}</h3>
+        <span class="stat-sub">across all projects</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-content">
+        <span class="stat-label">Budget Overview</span>
+        <h3 class="stat-value">₹{{ builderDashboard.totalBudget | number:'1.0-0' }}</h3>
+        <span class="stat-sub">Spent: ₹{{ builderDashboard.totalSpent | number:'1.0-0' }}</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-content">
+        <span class="stat-label">Bookings</span>
+        <h3 class="stat-value">{{ builderDashboard.totalBookings }}</h3>
+        <span class="stat-sub">{{ builderDashboard.pendingBookings }} pending</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+    </div>
   </div>
-  <div class="row d-flex justify-content-between">
-    <div class="col-sm-3">
-      <mat-card class="diff">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Total Documents</p>
-            <h3 class="op-7 fw-bolder clildDiff">2</h3>
-          </div>
-          <div class="customIcon">
-            <i class="fa-solid fa-file-invoice"></i> 
-          </div>
-        </mat-card-content>
-      </mat-card>
+
+  <!-- Budget Utilization Bar -->
+  <div class="panel mb-4" *ngIf="builderDashboard.totalBudget > 0">
+    <div class="panel-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span style="font-size:14px; font-weight:600; color:#1e293b;">Overall Budget Utilization</span>
+        <span style="font-size:14px; font-weight:700;" [ngClass]="{'text-success': budgetUtilization <= 75, 'text-warning': budgetUtilization > 75 && budgetUtilization <= 90, 'text-danger': budgetUtilization > 90}">
+          {{ budgetUtilization }}%
+        </span>
+      </div>
+      <div class="progress" style="height:10px; border-radius:5px;">
+        <div class="progress-bar" [style.width.%]="budgetUtilization"
+             [ngClass]="{'bg-success': budgetUtilization <= 75, 'bg-warning': budgetUtilization > 75 && budgetUtilization <= 90, 'bg-danger': budgetUtilization > 90}"></div>
+      </div>
+      <div class="d-flex justify-content-between mt-2" style="font-size:12px; color:#64748b;">
+        <span>₹{{ builderDashboard.totalSpent | number:'1.0-0' }} spent</span>
+        <span>₹{{ (builderDashboard.totalBudget - builderDashboard.totalSpent) | number:'1.0-0' }} remaining</span>
+      </div>
     </div>
-    <div class="col-sm-3">
-      <mat-card class="diff2">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Acknowledged</p>
-            <h3 class="op-7 fw-bolder clildDiff">0</h3>
+  </div>
+
+  <div class="dash-grid">
+    <!-- Projects List -->
+    <div class="panel">
+      <div class="panel-header">
+        <h5><i class="fa-solid fa-building me-2"></i>Your Projects</h5>
+        <a routerLink="/project/list" class="btn btn-outline-primary btn-sm">View All</a>
+      </div>
+      <div class="project-list">
+        <div class="project-row" *ngFor="let p of projects" [routerLink]="['/projectmilestone', p.projectId]" style="cursor:pointer;">
+          <div class="proj-img">
+            <div *ngIf="!p.profileImage" class="proj-placeholder"><i class="fa-solid fa-building"></i></div>
+            <img *ngIf="p.profileImage" [src]="p.profileImage">
           </div>
-             <div class="customIcon">
-           <i class="fa-regular fa-circle-check"></i>
+          <div class="proj-info">
+            <strong>{{ p.projectName }}</strong>
+            <small>{{ p.projectAddress }}</small>
           </div>
-        </mat-card-content>
-      </mat-card>
+          <div class="proj-stats">
+            <div class="progress" style="width:60px; height:6px;">
+              <div class="progress-bar bg-primary" [style.width.%]="p.completionPercentage"></div>
+            </div>
+            <small>{{ p.completionPercentage }}%</small>
+          </div>
+          <span class="badge" [ngClass]="{'bg-success': p.status === 'New', 'bg-warning text-dark': p.status === 'In Progress'}">{{ p.status }}</span>
+        </div>
+        <div *ngIf="projects.length === 0" class="text-center p-4 text-muted">No projects yet</div>
+      </div>
     </div>
-    <div class="col-sm-3">
-      <mat-card class="diff3">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Pending</p>
-            <h3 class="op-7 fw-bolder clildDiff">1</h3>
-          </div>
-             <div class="customIcon">
-          <i class="fa-regular fa-clock"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-sm-3">
-      <mat-card class="diff3">
-        <mat-card-content>
-          <div>
-            <p class="clildDiff">Filters</p>
-            <h3 class="op-7 fw-bolder clildDiff">0</h3>
-          </div>
-             <div class="customIcon">
-           <i class="fa-solid fa-triangle-exclamation"></i>
-          </div>
-        </mat-card-content>
-      </mat-card>
+
+    <!-- Quick Actions + Info -->
+    <div>
+      <!-- Quick Actions -->
+      <div class="panel mb-3">
+        <div class="panel-header"><h5><i class="fa-solid fa-bolt me-2"></i>Quick Actions</h5></div>
+        <div class="quick-links">
+          <a routerLink="/property/add" class="quick-link"><i class="fa-solid fa-plus-circle"></i><span>Add Property</span></a>
+          <a routerLink="/project/list" class="quick-link"><i class="fa-solid fa-list"></i><span>Manage Projects</span></a>
+          <a routerLink="/cost-monitoring" class="quick-link"><i class="fa-solid fa-chart-line"></i><span>Cost Monitoring</span></a>
+          <a routerLink="/progress-tracker" class="quick-link"><i class="fa-solid fa-hard-hat"></i><span>Progress Tracker</span></a>
+          <a routerLink="/messaging" class="quick-link"><i class="fa-solid fa-message"></i><span>Messages</span></a>
+          <a routerLink="/builder/list" class="quick-link"><i class="fa-solid fa-building"></i><span>Company Profile</span></a>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="panel" *ngIf="builderDashboard.averageRating">
+        <div class="panel-body text-center">
+          <div style="font-size:36px; color:#f59e0b;"><i class="fa-solid fa-star"></i></div>
+          <h4 class="mt-1 mb-0">{{ builderDashboard.averageRating }}/5</h4>
+          <p class="text-muted" style="font-size:13px;">Average Rating</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="class">
-    <mat-card class="">
-      <mat-card-content>
-        <div>
-          <h4 class=""><i class="fa-solid fa-filter"></i> Filters</h4>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 mb-4">
-            <div class="class">
-              <input
-                type="text"
-                class="form-control"
-                name=""
-                id=""
-                placeholder="Search Documents"
-              />
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="class">
-              <select name="" class="form-select form-control" id="">
-                <option value="" selected disabled hidden>All Types</option>
-                <option value="">Legal</option>
-                <option value="">Structural</option>
-                <option value="">Financial</option>
-                <option value="">Marketing</option>
-                <option value="">Sales Agreement</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="class">
-              <select name="" class="form-select form-control" id="">
-                <option value="" selected disabled hidden>
-                  All Properties
-                </option>
-                <option value="">Skyline Residency</option>
-                <option value="">Green Valley Appartments</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+<!-- Buyer Dashboard -->
+<section *ngIf="buyerDashboard">
+  <h2 class="dash-title">Buyer Dashboard</h2>
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-content">
+        <span class="stat-label">My Bookings</span>
+        <h3 class="stat-value">{{ buyerDashboard.totalBookings }}</h3>
+        <span class="stat-sub">{{ buyerDashboard.activeBookings }} active</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-content">
+        <span class="stat-label">Unread Messages</span>
+        <h3 class="stat-value">{{ buyerDashboard.unreadMessages }}</h3>
+        <span class="stat-sub">conversations</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-envelope"></i></div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-content">
+        <span class="stat-label">Reviews Given</span>
+        <h3 class="stat-value">{{ buyerDashboard.reviewsGiven }}</h3>
+        <span class="stat-sub">properties reviewed</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-content">
+        <span class="stat-label">Saved Properties</span>
+        <h3 class="stat-value">{{ buyerDashboard.savedProperties || 0 }}</h3>
+        <span class="stat-sub">in your shortlist</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-heart"></i></div>
+    </div>
+  </div>
+  <div class="quick-actions mt-4">
+    <h5 class="qa-title">Quick Actions</h5>
+    <div class="d-flex gap-3 flex-wrap">
+      <a routerLink="/property/explore" class="action-btn"><i class="fa-solid fa-search me-2"></i>Explore Properties</a>
+      <a routerLink="/saved-properties" class="action-btn"><i class="fa-solid fa-heart me-2"></i>Saved Properties</a>
+      <a routerLink="/recently-viewed" class="action-btn"><i class="fa-solid fa-clock me-2"></i>Recently Viewed</a>
+      <a routerLink="/property/compare" class="action-btn"><i class="fa-solid fa-scale-balanced me-2"></i>Compare</a>
+    </div>
   </div>
 </section>
 
-<div class="class">
-  <mat-tab-group>
-    <mat-tab label="All (2)">
-      <div class="row">
-        <div class="col-sm-4">
-          <mat-card class="">
-            <mat-card-content>
-              <div class="mb-1">
-                <img class="img-fluid" src="../../assets/images/room_top_view2_generated.jpg" alt="">
-              </div>
-              <div class="d-flex">
-              <i class="fa-solid fa-file-invoice"></i> &nbsp;  <p class="fw-bolder">RERA Registration Certificate</p>
-              </div>
-                  <div class="d-flex">
-
-                <p class="customBandage mr-3">Legal</p>
-                <p class="customBandage">Pending</p>
-                
-              </div>
-              <div class="class">
-                <p><strong>File: </strong> rera-certificate.pdf</p>
-              </div>
-              <div class="class">
-                <p><strong>Uploaded: </strong> 15/01/2024</p>
-              </div>
-              <div class="class">
-                <p><strong>By: </strong> John Seller</p>
-              </div>
-
-              <div class="d-flex justify-content-between">
-                <div class=" mb-3">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    View
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Download
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Edit
-                  </a>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div class="col-sm-4">
-          <mat-card class="">
-            <mat-card-content>
-                       <div class="mb-1">
-                <img class="img-fluid" src="../../assets/images/room_top_view2_generated.jpg" alt="">
-              </div>
-              <div class="d-flex">
-              <i class="fa-solid fa-file-invoice"></i> &nbsp; <p class="fw-bolder">Floor Plan - Tower A</p>
-              </div>
-                  <div class="d-flex">
-
-                <p class="customBandage">Structural</p>
-               
-                
-              </div>
-              <div class="class">
-                <p><strong>File: </strong> rera-certificate.pdf</p>
-              </div>
-              <div class="class">
-                <p><strong>Uploaded: </strong> 15/01/2024</p>
-              </div>
-              <div class="class">
-                <p><strong>By: </strong> John Seller</p>
-              </div>
-
-            
-              <div class="d-flex justify-content-between">
-                <div class=" mb-3">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    View
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Download
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Edit
-                  </a>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+<!-- Admin Dashboard -->
+<section *ngIf="adminDashboard">
+  <h2 class="dash-title">Admin Dashboard</h2>
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-content">
+        <span class="stat-label">Total Users</span>
+        <h3 class="stat-value">{{ adminDashboard.totalUsers }}</h3>
+        <span class="stat-sub">{{ adminDashboard.totalBuilders }} builders, {{ adminDashboard.totalBuyers }} buyers</span>
       </div>
-    </mat-tab>
-    <mat-tab label="Legal (1)">
-      <div class="row">
-        <div class="col-sm-4">
-          <mat-card class="">
-            <mat-card-content>
-                       <div class="mb-1">
-                <img class="img-fluid" src="../../assets/images/room_top_view2_generated.jpg" alt="">
-              </div>
-              <div class="d-flex">
-              <i class="fa-solid fa-file-invoice"></i> &nbsp;  <p class="fw-bolder">RERA Registration Certificate</p>
-              </div>
-                  <div class="d-flex">
-
-                <p class="customBandage mr-3">Legal</p>
-                <p class="customBandage">Pending</p>
-                
-              </div>
-              <div class="class">
-                <p><strong>File: </strong> rera-certificate.pdf</p>
-              </div>
-              <div class="class">
-                <p><strong>Uploaded: </strong> 15/01/2024</p>
-              </div>
-              <div class="class">
-                <p><strong>By: </strong> John Seller</p>
-              </div>
-
-              <div class="d-flex justify-content-between">
-                <div class=" mb-3">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    View
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Download
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Edit
-                  </a>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+      <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-content">
+        <span class="stat-label">Projects</span>
+        <h3 class="stat-value">{{ adminDashboard.totalProjects }}</h3>
+        <span class="stat-sub">{{ adminDashboard.activeProjects }} active</span>
       </div>
-    </mat-tab>
-    <mat-tab label="Structural (1)">
-      <div class="row">
-        <div class="col-sm-4">
-          <mat-card class="">
-            <mat-card-content>
-                       <div class="mb-1">
-                <img class="img-fluid" src="../../assets/images/room_top_view2_generated.jpg" alt="">
-              </div>
-              <div class="d-flex">
-              <i class="fa-solid fa-file-invoice"></i> &nbsp;  <p class="fw-bolder">RERA Registration Certificate</p>
-              </div>
-              <div class="d-flex">
-
-                <p class="customBandage">Structural</p>
-              
-                
-              </div>
-              <div class="class">
-                <p><strong>File: </strong> rera-certificate.pdf</p>
-              </div>
-              <div class="class">
-                <p><strong>Uploaded: </strong> 15/01/2024</p>
-              </div>
-              <div class="class">
-                <p><strong>By: </strong> John Seller</p>
-              </div>
-
-             
-              <div class="d-flex justify-content-between">
-                <div class=" mb-3">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    View
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Download
-                  </a>
-                </div>
-                <div class="class">
-                  <a class="btn btn-primary ml-1" tooltipPosition="top">
-                    Edit
-                  </a>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+      <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-content">
+        <span class="stat-label">Pending Reports</span>
+        <h3 class="stat-value">{{ adminDashboard.pendingReports }}</h3>
+        <span class="stat-sub">{{ adminDashboard.flaggedMessages }} flagged</span>
       </div>
-    </mat-tab>
-    <mat-tab label="Financial (0)"> </mat-tab>
-    <mat-tab label="Marketing (0)"> </mat-tab>
-    <mat-tab label="Sales (0)"> </mat-tab>
-  </mat-tab-group>
+      <div class="stat-icon"><i class="fa-solid fa-flag"></i></div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-content">
+        <span class="stat-label">Revenue</span>
+        <h3 class="stat-value">₹{{ adminDashboard.totalRevenue | number:'1.0-0' }}</h3>
+        <span class="stat-sub">{{ adminDashboard.totalBookings }} bookings</span>
+      </div>
+      <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- Loading -->
+<div *ngIf="loading" class="text-center p-5">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="mt-2 text-muted">Loading dashboard...</p>
 </div>
 
-<section></section>
+<!-- No Data -->
+<div *ngIf="!loading && !builderDashboard && !buyerDashboard && !adminDashboard" class="text-center p-5">
+  <i class="fa-solid fa-house-chimney" style="font-size:48px; color:#cbd5e1;"></i>
+  <h3 class="mt-3">Welcome to BrickNTrack</h3>
+  <p class="text-muted">Your dashboard will appear here once data is available.</p>
+  <a routerLink="/property/explore" class="btn btn-primary mt-2">Explore Properties</a>
+</div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   trigger,
   style,
@@ -11,9 +11,8 @@ import {
 
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brickntrackService } from 'src/app/service/brickntrack-service.service'; 
+import { ApiService } from '../core/services/api.service';
 import Swal from 'sweetalert2';
-import { ServiceUrl } from '../service/service-url.service';
 
 
 @Component({
@@ -34,7 +33,9 @@ import { ServiceUrl } from '../service/service-url.service';
     ])
   ]
 })
-export class LandingPageComponent implements OnInit,AfterViewInit {
+export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
+ private intervalIds: any[] = [];
+ private observer: IntersectionObserver | null = null;
  @ViewChild('ratesSection') ratesSection!: ElementRef;
  @ViewChild('storeSection', { static: true }) storeSection!: ElementRef;
   animationState = 'hidden';
@@ -63,7 +64,7 @@ visibleSlidesCount = 1
   projectList: any;
   projectDataList: any;
   constructor(private router: Router,
-      private brickntrackService: brickntrackService,
+      private api: ApiService,
       private fb: FormBuilder,) { }
 
   ngOnInit(): void {
@@ -87,6 +88,7 @@ visibleSlidesCount = 1
     }, { threshold: 0.3 }); // Adjust threshold as needed
 
     observer.observe(this.storeSection.nativeElement);
+    this.observer = observer;
   
     
   }
@@ -94,6 +96,11 @@ visibleSlidesCount = 1
 
 
   
+  ngOnDestroy(): void {
+    this.intervalIds.forEach(id => clearInterval(id));
+    this.observer?.disconnect();
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.checkIfInView();
@@ -133,48 +140,38 @@ visibleSlidesCount = 1
       }
       (this as any)[property] = current;
     }, 16);
+    this.intervalIds.push(interval);
   }
 
 
      getAllActiveProjects() {
-        debugger
-        this.brickntrackService.get<any>(null, ServiceUrl.getAllActiveProject)
+        this.api.get<any>('PropertySearch/search', { page: 1, pageSize: 20 })
           .subscribe(
             (res) => {
-              this.projectList = res
+              const data = res.data?.items || res.data || [];
+              this.projectList = data;
               this.getAllProjectDataDetail();
             },
-            (err) => {
-              Swal.fire("", err.error.message, "error")
+            () => {
+              // Fallback: try the other endpoint
+              this.api.get<any>('Property/getAllActiveProject').subscribe(
+                (res) => {
+                  this.projectList = res.data || [];
+                },
+                () => { this.projectList = []; }
+              );
             }
           )
       }
      getAllProjectDataDetail() {
-        debugger
-        this.brickntrackService.get<any>(null, ServiceUrl.getAllProjectDataDetail)
-          .subscribe(
-            (res) => {
-              this.projectDataList = res
-  
-                this.projectList = this.projectList.map((project: { projectId: any; }) => {
-            const relatedMedia = this.projectDataList.filter((data: { projectId: any; }) => data.projectId === project.projectId);
-            return {
-              ...project,
-              media: relatedMedia
-            };
-          });
-  
-            },
-            (err) => {
-              Swal.fire("", err.error.message, "error")
-            }
-          )
+        // No-op: PropertySearch/search already provides the project data needed.
+        // The previous Project/getAllProjectDataDetail endpoint requires AdminOrBuilder auth
+        // and always fails on the public landing page.
+        return;
       }
     sanitizeImagePath(path: string): string {
-    if (!path) return 'assets/images/no-image.jpg'; // fallback image
-  
-    // Example: Replace local path with public server URL
-    return path.replace("D://BrickNTrack//", "https://yourdomain.com/assets/").replace(/\\/g, "/");
+    if (!path) return '';
+    return path.replace(/\\/g, '/');
   }
   
   getProjectImagePath(project: any): string {

@@ -21,8 +21,8 @@ namespace BrickNTrack.Repository.EntityConfiguration
             builder.Property(x => x.GSTNo).IsRequired(false);
             builder.Property(x => x.OwnerName).IsRequired(false);
 
-            builder.Property(x => x.CreatedBy).IsRequired(false).HasMaxLength(30);
-            builder.Property(x => x.ModifiedBy).IsRequired(false).HasMaxLength(30);
+            builder.Property(x => x.CreatedBy).IsRequired(false).HasMaxLength(100);
+            builder.Property(x => x.ModifiedBy).IsRequired(false).HasMaxLength(100);
             builder.Property(x => x.CreatedDate).IsRequired(true).HasColumnType("datetime");
             builder.Property(x => x.ModifiedDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(x => x.IsActive).HasDefaultValue(true);
